@@ -79,6 +79,10 @@
                 <template v-slot:before>
                   <q-icon style="color: #3948ab85" name="groups_3" size="lg" />
                 </template>
+                <template v-slot:append>
+                  <q-icon name="close" @click="formInput.suffix = null" class="remove-selection"
+                    v-show="formInput.suffix"></q-icon>
+                </template>
               </q-select>
               <q-input outlined rounded :color="formColor" :label-color="formColor" label="Bithdate"
                 v-model="formInput.birthDate" @click="$refs.birthdateProxy.show()" :rules="[
@@ -346,6 +350,7 @@
             <q-btn label="submit" type="submit" color="primary" class="button-submit" @click="submitResponse()" />
           </div>
         </div>
+        <!-- remove comment to enable testing with pre-input data -->
         <!-- <q-btn label="test" @click="testSubmit()"/> -->
       </q-form>
     </div>
@@ -544,8 +549,8 @@ const axiosInit = axios.create({
 
 
 const accept = ref(false)
-// test OTPVerified
-const OTPVerified = ref(true)
+// skip otp verification
+const OTPVerified = ref(false)
 const otp = ref(null)
 const isOTPSixDigit = ref(null)
 const allRequired = ref(null)

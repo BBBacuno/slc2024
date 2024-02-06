@@ -1,487 +1,358 @@
 <template>
-    <q-card
-      class="evaluation"
-      style="
+  <q-card class="evaluation" style="
         -webkit-border-radius: 50px;
         -moz-border-radius: 50px;
         border-radius: 50px;
-      "
-      id="topElement"
-    >
+      " id="topElement">
     <div v-show="!verify">
       <div v-show="!verify" class="input-forms">
-        <div class="button-container"><h4>Evaluation</h4></div>
+        <div class="button-container">
+          <h4>Evaluation</h4>
+        </div>
         <br><br>
-        <q-input
-          outlined
-          rounded
-          v-model="formInput.email"
-          type="email"
-          color="indigo-7"
-          label-color="indigo-7"
-          label="Registered Email for SLC 2024"
-          :rules="[(val) => val.includes('@') || 'Only valid email']"
-          lazy-rules
-        >
+        <q-input outlined rounded v-model="formInput.email" type="email" color="indigo-7" label-color="indigo-7"
+          label="Registered Email for SLC 2024" :rules="[(val) => val.includes('@') || 'Only valid email']" lazy-rules>
           <template v-slot:before>
             <q-icon style="color: #3948ab85" name="mail" />
           </template>
         </q-input>
         <div class="button-container">
-          <q-toggle
-            v-model="accept"
-            @click="dataPolicyMenu = !dataPolicyMenu"
-          >
+          <q-toggle v-model="accept" @click="dataPolicyMenu = !dataPolicyMenu">
             I accept the <b>Data Privacy Policy Terms</b>
           </q-toggle>
-          <q-btn
-            unelevated
-            rounded
-            size="lg"
-            label="Start Evaluation"
-            color="teal"
-            :disabled="!accept"
-            style="width: 50%"
-            @click="sendOTP()"
-          />
+          <q-btn unelevated rounded size="lg" label="Start Evaluation" color="teal" :disabled="!accept" style="width: 50%"
+            @click="sendOTP()" />
         </div>
       </div>
     </div>
     <div v-show="verify" id="parentContainer">
-        <q-form >
-          <div v-show="pageNum == 1">
-            <p style="justify-content: center;">
-              <b>DIRECTIONS</b>: Using a 5-point Likert scale, please put a checkmark (✓) on the 
-              appropriate column that represents the extent of your agreement to the following 
-              statements about some quality dimensions of this activity. 
-              All fields required.
-            </p>
-            <q-separator />
-            <br><br><b>{{ "Access and Facilities" }}</b>
-            <div v-for="(item, index) in questions.af" :key="item.id">
-              <br>{{ item }}
-              <div class="radios">
-                <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                  <div v-for="val in radio_val" :key="val.id" :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'" >
-                    <li>
-                      <q-btn
-                      :outline="formInput.af[index] != val"
-                      :unelevated="formInput.af[index] == val"
-                      :label="likertScaleDesc[val-1]"
-                      @click="formInput.af[index] = val"
+      <q-form>
+        <div v-show="pageNum == 1">
+          <p style="justify-content: center;">
+            <b>DIRECTIONS</b>: Using a 5-point Likert scale, please put a checkmark (✓) on the
+            appropriate column that represents the extent of your agreement to the following
+            statements about some quality dimensions of this activity.
+            All fields required.
+          </p>
+          <q-separator />
+          <br><br><b>{{ "Access and Facilities" }}</b>
+          <div v-for="(item, index) in questions.af" :key="item.id">
+            <br>{{ item }}
+            <div class="radios">
+              <ul style="list-style-type: none; padding: 0; margin: 0; ">
+                <div v-for="val in radio_val" :key="val.id"
+                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                  <li>
+                    <q-btn :outline="formInput.af[index] != val" :unelevated="formInput.af[index] == val"
+                      :label="likertScaleDesc[val - 1]" @click="formInput.af[index] = val"
                       :class="formInput.af[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.af[index] == val ? likertScaleColor[val-1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px"
-                      />
-                    </li>
-                  </div>
-                </ul>
-              </div>
+                      :color="formInput.af[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                      style="margin-inline: 10px; margin-block: 5px" />
+                  </li>
+                </div>
+              </ul>
             </div>
-            <q-separator />
           </div>
-          <div v-show="pageNum == 2">
-            <br><b>{{ "Communication" }}</b>
-            <div v-for="(item, index) in questions.c" :key="item.id">
-              <br>{{ item }}
-              <div class="radios">
-                <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                  <div v-for="val in radio_val" :key="val.id" :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'" >
-                    <li>
-                      <q-btn
-                      :outline="formInput.c[index] != val"
-                      :unelevated="formInput.c[index] == val"
-                      :label="likertScaleDesc[val-1]"
-                      @click="formInput.c[index] = val"
+          <q-separator />
+        </div>
+        <div v-show="pageNum == 2">
+          <br><b>{{ "Communication" }}</b>
+          <div v-for="(item, index) in questions.c" :key="item.id">
+            <br>{{ item }}
+            <div class="radios">
+              <ul style="list-style-type: none; padding: 0; margin: 0; ">
+                <div v-for="val in radio_val" :key="val.id"
+                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                  <li>
+                    <q-btn :outline="formInput.c[index] != val" :unelevated="formInput.c[index] == val"
+                      :label="likertScaleDesc[val - 1]" @click="formInput.c[index] = val"
                       :class="formInput.c[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.c[index] == val ? likertScaleColor[val-1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px"
-                      />
-                    </li>
-                  </div>
-                </ul>
-              </div>
+                      :color="formInput.c[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                      style="margin-inline: 10px; margin-block: 5px" />
+                  </li>
+                </div>
+              </ul>
             </div>
-            <q-separator />
           </div>
-          <div v-show="pageNum == 3">
-            <br><b>{{ "Quality" }}</b>
-            <div v-for="(item, index) in questions.q" :key="item.id">
-              <br>{{ item }}
-              <div class="radios">
-                <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                  <div v-for="val in radio_val" :key="val.id" :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'" >
-                    <li>
-                      <q-btn
-                      :outline="formInput.q[index] != val"
-                      :unelevated="formInput.q[index] == val"
-                      :label="likertScaleDesc[val-1]"
-                      @click="formInput.q[index] = val"
+          <q-separator />
+        </div>
+        <div v-show="pageNum == 3">
+          <br><b>{{ "Quality" }}</b>
+          <div v-for="(item, index) in questions.q" :key="item.id">
+            <br>{{ item }}
+            <div class="radios">
+              <ul style="list-style-type: none; padding: 0; margin: 0; ">
+                <div v-for="val in radio_val" :key="val.id"
+                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                  <li>
+                    <q-btn :outline="formInput.q[index] != val" :unelevated="formInput.q[index] == val"
+                      :label="likertScaleDesc[val - 1]" @click="formInput.q[index] = val"
                       :class="formInput.q[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.q[index] == val ? likertScaleColor[val-1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px"
-                      />
-                    </li>
-                  </div>
-                </ul>
-              </div>
+                      :color="formInput.q[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                      style="margin-inline: 10px; margin-block: 5px" />
+                  </li>
+                </div>
+              </ul>
             </div>
-            <q-separator />
           </div>
-          <div v-show="pageNum == 4">
-            <br><b>{{ "Organization" }}</b>
-            <div v-for="(item, index) in questions.org" :key="item.id">
-              <br>{{ item }}
-              <div class="radios">
-                <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                  <div v-for="val in radio_val" :key="val.id" :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'" >
-                    <li>
-                      <q-btn
-                      :outline="formInput.org[index] != val"
-                      :unelevated="formInput.org[index] == val"
-                      :label="likertScaleDesc[val-1]"
-                      @click="formInput.org[index] = val"
+          <q-separator />
+        </div>
+        <div v-show="pageNum == 4">
+          <br><b>{{ "Organization" }}</b>
+          <div v-for="(item, index) in questions.org" :key="item.id">
+            <br>{{ item }}
+            <div class="radios">
+              <ul style="list-style-type: none; padding: 0; margin: 0; ">
+                <div v-for="val in radio_val" :key="val.id"
+                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                  <li>
+                    <q-btn :outline="formInput.org[index] != val" :unelevated="formInput.org[index] == val"
+                      :label="likertScaleDesc[val - 1]" @click="formInput.org[index] = val"
                       :class="formInput.org[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.org[index] == val ? likertScaleColor[val-1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px"
-                      />
-                    </li>
-                  </div>
-                </ul>
-              </div>
+                      :color="formInput.org[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                      style="margin-inline: 10px; margin-block: 5px" />
+                  </li>
+                </div>
+              </ul>
             </div>
-            <q-separator />
           </div>
-          <div v-show="pageNum == 5">
-            <br><b>{{ "Outcome" }}</b>
-            <div v-for="(item, index) in questions.out" :key="item.id">
-              <br>{{ item }}
-              <div class="radios">
-                <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                  <div v-for="val in radio_val" :key="val.id" :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'" >
-                    <li>
-                      <q-btn
-                      :outline="formInput.out[index] != val"
-                      :unelevated="formInput.out[index] == val"
-                      :label="likertScaleDesc[val-1]"
-                      @click="formInput.out[index] = val"
+          <q-separator />
+        </div>
+        <div v-show="pageNum == 5">
+          <br><b>{{ "Outcome" }}</b>
+          <div v-for="(item, index) in questions.out" :key="item.id">
+            <br>{{ item }}
+            <div class="radios">
+              <ul style="list-style-type: none; padding: 0; margin: 0; ">
+                <div v-for="val in radio_val" :key="val.id"
+                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                  <li>
+                    <q-btn :outline="formInput.out[index] != val" :unelevated="formInput.out[index] == val"
+                      :label="likertScaleDesc[val - 1]" @click="formInput.out[index] = val"
                       :class="formInput.out[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.out[index] == val ? likertScaleColor[val-1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px"
-                      />
-                    </li>
-                  </div>
-                </ul>
-              </div>
+                      :color="formInput.out[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                      style="margin-inline: 10px; margin-block: 5px" />
+                  </li>
+                </div>
+              </ul>
             </div>
-            <q-separator />
           </div>
-          <div v-show="pageNum == 6">
-            <br><b>{{ "DR. SEGUNDO JOAQUIN A. ROMERO, JR. " }}</b>
-            <div v-for="(item, index) in questions.speakers" :key="item.id">
-              <br>{{ item }}
-              <div class="radios">
-                <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                  <div v-for="val in radio_val" :key="val.id" :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'" >
-                    <li>
-                      <q-btn
-                      :outline="formInput.romero[index] != val"
-                      :unelevated="formInput.romero[index] == val"
-                      :label="overallScaleDesc[val-1]"
-                      @click="formInput.romero[index] = val"
+          <q-separator />
+        </div>
+        <div v-show="pageNum == 6">
+          <br><b>{{ "DR. SEGUNDO JOAQUIN A. ROMERO, JR. " }}</b>
+          <div v-for="(item, index) in questions.speakers" :key="item.id">
+            <br>{{ item }}
+            <div class="radios">
+              <ul style="list-style-type: none; padding: 0; margin: 0; ">
+                <div v-for="val in radio_val" :key="val.id"
+                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                  <li>
+                    <q-btn :outline="formInput.romero[index] != val" :unelevated="formInput.romero[index] == val"
+                      :label="rpRatingDesc[val - 1]" @click="formInput.romero[index] = val"
                       :class="formInput.romero[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.romero[index] == val ? likertScaleColor[val-1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px"
-                      />
-                    </li>
-                  </div>
-                </ul>
-              </div>
+                      :color="formInput.romero[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                      style="margin-inline: 10px; margin-block: 5px" />
+                  </li>
+                </div>
+              </ul>
             </div>
-            <q-separator />
           </div>
-          <div v-show="pageNum == 7">
-            <br><b>{{ "ENGR. BERNIE C. CANGREJO" }}</b>
-            <div v-for="(item, index) in questions.speakers" :key="item.id">
-              <br>{{ item }}
-              <div class="radios">
-                <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                  <div v-for="val in radio_val" :key="val.id" :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'" >
-                    <li>
-                      <q-btn
-                      :outline="formInput.cangrejo[index] != val"
-                      :unelevated="formInput.cangrejo[index] == val"
-                      :label="overallScaleDesc[val-1]"
-                      @click="formInput.cangrejo[index] = val"
+          <q-separator />
+        </div>
+        <div v-show="pageNum == 7">
+          <br><b>{{ "ENGR. BERNIE C. CANGREJO" }}</b>
+          <div v-for="(item, index) in questions.speakers" :key="item.id">
+            <br>{{ item }}
+            <div class="radios">
+              <ul style="list-style-type: none; padding: 0; margin: 0; ">
+                <div v-for="val in radio_val" :key="val.id"
+                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                  <li>
+                    <q-btn :outline="formInput.cangrejo[index] != val" :unelevated="formInput.cangrejo[index] == val"
+                      :label="rpRatingDesc[val - 1]" @click="formInput.cangrejo[index] = val"
                       :class="formInput.cangrejo[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.cangrejo[index] == val ? likertScaleColor[val-1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px"
-                      />
-                    </li>
-                  </div>
-                </ul>
-              </div>
+                      :color="formInput.cangrejo[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                      style="margin-inline: 10px; margin-block: 5px" />
+                  </li>
+                </div>
+              </ul>
             </div>
-            <q-separator />
           </div>
-          <div v-show="pageNum == 8">
-            <br><b>{{ "DR. NESTOR G. ACALA " }}</b>
-            <div v-for="(item, index) in questions.speakers" :key="item.id">
-              <br>{{ item }}
-              <div class="radios">
-                <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                  <div v-for="val in radio_val" :key="val.id" :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'" >
-                    <li>
-                      <q-btn
-                      :outline="formInput.acala[index] != val"
-                      :unelevated="formInput.acala[index] == val"
-                      :label="overallScaleDesc[val-1]"
-                      @click="formInput.acala[index] = val"
+          <q-separator />
+        </div>
+        <div v-show="pageNum == 8">
+          <br><b>{{ "DR. NESTOR G. ACALA " }}</b>
+          <div v-for="(item, index) in questions.speakers" :key="item.id">
+            <br>{{ item }}
+            <div class="radios">
+              <ul style="list-style-type: none; padding: 0; margin: 0; ">
+                <div v-for="val in radio_val" :key="val.id"
+                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                  <li>
+                    <q-btn :outline="formInput.acala[index] != val" :unelevated="formInput.acala[index] == val"
+                      :label="rpRatingDesc[val - 1]" @click="formInput.acala[index] = val"
                       :class="formInput.acala[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.acala[index] == val ? likertScaleColor[val-1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px"
-                      />
-                    </li>
-                  </div>
-                </ul>
-              </div>
+                      :color="formInput.acala[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                      style="margin-inline: 10px; margin-block: 5px" />
+                  </li>
+                </div>
+              </ul>
             </div>
-            <q-separator />
           </div>
-          <div v-show="pageNum == 9">
-            <br><b>{{ "PROF. MICHAEL CHARLESTON B. CHUA" }}</b>
-            <div v-for="(item, index) in questions.speakers" :key="item.id">
-              <br>{{ item }}
-              <div class="radios">
-                <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                  <div v-for="val in radio_val" :key="val.id" :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'" >
-                    <li>
-                      <q-btn
-                      :outline="formInput.chua[index] != val"
-                      :unelevated="formInput.chua[index] == val"
-                      :label="overallScaleDesc[val-1]"
-                      @click="formInput.chua[index] = val"
+          <q-separator />
+        </div>
+        <div v-show="pageNum == 9">
+          <br><b>{{ "PROF. MICHAEL CHARLESTON B. CHUA" }}</b>
+          <div v-for="(item, index) in questions.speakers" :key="item.id">
+            <br>{{ item }}
+            <div class="radios">
+              <ul style="list-style-type: none; padding: 0; margin: 0; ">
+                <div v-for="val in radio_val" :key="val.id"
+                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                  <li>
+                    <q-btn :outline="formInput.chua[index] != val" :unelevated="formInput.chua[index] == val"
+                      :label="rpRatingDesc[val - 1]" @click="formInput.chua[index] = val"
                       :class="formInput.chua[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.chua[index] == val ? likertScaleColor[val-1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px"
-                      />
-                    </li>
-                  </div>
-                </ul>
-              </div>
+                      :color="formInput.chua[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                      style="margin-inline: 10px; margin-block: 5px" />
+                  </li>
+                </div>
+              </ul>
             </div>
-            <q-separator />
           </div>
-          <div v-show="pageNum == 10">
-            <br><b>{{ "JAYEEL S. CORNELIO Ph. D." }}</b>
-            <div v-for="(item, index) in questions.speakers" :key="item.id">
-              <br>{{ item }}
-              <div class="radios">
-                <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                  <div v-for="val in radio_val" :key="val.id" :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'" >
-                    <li>
-                      <q-btn
-                      :outline="formInput.cornelio[index] != val"
-                      :unelevated="formInput.cornelio[index] == val"
-                      :label="overallScaleDesc[val-1]"
-                      @click="formInput.cornelio[index] = val"
+          <q-separator />
+        </div>
+        <div v-show="pageNum == 10">
+          <br><b>{{ "JAYEEL S. CORNELIO Ph. D." }}</b>
+          <div v-for="(item, index) in questions.speakers" :key="item.id">
+            <br>{{ item }}
+            <div class="radios">
+              <ul style="list-style-type: none; padding: 0; margin: 0; ">
+                <div v-for="val in radio_val" :key="val.id"
+                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                  <li>
+                    <q-btn :outline="formInput.cornelio[index] != val" :unelevated="formInput.cornelio[index] == val"
+                      :label="rpRatingDesc[val - 1]" @click="formInput.cornelio[index] = val"
                       :class="formInput.cornelio[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.cornelio[index] == val ? likertScaleColor[val-1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px"
-                      />
-                    </li>
-                  </div>
-                </ul>
-              </div>
+                      :color="formInput.cornelio[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                      style="margin-inline: 10px; margin-block: 5px" />
+                  </li>
+                </div>
+              </ul>
             </div>
-            <q-separator />
           </div>
-          <div v-show="pageNum == 11">
-            <br><b>{{ "MS. ROSEJELYNN C. BULANTE " }}</b>
-            <div v-for="(item, index) in questions.speakers" :key="item.id">
-              <br>{{ item }}
-              <div class="radios">
-                <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                  <div v-for="val in radio_val" :key="val.id" :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'" >
-                    <li>
-                      <q-btn
-                      :outline="formInput.bulante[index] != val"
-                      :unelevated="formInput.bulante[index] == val"
-                      :label="overallScaleDesc[val-1]"
-                      @click="formInput.bulante[index] = val"
+          <q-separator />
+        </div>
+        <div v-show="pageNum == 11">
+          <br><b>{{ "MS. ROSEJELYNN C. BULANTE " }}</b>
+          <div v-for="(item, index) in questions.speakers" :key="item.id">
+            <br>{{ item }}
+            <div class="radios">
+              <ul style="list-style-type: none; padding: 0; margin: 0; ">
+                <div v-for="val in radio_val" :key="val.id"
+                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                  <li>
+                    <q-btn :outline="formInput.bulante[index] != val" :unelevated="formInput.bulante[index] == val"
+                      :label="rpRatingDesc[val - 1]" @click="formInput.bulante[index] = val"
                       :class="formInput.bulante[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.bulante[index] == val ? likertScaleColor[val-1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px"
-                      />
-                    </li>
-                  </div>
-                </ul>
-              </div>
+                      :color="formInput.bulante[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                      style="margin-inline: 10px; margin-block: 5px" />
+                  </li>
+                </div>
+              </ul>
             </div>
           </div>
-          <div v-show="pageNum == 12">
-            <br><b>{{ "OVERALL RATING" }}</b>
-              <br>{{ questions.five1 }}
-              <div class="radios">
-                <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                  <div v-for="val in radio_val" :key="val.id" :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'" >
-                    <li>
-                      <q-btn
-                      :outline="formInput.five1 != val"
-                      :unelevated="formInput.five1 == val"
-                      :label="overallScaleDesc[val-1]"
-                      @click="formInput.five1 = val"
-                      :class="formInput.five1 == val ? 'pulsate-bck' : ''"
-                      :color="formInput.five1 == val ? likertScaleColor[val-1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px"
-                      />
-                    </li>
-                  </div>
-                </ul>
+        </div>
+        <div v-show="pageNum == 12">
+          <br><b>{{ "OVERALL RATING" }}</b>
+          <br>{{ questions.five1 }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div v-for="val in radio_val" :key="val.id"
+                :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                <li>
+                  <q-btn :outline="formInput.five1 != val" :unelevated="formInput.five1 == val"
+                    :label="overallScaleDesc[val - 1]" @click="formInput.five1 = val"
+                    :class="formInput.five1 == val ? 'pulsate-bck' : ''"
+                    :color="formInput.five1 == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
               </div>
-              <br>{{ questions.five2 }}
-              <q-input
-                rounded
-                outlined
-                color="indigo-7"
-                label-color="indigo-7"
-                class="text-fields-overall"
-                v-model="formInput.five2"
-                label="Comment"
-                lazy-rules
-                :rules="[
-                  (val) => (val && val.length > 0) || 'Required Field',
-                ]"
-              />
-              <br>{{ questions.five3 }}
-              <q-field
-                class="answer-container"
-                borderless
-                ref="fieldRef"
-                v-model="formInput.five3[0]"
-                stack-label
-                lazy-rules
-                :rules="[
-                  (val) => (val > 0) || 'Required Field',
-                ]"
-              >
-                <q-radio
-                  v-model="formInput.five3[0]"
-                  checked-icon="task_alt"
-                  unchecked-icon="panorama_fish_eye"
-                  val="1"
-                  :size="isScreenMD"
-                  color="indigo-7"
-                >
-                  <q-icon
-                    style="color: rgba(133, 57, 171, 0.87)"
-                    name="check"
-                    :size="isScreenMD"
-                  />
-                </q-radio>
-                <q-radio
-                  v-model="formInput.five3[0]"
-                  checked-icon="task_alt"
-                  unchecked-icon="panorama_fish_eye"
-                  val="2"
-                  :size="isScreenMD"
-                  color="indigo-7"
-                >
-                  <q-icon
-                    style="color: rgba(133, 57, 171, 0.87)"
-                    name="close"
-                    :size="isScreenMD"
-                  />
-                </q-radio>
-              </q-field>
-              {{ formInput.five3[0] == 1 ? 'Why?' : 'Why not?'}}
-              <div v-show="formInput.five3[0]">
-                <q-input
-                  rounded
-                  outlined
-                  color="indigo-7"
-                  label-color="indigo-7"
-                  class="text-fields-overall"
-                  v-model="formInput.five3[1]"
-                  label="Comment"
-                  lazy-rules
-                  :rules="[
-                    (val) => (val && val.length > 0) || 'Required Field',
-                  ]"
-                />
-              </div>
-              <br>{{ questions.five4 }}
-              <q-input
-                rounded
-                outlined
-                color="indigo-7"
-                label-color="indigo-7"
-                class="text-fields-overall"
-                v-model="formInput.five4"
-                label="Comment"
-                lazy-rules
-                :rules="[
-                  (val) => (val && val.length > 0) || 'Required Field',
-                ]"
-              />
-              <br>{{ questions.five5 }}
-              <q-input
-                rounded
-                outlined
-                color="indigo-7"
-                label-color="indigo-7"
-                class="text-fields-overall"
-                v-model="formInput.five5"
-                label="Comment"
-                lazy-rules
-                :rules="[
-                  (val) => (val && val.length > 0) || 'Required Field',
-                ]"
-              />
-              <br>{{ questions.five6 }}
-              <q-input
-                rounded
-                outlined
-                color="indigo-7"
-                label-color="indigo-7"
-                class="text-fields-overall"
-                v-model="formInput.five6"
-                label="Comment"
-                lazy-rules
-                :rules="[
-                  (val) => (val && val.length > 0) || 'Required Field',
-                ]"
-              />
+            </ul>
           </div>
-          <div class="button-container">
-            <q-btn @click="testSubmit()" label="test" />
-            <div class="radios" style="width: 100%;">
-              <div v-show="pageNum > 1" style="width: 25%;">
-                <q-btn label="Back" @click="pageNum--"  color="teal" class="button-submit" style="width: 100%;"></q-btn>
-              </div>
-              <div v-show="pageNum < 12" style="width: 25%;  ">
-                <q-btn label="Next" @click="pageNum++, scrollToElement('#topElement')" color="teal" class="button-submit" style="width: 100%; height: 12%"
-                :disabled="
-                (pageNum == 1 && formInput.af.filter(v => v).length < 6) ||
-                (pageNum == 2 && formInput.c.filter(v => v).length < 5) ||
-                (pageNum == 3 &&  formInput.q.filter(v => v).length < 7) ||
-                (pageNum == 4 &&  formInput.org.filter(v => v).length < 7) ||
-                (pageNum == 5 &&  formInput.out.filter(v => v).length < 7) ||
-                (pageNum == 6 &&  formInput.romero.filter(v => v).length < 5) ||
-                (pageNum == 7 &&  formInput.cangrejo.filter(v => v).length < 5) ||
-                (pageNum == 8 &&  formInput.acala.filter(v => v).length < 5) ||
-                (pageNum == 9 &&  formInput.chua.filter(v => v).length < 5) ||
-                (pageNum == 10 &&  formInput.cornelio.filter(v => v).length < 5) ||
-                (pageNum == 11 && formInput.bulante.filter(v => v).length < 5 )
-                "
-                ></q-btn>
-              </div>
-            </div>
-            <div class="button-container" style="width: 100%;" v-show="pageNum"> 
-              <q-btn @click="submitResponse()" label="submit" type="submit" color="primary" class="button-submit" ></q-btn>
-            </div>
-            <!--  v-show="pageNum == 11" -->
+          <br>{{ questions.five2 }}
+          <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
+            v-model="formInput.five2" label="Comment" lazy-rules :rules="[
+              (val) => (val && val.length > 0) || 'Required Field',
+            ]" />
+          <br>{{ questions.five3 }}
+          <q-field class="answer-container" borderless ref="fieldRef" v-model="formInput.five3[0]" stack-label lazy-rules
+            :rules="[
+              (val) => (val > 0) || 'Required Field',
+            ]">
+            <q-radio v-model="formInput.five3[0]" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="1"
+              :size="isScreenMD" color="indigo-7">
+              <q-icon style="color: rgba(133, 57, 171, 0.87)" name="check" :size="isScreenMD" />
+            </q-radio>
+            <q-radio v-model="formInput.five3[0]" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="2"
+              :size="isScreenMD" color="indigo-7">
+              <q-icon style="color: rgba(133, 57, 171, 0.87)" name="close" :size="isScreenMD" />
+            </q-radio>
+          </q-field>
+          <div v-if="formInput.five3[0]">
+            {{ formInput.five3[0] == 1 ? 'Why?' : 'Why not?' }}
           </div>
+
+          <div v-show="formInput.five3[0]">
+            <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
+              v-model="formInput.five3[1]" label="Comment" lazy-rules :rules="[
+                (val) => (val && val.length > 0) || 'Required Field',
+              ]" />
+          </div>
+          <br>{{ questions.five4 }}
+          <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
+            v-model="formInput.five4" label="Comment" lazy-rules :rules="[
+              (val) => (val && val.length > 0) || 'Required Field',
+            ]" />
+          <br>{{ questions.five5 }}
+          <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
+            v-model="formInput.five5" label="Comment" lazy-rules :rules="[
+              (val) => (val && val.length > 0) || 'Required Field',
+            ]" />
+          <br>{{ questions.five6 }}
+          <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
+            v-model="formInput.five6" label="Comment" lazy-rules :rules="[
+              (val) => (val && val.length > 0) || 'Required Field',
+            ]" />
+        </div>
+        <div class="button-container">
+          <!-- for testing pre input data -->
+          <!-- <q-btn @click="testSubmit()" label="test" /> -->
+          <div class="radios" style="width: 100%;">
+            <div v-show="pageNum > 1" style="width: 25%;">
+              <q-btn label="Back" @click="pageNum--" color="teal" class="button-submit" style="width: 100%;"></q-btn>
+            </div>
+            <div v-show="pageNum < 12" style="width: 25%;  ">
+              <q-btn label="Next" @click="pageNum++, scrollToElement('#topElement')" color="teal" class="button-submit"
+                style="width: 100%; height: 12%" :disabled="(pageNum == 1 && formInput.af.filter(v => v).length < 6) ||
+                  (pageNum == 2 && formInput.c.filter(v => v).length < 5) ||
+                  (pageNum == 3 && formInput.q.filter(v => v).length < 7) ||
+                  (pageNum == 4 && formInput.org.filter(v => v).length < 7) ||
+                  (pageNum == 5 && formInput.out.filter(v => v).length < 7) ||
+                  (pageNum == 6 && formInput.romero.filter(v => v).length < 5) ||
+                  (pageNum == 7 && formInput.cangrejo.filter(v => v).length < 5) ||
+                  (pageNum == 8 && formInput.acala.filter(v => v).length < 5) ||
+                  (pageNum == 9 && formInput.chua.filter(v => v).length < 5) ||
+                  (pageNum == 10 && formInput.cornelio.filter(v => v).length < 5) ||
+                  (pageNum == 11 && formInput.bulante.filter(v => v).length < 5)"></q-btn>
+            </div>
+          </div>
+          <div class="button-container" style="width: 100%;" v-show="pageNum">
+            <q-btn @click="submitResponse()" label="submit" type="submit" color="primary" class="button-submit"></q-btn>
+          </div>
+          <!--  v-show="pageNum == 11" -->
+        </div>
       </q-form>
     </div>
   </q-card>
@@ -494,10 +365,7 @@
         <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
       </q-card-section>
 
-      <q-card-section
-        class="q-pt-none text-center"
-        style="font-family: Montserrat; font-size: 15px"
-      >
+      <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
         There are some unfulfilled details.
       </q-card-section>
 
@@ -530,10 +398,7 @@
         </div>
       </q-card-section>
 
-      <q-card-section
-        class="q-pt-none text-center"
-        style="font-family: Montserrat; font-size: 15px"
-      >
+      <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
         Your
         <b>SLC 2024</b> experience have been succesfully<br />concluded.
         an email will be sent to you containing<br />
@@ -542,13 +407,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn
-          flat
-          label="OK"
-          color="green"
-          @click="refreshPage()"
-          v-close-popup
-        />
+        <q-btn flat label="OK" color="green" @click="refreshPage()" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -561,20 +420,12 @@
         <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
       </q-card-section>
 
-      <q-card-section
-        class="q-pt-none text-center"
-        style="font-family: Montserrat; font-size: 15px"
-      >
+      <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
         Please try again
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn
-          flat
-          label="OK"
-          color="grey"
-          v-close-popup
-        />
+        <q-btn flat label="OK" color="grey" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -587,10 +438,7 @@
         <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
       </q-card-section>
 
-      <q-card-section
-        class="q-pt-none text-center"
-        style="font-family: Montserrat; font-size: 15px"
-      >
+      <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
         Kindly contact your respective scholarship coordinator to enlist your
         email.
       </q-card-section>
@@ -609,10 +457,7 @@
         <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
       </q-card-section>
 
-      <q-card-section
-        class="q-pt-none text-center"
-        style="font-family: Montserrat; font-size: 15px"
-      >
+      <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
         You have already submitted your evaluation forms.
         <br>Thank you.
       </q-card-section>
@@ -631,10 +476,7 @@
         <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
       </q-card-section>
 
-      <q-card-section
-        class="q-pt-none text-center"
-        style="font-family: Montserrat; font-size: 15px"
-      >
+      <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
         You have not attended yet all days of your SLC.
         <br>Thank you.
       </q-card-section>
@@ -644,47 +486,34 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
-  <q-dialog
-  v-model="dataPolicyMenu"
-  position="left"
-  transition-show="slide-right"
-  transition-hide="slide-left"
-  maximized
->
-  <q-card
-    class="dataPolicy"
-    style="
+  <q-dialog v-model="dataPolicyMenu" position="left" transition-show="slide-right" transition-hide="slide-left" maximized>
+    <q-card class="dataPolicy" style="
       -webkit-border-radius: 25px;
       -moz-border-radius: 25px;
       border-radius: 25px;
-    "
-  >
-    <q-btn dense size="lg" flat icon="close" v-close-popup class="close-btn">
-      <q-tooltip class="bg-white text-primary">Close</q-tooltip>
-    </q-btn>
-    <q-card-section>
-      <div class="text-h6" style="color: #e3dfcf">Data Privacy Policy</div>
-      <div class="text-subtitle2" style="color: #e3dfcf">
-        Department of Science and Technology - Science Education Institute
-      </div>
-    </q-card-section>
-    <q-separator />
-    <q-card-section class="scroll" style="color: #e3dfcf">
-      <p class="dataPolicyText">
-        {{ dataPolicyText }}
-      </p>
-    </q-card-section>
-    <q-card-section>
-      <div class="row items-center justify-end">
-        <q-btn
-          v-close-popup
-          label="Close"
-          color="red-10"
-        />
-      </div>
-    </q-card-section>
-  </q-card>
-</q-dialog>
+    ">
+      <q-btn dense size="lg" flat icon="close" v-close-popup class="close-btn">
+        <q-tooltip class="bg-white text-primary">Close</q-tooltip>
+      </q-btn>
+      <q-card-section>
+        <div class="text-h6" style="color: #e3dfcf">Data Privacy Policy</div>
+        <div class="text-subtitle2" style="color: #e3dfcf">
+          Department of Science and Technology - Science Education Institute
+        </div>
+      </q-card-section>
+      <q-separator />
+      <q-card-section class="scroll" style="color: #e3dfcf">
+        <p class="dataPolicyText">
+          {{ dataPolicyText }}
+        </p>
+      </q-card-section>
+      <q-card-section>
+        <div class="row items-center justify-end">
+          <q-btn v-close-popup label="Close" color="red-10" />
+        </div>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
@@ -743,7 +572,7 @@ const refreshPage = () => {
 
 const scrollToElement = (el) => {
   const myDiv = document.querySelector(el);
-  myDiv.scrollTo({top: 0, behavior: 'smooth'})
+  myDiv.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
 
@@ -752,7 +581,7 @@ const sendOTP = () => {
   axiosInit
     .get('/record/checkEmailforEval.php?email=' + formInput.email)
     .then(function (response) {
-      if (response.data.dupe === true){
+      if (response.data.dupe === true) {
         pleaseWait.value = false;
         alreadySubmitted.value = true
       } else if (response.data.attended === false) {
@@ -769,7 +598,7 @@ const sendOTP = () => {
 };
 
 export default {
-  setup () {
+  setup() {
     const $q = useQuasar();
 
     const toFormData = (obj) => {
@@ -779,10 +608,10 @@ export default {
       }
       return formData;
     };
-    
+
     const submitResponse = () => {
       pleaseWait.value = true
-      if ( 
+      if (
         !formInput.email ||
         formInput.af.filter(v => v).length < 6 ||
         formInput.c.filter(v => v).length < 5 ||
@@ -802,29 +631,29 @@ export default {
         !formInput.five5 ||
         !formInput.five6
 
-        ){
-          pleaseWait.value=false
-          allRequired.value=true
-        }else{
-     
-          const dlInsert = toFormData(formInput);
-          axiosInit.post(
-              "record/submitEval.php", dlInsert, {
-                headers: {
-                  "Content-Type": "multipart/form-data",
-                }
-              }
-            ).then(function (response) {
-              if (response.data.success){
-                pleaseWait.value = false
-                congrats.value = true
-              }
-              else{
-                pleaseWait.value = false
-                errorWarning.value = true
-              }
-            })
+      ) {
+        pleaseWait.value = false
+        allRequired.value = true
+      } else {
+
+        const dlInsert = toFormData(formInput);
+        axiosInit.post(
+          "record/submitEval.php", dlInsert, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          }
         }
+        ).then(function (response) {
+          if (response.data.success) {
+            pleaseWait.value = false
+            congrats.value = true
+          }
+          else {
+            pleaseWait.value = false
+            errorWarning.value = true
+          }
+        })
+      }
     }
 
     return {
@@ -850,8 +679,8 @@ export default {
       pageNum,
       index,
       isScreenMD: ref($q.screen.lt.md ? 'md' : 'xl'),
-      testSubmit () {
-        formInput.email = 'bondavidbacuno@gmail.com'
+      testSubmit() {
+        formInput.email = 'bonbacuno@gmail.com'
         formInput.af = [1, 2, 3, 4, 5, 1]
         formInput.c = [1, 2, 3, 4, 5]
         formInput.q = [1, 2, 3, 4, 5, 1, 2]
@@ -870,10 +699,11 @@ export default {
         formInput.five5 = "yay"
         formInput.five6 = "yay"
       },
-      radio_val: [5, 4, 3, 2, 1],
-      overallScaleDesc: ['Excellent', 'Very Satisfactory', 'Satisfactory', 'Poor', 'Very Poor'],
-      likertScaleDesc: ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
-      likertScaleColor: ['green-6', 'green-4', 'teal-4', 'red-4', 'red-6'],
+      radio_val: [1, 2, 3, 4, 5],
+      rpRatingDesc: ['Needs Improvement', 'Fair', 'Satisfactory', 'Very Satisfactory', 'Excellent'],
+      overallScaleDesc: ['Very Poor', 'Poor', 'Satisfactory', 'Very Satisfactory', 'Excellent'],
+      likertScaleDesc: ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'],
+      likertScaleColor: ['red-6', 'red-4', 'teal-4', 'green-4', 'green-6'],
       questions: {
         af: [
           "1. The venue was appropriate for the leadership camp.",
@@ -964,7 +794,7 @@ export default {
         Mr. Philip Bue
         Data Protection Officer
         Direct Line: +63 2 8775 9043`
-  
+
     }
   }
 }
@@ -980,8 +810,10 @@ export default {
   margin-inline: auto;
   /* min-width: 40vw; */
   height: 100vh;
-  -webkit-backdrop-filter: blur(8px); /* Safari 9+ */
-  backdrop-filter: blur(8px); /* Chrome and Opera */
+  -webkit-backdrop-filter: blur(8px);
+  /* Safari 9+ */
+  backdrop-filter: blur(8px);
+  /* Chrome and Opera */
   box-shadow: 0px 10px 15px 10px rgb(0 0 0 / 15%);
   background-color: rgba(228, 228, 228, 0.627);
   -webkit-border-top-left-radius: 25px;
@@ -995,16 +827,17 @@ export default {
   overflow: scroll;
   font-size: 1.3em;
 }
+
 @media screen and (max-width: 850px) {
   .evaluation {
     width: 100vw;
   }
 }
 
-body{
-background-image: url('/background.jpg');
-background-size: 100%;
-background-repeat: repeat;
+body {
+  background-image: url('/background.jpg');
+  background-size: 100%;
+  background-repeat: repeat;
 }
 
 .radios {
@@ -1023,7 +856,7 @@ background-repeat: repeat;
   justify-content: space-evenly;
 }
 
-.button-container > * {
+.button-container>* {
   margin: auto;
   margin-top: 2%;
   height: 100%;
@@ -1045,24 +878,30 @@ background-repeat: repeat;
   width: 30px;
   background-clip: padding-box;
 }
-.answer-container{
+
+.answer-container {
   width: 80%;
 }
-.q-field__control-container{
+
+.q-field__control-container {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-evenly;
 }
-.button-submit{
+
+.button-submit {
   width: 50%;
 }
-.text-fields-rate{
+
+.text-fields-rate {
   width: 25%;
 }
-.text-fields-aspect{
+
+.text-fields-aspect {
   width: 70%;
 }
-.text-fields-overall{
+
+.text-fields-overall {
   width: 90%;
 }
 </style>

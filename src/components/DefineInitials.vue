@@ -82,7 +82,7 @@ const suffix_options = ref([
 
 const scholarProgram_options = ref([
   {
-    label: 'RA 7642',
+    label: 'RA 7687',
     value: 1
   },
   {
@@ -90,7 +90,7 @@ const scholarProgram_options = ref([
     value: 2
   },
   {
-    label: 'RA 10162',
+    label: 'RA 10612',
     value: 3
   }
 ])
@@ -297,6 +297,12 @@ const pretest_columns = [
 
 const pretest_columnsExport = [
   {
+    name: 'created_at',
+    label: 'Submitted at',
+    field: 'created_at',
+
+  },
+  {
     name: 'fullname',
     label: 'Full Name',
     field: 'fullname',
@@ -392,6 +398,7 @@ const evaluation_columns = [
   {
     name: 'evaldone',
     label: 'Eval Done',
+    field: 'doneeval',
     sortable: true,
     align: 'center',
   },
@@ -416,7 +423,7 @@ const evaluation_columns = [
 
 ]
 const evaluation_columnsExport = [
-  { name: 'id', label: 'id', field: 'id' },
+  { name: 'created_at', label: 'Submitted at', field: 'created_at' },
   { name: 'doneeval', label: 'doneeval', field: 'doneeval' },
   { name: 'fullname', label: 'fullname', field: 'fullname' },
   { name: 'participant', label: 'participant', field: 'participant' },
@@ -468,6 +475,29 @@ const inOut_columns = ref([
     sortable: true,
     format: val => `${val}`
   },
+])
+
+const inOut_columnsExport = ref([
+  {
+    name: 'fullName',
+    label: 'Full Name',
+    field: 'fullName',
+  },
+  {
+    name: 'inOut',
+    label: 'In or Out',
+    field: 'inOut',
+  },
+  {
+    name: 'group',
+    label: 'Group',
+    field: 'group',
+  },
+  {
+    name: 'universityName',
+    label: 'University',
+    field: 'universityName',
+  }
 ])
 
 const filter_university = (val, update) => {
@@ -716,6 +746,7 @@ export {
   allRequired,
   masterList_columns,
   pretest_columnsExport,
-  evaluation_columnsExport
+  evaluation_columnsExport,
+  inOut_columnsExport
 }
 </script>
