@@ -567,7 +567,7 @@ const index = ref(null)
 const dataPolicyMenu = ref(null)
 
 const refreshPage = () => {
-  // location.href = "/";
+  location.href = "/";
 };
 
 const scrollToElement = (el) => {

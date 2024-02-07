@@ -10,7 +10,7 @@
         <q-img src="/pubmat-big.jpg" v-show="!OTPVerified" :ratio="2" />
         <q-img src="/pubmat-small.jpg" v-show="OTPVerified" style="border-radius: 25px;" />
       </div>
-      <q-form @submit="submitResponse()">
+      <q-form>
         <div v-show="!OTPVerified && !OTPSent" style="margin-top: 15px;">
           This email will be used to further contact you with DOST-SEI and Patriot Programs.
           <q-input outlined rounded v-model="formInput.email" type="email" :color="formColor" :label-color="formColor"
