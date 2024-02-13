@@ -546,7 +546,7 @@
                     v-show="formInput.suffix"></q-icon>
                 </template>
               </q-select>
-              <q-input outlined rounded :color="formColor" :label-color="formColor" label="Bithdate"
+              <q-input outlined rounded :color="formColor" :label-color="formColor" label="Birthdate"
                 v-model="formInput.birthDate" @click="$refs.birthdateProxy.show()" :rules="[
                   (val) => (val && val.length > 0) || 'Required Field',
                 ]">
@@ -757,7 +757,7 @@
               <q-btn label="submit" type="submit" color="primary" class="button-submit"
                 @click="submitResponse(action, idNum), navigationToggle('home')" v-close-popup />
             </div>
-            <q-btn label="test" @click="testSubmit()" />
+            <!-- <q-btn label="test" @click="testSubmit()" /> -->
           </div>
           <q-separator />
         </div>
@@ -1167,7 +1167,7 @@ export default defineComponent({
       exportDialog,
       formColor: 'indigo-7',
       exportByRegion_column: ['Export All', 'Region 1', 'Region 2', 'Region 3', 'Region 4-A', 'Region 4-B', 'Region 5', 'Region 6', 'Region 7', 'Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12', 'NCR', 'CAR', 'CARAGA', 'BARMM'],
-      attendanceConduct_options: ['NCR 1', 'NCR 2', 'Region 1 and CAR', 'Region 2 and 3', 'Region 4-A and 5', 'Region 4-B and 6', 'Region 7 and 8', 'Region 9 and BARMM', 'Region 11 and 12', 'Region 10 and 13', 'CBPSME VisMin', 'CBPSME Luzon'],
+      attendanceConduct_options: ['NCR 1', 'NCR 2', 'Region 1 and CAR', 'Region 2 and 3', 'Region 4-A and 5', 'Region 4-B and 6', 'Region 7 and 8', 'Region 9 and BARMM', 'Region 11 and 12', 'Region 10 and CARAGA', 'CBPSME VisMin', 'CBPSME Luzon'],
       attendanceDay_options: ['Day 0', 'Day 1', 'Day 2', 'Day 3'],
       randomEntrance: ['backInDown', 'backInLeft', 'backInRight', 'backInUp', 'bounceIn', 'bounceInDown', 'bounceInLeft', 'bounceInRight', 'bounceInUp', 'fadeIn', 'fadeInDown', 'fadeInDownBig', 'fadeInLeft', 'fadeInLeftBig', 'fadeInRight', 'fadeInRightBig', 'fadeInUp', 'fadeInUpBig', 'fadeInTopLeft', 'fadeInTopRight', 'fadeInBottomLeft', 'fadeInBottomRight', 'flipInX', 'flipInY', 'lightSpeedInRight', 'lightSpeedInLeft', 'rotateIn', 'rotateInDownLeft', 'rotateInDownRight', 'rotateInUpLeft', 'rotateInUpRight', 'jackInTheBox', 'rollIn', 'zoomIn', 'zoomInDown', 'zoomInLeft', 'zoomInRight', 'zoomInUp', 'slideInDown', 'slideInLeft', 'slideInRight', 'slideInUp'],
       randomExit: ['fadeOutTopLeft', 'fadeOutRight', 'fadeOutLeft', 'backOutRight', 'zoomOutUp', 'bounceOutDown', 'rollOut', 'slideOutUp', 'flipOutX', 'zoomOut', 'backOutLeft', 'backOutDown', 'fadeOutTopRight', 'slideOutDown', 'hinge', 'fadeOutBottomLeft', 'fadeOutUp', 'fadeOutBottomRight', 'fadeOutUpBig', 'fadeOutRightBig', 'rotateOut', 'bounceOutUp', 'slideOutLeft', 'rotateOutDownLeft', 'zoomOutLeft', 'zoomOutDown', 'lightSpeedOutRight', 'bounceOutLeft', 'fadeOutDownBig', 'zoomOutRight', 'flipOutY', 'rotateOutDownRight', 'rotateOutUpLeft', 'fadeOut', 'bounceOut', 'rotateOutUpRight', 'lightSpeedOutLeft', 'fadeOutLeftBig', 'bounceOutRight', 'backOutUp', 'slideOutRight', 'fadeOutDown'],
@@ -1279,6 +1279,7 @@ export default defineComponent({
           else {
             congrats.value = true
           }
+          formInput.importMasterList = null
           navigationToggle('masterList')
         })
       },

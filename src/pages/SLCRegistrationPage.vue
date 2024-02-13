@@ -84,7 +84,7 @@
                     v-show="formInput.suffix"></q-icon>
                 </template>
               </q-select>
-              <q-input outlined rounded :color="formColor" :label-color="formColor" label="Bithdate"
+              <q-input outlined rounded :color="formColor" :label-color="formColor" label="Birthdate"
                 v-model="formInput.birthDate" @click="$refs.birthdateProxy.show()" :rules="[
                   (val) => (val && val.length > 0) || 'Required Field',
                 ]">
@@ -351,7 +351,7 @@
           </div>
         </div>
         <!-- remove comment to enable testing with pre-input data -->
-        <!-- <q-btn label="test" @click="testSubmit()"/> -->
+        <!-- <q-btn label="test" @click="testSubmit()" /> -->
       </q-form>
     </div>
   </q-card>
@@ -488,30 +488,39 @@
       <q-img src="/SLCGreetingLogo3.png" class="pulsate-logo greeting-logo" v-close-popup />
     </q-card>
   </q-dialog>
-  <q-dialog v-model="dataPolicyMenu" position="left" transition-show="slide-right" transition-hide="slide-left" maximized>
+  <q-dialog v-model="dataPolicyMenu" position="left" transition-show="slide-right" transition-hide="slide-left" maximized
+    :persistent="!conformeCheck">
     <q-card class="dataPolicy" style="
       -webkit-border-radius: 25px;
       -moz-border-radius: 25px;
-      border-radius: 25px;
-    ">
-      <q-btn dense size="lg" flat icon="close" v-close-popup class="close-btn">
-        <q-tooltip class="bg-white text-primary">Close</q-tooltip>
-      </q-btn>
+      border-radius: 25px;  
+      ">
       <q-card-section>
-        <div class="text-h6" style="color: #e3dfcf">Data Privacy Policy</div>
-        <div class="text-subtitle2" style="color: #e3dfcf">
+        <div class="text-h5" style="color: #d6ac1f">Data Privacy Notice</div>
+        <div class="text-subtitle2" style="color: #d6ac1f">
           Department of Science and Technology - Science Education Institute
         </div>
       </q-card-section>
       <q-separator />
-      <q-card-section class="scroll" style="color: #e3dfcf">
+      <q-card-section class="scroll">
         <p class="dataPolicyText">
           {{ dataPolicyText }}
         </p>
       </q-card-section>
       <q-card-section>
         <div class="row items-center justify-end">
-          <q-btn v-close-popup label="Close" color="red-10" />
+          <!-- <q-checkbox v-model="conformeCheck" size="lg"> -->
+          <p class="dataPolicyText">
+            CONFORME:
+
+            I hereby authorize the DOST-SEI to collect and process the data indicated herein for future improvements
+            and
+            research study. I understand that my personal information is protected by R.A. 10173, Data Privacy Act of
+            2012.
+          </p>
+          <!-- </q-checkbox> -->
+
+          <q-btn v-close-popup label="I Agree" color="green-6" />
         </div>
       </q-card-section>
     </q-card>
@@ -626,6 +635,7 @@ export default {
     const filtered_course = ref(course_options.value)
     const dataPolicyMenu = ref(false)
     const greeting = ref(true)
+    const conformeCheck = ref(false)
 
     const OTPValid = () => {
       axiosInit
@@ -766,9 +776,10 @@ export default {
       scholarProgram_options,
       yearLevel_options,
       yearAward_options,
+      conformeCheck,
       radio_val: [5, 4, 3, 2, 1],
-      likertScaleDesc: ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'],
-      likertScaleColor: ['green-6', 'green-4', 'teal-4', 'red-4', 'red-6'],
+      likertScaleDesc: ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'],
+      likertScaleColor: ['red-6', 'red-4', 'teal-4', 'green-4', 'green-6'],
       questions: {
         af: [
           ' 1. I am familiar with the common leadership approaches.',
@@ -804,34 +815,19 @@ export default {
         ],
         lastQuestion: 'Please identify and describe the specific skills and knowledge that you are expecting to learn from the Leadership Boot Camp.'
       },
-      dataPolicyText: `We, at the Department of Science and Technology-Science Education Institute, are committed to provide you with prompt and reliable services for the development of the country’s science and technology (S&T) human resources, the implementation of STEM education and innovation programs, and the promotion of S&T among the youth, pursuant to Executive Order No. 128 while implementing safeguards to protect your privacy and keep your personal data safe and secure in accordance with RA 10173 or the Data Privacy Act (DPA) of 2012.
+      dataPolicyText: `This form collects your personal information and post-evaluation of the activity for future improvements and research study.  The DOST-SEI, in compliance with R.A. 10173, implements reasonable and appropriate organizational, physical, and technical security measures for the protection of your personal information collected. Only the DOST-SEI employees are permitted to have access to the collected information. They shall be guided by the security measures provided in handling all personal information collected. Personal information collected is processed, stored, and later on disposed of via shredding and permanently deleted in our electronic files in accordance with R.A No. 9470 otherwise known as the National Archive of the Philippines Act of 2007. In case of a data breach, DOST-SEI shall notify you and inform the National Privacy Commission (NPC) in accordance with NPC Circular 16-03 on Personal Data Breach Management. 
 
-  Processing of Personal Data
+RIGHTS OF THE DATA SUBJECT
 
-  The personal information being collected by DOST-SEI are used for the purpose as specified in the various transaction systems and functional units of the organization.
+As the Data Subject, you have the right to be informed of the personal information being collected, processed, and stored by DOST-SEI as well as to access, object, rectify, and block the same. 
 
-  Data Protection
+CONTACT DETAILS OF THE DOST-SEI DATA PRIVACY OFFICER (DPO) 
 
-  The DOST-SEI, in compliance with RA 10173, shall implement reasonable and appropriate organizational, physical, and technical security measures for the protection of personal information collected.
+For questions or concerns, you may contact our Data Protection Officer through the following details:
 
-  Only authorized personnel are permitted to have access to the collected information. They shall be guided by the security measures provided in handling all personal information collected.
+Direct Line: +63 2 8710 7462
 
-  Personal information collected are processed, stored, and later on disposed of via shredding and permanently deleted in our electronic files in accordance to R.A No. 9470 otherwise known as the National Archive of the Philippines Act of 2007.
-
-  In case of data breach, DOST-SEI shall notify you and inform the National Privacy Commission (NPC) in accordance with NPC Circular 16-03 on Personal Data Breach Management.
-
-  Rights of the Data Subject
-  As the Data Subject, you have the right to be informed of the personal information being collected, processed, and stored by DOST-SEI as well as to access, object, rectify, and block the same.
-
-
-
-  Contact Details of the DOST-SEI Data Privacy Officer (DPO)
-  For questions or concerns, you may contact:
-  
-  Mr. Philip Bue
-  Data Protection Officer
-  Direct Line: +63 2 8775 9043
-  E-mail: dpo@sei.dost.gov.ph`,
+E-mail: dpo@sei.dost.gov.ph`,
       filter_university(val, update) {
         const temp = university_options.value
         if (val === '') {
@@ -1040,7 +1036,7 @@ label.q-field {
   backdrop-filter: blur(8px);
   /* Chrome and Opera */
   box-shadow: 0px 10px 15px 10px rgb(0 0 0 / 15%);
-  background-color: rgba(219, 56, 56, 0.24);
+  background-color: rgba(180, 52, 19, 0.644);
   -webkit-border-top-left-radius: 25px;
   -webkit-border-bottom-left-radius: 25px;
   -moz-border-radius-topleft: 25px;
@@ -1172,5 +1168,17 @@ label.q-field {
     width: 100vw;
     margin: 0;
   }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  appearance: textfield;
 }
 </style>

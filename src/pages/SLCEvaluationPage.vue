@@ -17,8 +17,8 @@
           </template>
         </q-input>
         <div class="button-container">
-          <q-toggle v-model="accept" @click="dataPolicyMenu = !dataPolicyMenu">
-            I accept the <b>Data Privacy Policy Terms</b>
+          <q-toggle v-model="accept" @click="dataPolicyMenu = accept">
+            I accept the <b>Data Privacy Notice Terms</b>
           </q-toggle>
           <q-btn unelevated rounded size="lg" label="Start Evaluation" color="teal" :disabled="!accept" style="width: 50%"
             @click="sendOTP()" />
@@ -140,7 +140,7 @@
           <q-separator />
         </div>
         <div v-show="pageNum == 6">
-          <br><b>{{ "DR. SEGUNDO JOAQUIN A. ROMERO, JR. " }}</b>
+          <br><b>{{ "DR. SEGUNDO JOAQUIN E. ROMERO, JR. " }}</b>
           <div v-for="(item, index) in questions.speakers" :key="item.id">
             <br>{{ item }}
             <div class="radios">
@@ -223,7 +223,7 @@
           </div>
           <q-separator />
         </div>
-        <div v-show="pageNum == 10">
+        <!-- <div v-show="pageNum == 10">
           <br><b>{{ "JAYEEL S. CORNELIO Ph. D." }}</b>
           <div v-for="(item, index) in questions.speakers" :key="item.id">
             <br>{{ item }}
@@ -243,8 +243,8 @@
             </div>
           </div>
           <q-separator />
-        </div>
-        <div v-show="pageNum == 11">
+        </div> -->
+        <div v-show="pageNum == 10">
           <br><b>{{ "MS. ROSEJELYNN C. BULANTE " }}</b>
           <div v-for="(item, index) in questions.speakers" :key="item.id">
             <br>{{ item }}
@@ -264,7 +264,7 @@
             </div>
           </div>
         </div>
-        <div v-show="pageNum == 12">
+        <div v-show="pageNum == 11">
           <br><b>{{ "OVERALL RATING" }}</b>
           <br>{{ questions.five1 }}
           <div class="radios">
@@ -287,29 +287,10 @@
               (val) => (val && val.length > 0) || 'Required Field',
             ]" />
           <br>{{ questions.five3 }}
-          <q-field class="answer-container" borderless ref="fieldRef" v-model="formInput.five3[0]" stack-label lazy-rules
-            :rules="[
-              (val) => (val > 0) || 'Required Field',
-            ]">
-            <q-radio v-model="formInput.five3[0]" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="1"
-              :size="isScreenMD" color="indigo-7">
-              <q-icon style="color: rgba(133, 57, 171, 0.87)" name="check" :size="isScreenMD" />
-            </q-radio>
-            <q-radio v-model="formInput.five3[0]" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="2"
-              :size="isScreenMD" color="indigo-7">
-              <q-icon style="color: rgba(133, 57, 171, 0.87)" name="close" :size="isScreenMD" />
-            </q-radio>
-          </q-field>
-          <div v-if="formInput.five3[0]">
-            {{ formInput.five3[0] == 1 ? 'Why?' : 'Why not?' }}
-          </div>
-
-          <div v-show="formInput.five3[0]">
-            <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
-              v-model="formInput.five3[1]" label="Comment" lazy-rules :rules="[
-                (val) => (val && val.length > 0) || 'Required Field',
-              ]" />
-          </div>
+          <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
+            v-model="formInput.five3" label="Comment" lazy-rules :rules="[
+              (val) => (val && val.length > 0) || 'Required Field',
+            ]" />
           <br>{{ questions.five4 }}
           <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
             v-model="formInput.five4" label="Comment" lazy-rules :rules="[
@@ -333,7 +314,7 @@
             <div v-show="pageNum > 1" style="width: 25%;">
               <q-btn label="Back" @click="pageNum--" color="teal" class="button-submit" style="width: 100%;"></q-btn>
             </div>
-            <div v-show="pageNum < 12" style="width: 25%;  ">
+            <div v-show="pageNum < 11" style="width: 25%;  ">
               <q-btn label="Next" @click="pageNum++, scrollToElement('#topElement')" color="teal" class="button-submit"
                 style="width: 100%; height: 12%" :disabled="(pageNum == 1 && formInput.af.filter(v => v).length < 6) ||
                   (pageNum == 2 && formInput.c.filter(v => v).length < 5) ||
@@ -344,11 +325,10 @@
                   (pageNum == 7 && formInput.cangrejo.filter(v => v).length < 5) ||
                   (pageNum == 8 && formInput.acala.filter(v => v).length < 5) ||
                   (pageNum == 9 && formInput.chua.filter(v => v).length < 5) ||
-                  (pageNum == 10 && formInput.cornelio.filter(v => v).length < 5) ||
-                  (pageNum == 11 && formInput.bulante.filter(v => v).length < 5)"></q-btn>
+                  (pageNum == 10 && formInput.bulante.filter(v => v).length < 5)"></q-btn>
             </div>
           </div>
-          <div class="button-container" style="width: 100%;" v-show="pageNum">
+          <div class="button-container" style="width: 100%;" v-show="pageNum == 11">
             <q-btn @click="submitResponse()" label="submit" type="submit" color="primary" class="button-submit"></q-btn>
           </div>
           <!--  v-show="pageNum == 11" -->
@@ -486,30 +466,39 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
-  <q-dialog v-model="dataPolicyMenu" position="left" transition-show="slide-right" transition-hide="slide-left" maximized>
+  <q-dialog v-model="dataPolicyMenu" position="left" transition-show="slide-right" transition-hide="slide-left" maximized
+    :persistent="!conformeCheck">
     <q-card class="dataPolicy" style="
       -webkit-border-radius: 25px;
       -moz-border-radius: 25px;
-      border-radius: 25px;
-    ">
-      <q-btn dense size="lg" flat icon="close" v-close-popup class="close-btn">
-        <q-tooltip class="bg-white text-primary">Close</q-tooltip>
-      </q-btn>
+      border-radius: 25px;  
+      ">
       <q-card-section>
-        <div class="text-h6" style="color: #e3dfcf">Data Privacy Policy</div>
-        <div class="text-subtitle2" style="color: #e3dfcf">
+        <div class="text-h5" style="color: #d6ac1f">Data Privacy Notice</div>
+        <div class="text-subtitle2" style="color: #d6ac1f">
           Department of Science and Technology - Science Education Institute
         </div>
       </q-card-section>
       <q-separator />
-      <q-card-section class="scroll" style="color: #e3dfcf">
+      <q-card-section class="scroll">
         <p class="dataPolicyText">
           {{ dataPolicyText }}
         </p>
       </q-card-section>
       <q-card-section>
         <div class="row items-center justify-end">
-          <q-btn v-close-popup label="Close" color="red-10" />
+          <!-- <q-checkbox v-model="conformeCheck" size="lg"> -->
+          <p class="dataPolicyText">
+            CONFORME:
+
+            I hereby authorize the DOST-SEI to collect and process the data indicated herein for future improvements
+            and
+            research study. I understand that my personal information is protected by R.A. 10173, Data Privacy Act of
+            2012.
+          </p>
+          <!-- </q-checkbox> -->
+
+          <q-btn v-close-popup label="I Agree" color="green-6" />
         </div>
       </q-card-section>
     </q-card>
@@ -541,7 +530,7 @@ const formInput = reactive({
   acala: [null],
   five1: null,
   five2: null,
-  five3: [null],
+  five3: null,
   five4: null,
   five5: null,
   five6: null,
@@ -600,6 +589,7 @@ const sendOTP = () => {
 export default {
   setup() {
     const $q = useQuasar();
+    const conformeCheck = ref(false)
 
     const toFormData = (obj) => {
       const formData = new FormData();
@@ -619,14 +609,13 @@ export default {
         formInput.org.filter(v => v).length < 7 ||
         formInput.out.filter(v => v).length < 7 ||
         formInput.romero.filter(v => v).length < 5 ||
-        formInput.cornelio.filter(v => v).length < 5 ||
         formInput.acala.filter(v => v).length < 5 ||
         formInput.cangrejo.filter(v => v).length < 5 ||
         formInput.chua.filter(v => v).length < 5 ||
         formInput.bulante.filter(v => v).length < 5 ||
         !formInput.five1 ||
         !formInput.five2 ||
-        formInput.five3.filter(v => v).length < 2 ||
+        !formInput.five3 ||
         !formInput.five4 ||
         !formInput.five5 ||
         !formInput.five6
@@ -678,6 +667,7 @@ export default {
       attended,
       pageNum,
       index,
+      conformeCheck,
       isScreenMD: ref($q.screen.lt.md ? 'md' : 'xl'),
       testSubmit() {
         formInput.email = 'bonbacuno@gmail.com'
@@ -687,19 +677,18 @@ export default {
         formInput.org = [1, 2, 3, 4, 5, 1, 2]
         formInput.out = [1, 2, 3, 4, 5, 1, 2]
         formInput.romero = [1, 2, 3, 4, 5]
-        formInput.cornelio = [1, 2, 3, 4, 5]
         formInput.acala = [1, 2, 3, 4, 5]
         formInput.cangrejo = [1, 2, 3, 4, 5]
         formInput.chua = [1, 2, 3, 4, 5]
         formInput.bulante = [1, 2, 3, 4, 5]
         formInput.five1 = 5
         formInput.five2 = "yay"
-        formInput.five3 = [1, "yay"]
+        formInput.five3 = "yay"
         formInput.five4 = "yay"
         formInput.five5 = "yay"
         formInput.five6 = "yay"
       },
-      radio_val: [1, 2, 3, 4, 5],
+      radio_val: [5, 4, 3, 2, 1],
       rpRatingDesc: ['Needs Improvement', 'Fair', 'Satisfactory', 'Very Satisfactory', 'Excellent'],
       overallScaleDesc: ['Very Poor', 'Poor', 'Satisfactory', 'Very Satisfactory', 'Excellent'],
       likertScaleDesc: ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'],
@@ -738,18 +727,18 @@ export default {
           "3. Organizers were able to build rapport and good working relationship with the participants.",
           "4. We felt safe and secured in providing information with the organizers.",
           "5. Assistance during the registration of the training was provided. ",
-          "6. Organizers were polite and sincere in dealing with the participants’ concerns. ",
+          "6. Organizers were polite and sincere in dealing with the concernse of the participants. ",
           "7. The security and welfare of the participants were considered in the conduct of the activities.",
 
         ],
         out: [
-          "1. The objectives of the leadership camp were clearly defined. ",
+          "1. The objectives of the leadership camp were achieved. ",
           "2. I gained new and important skills and knowledge from the activities. ",
           "3. The topics were interesting, useful, and transformative. ",
           "4. The training was a great avenue for fostering camaraderie and solidarity among science scholars.",
           "5. The activity taught me to fully understand and act on my responsibilities as a government scholar.  ",
           "6. The activity was effective at encouraging scholars to embody the core values of professional excellence, social responsibility, and servant leadership.  ",
-          "7. The training enriched my leadership and organizational skills.  ",
+          "7. The training has enriched my leadership and organizational skills.  ",
 
         ],
         speakers: [
@@ -767,33 +756,19 @@ export default {
         five5: "5.	Please identify and describe specific skills and knowledge that you learned from the leadership camp. ",
         five6: "6.	Please indicate any possible training to be organized under the Patriot Program that you wish to attend in the future."
       },
-      dataPolicyText: `We, at the Department of Science and Technology-Science Education Institute, are committed to provide you with prompt and reliable services for the development of the country’s science and technology (S&T) human resources, the implementation of STEM education and innovation programs, and the promotion of S&T among the youth, pursuant to Executive Order No. 128 while implementing safeguards to protect your privacy and keep your personal data safe and secure in accordance with RA 10173 or the Data Privacy Act (DPA) of 2012.
+      dataPolicyText: `This form collects your personal information and post-evaluation of the activity for future improvements and research study.  The DOST-SEI, in compliance with R.A. 10173, implements reasonable and appropriate organizational, physical, and technical security measures for the protection of your personal information collected. Only the DOST-SEI employees are permitted to have access to the collected information. They shall be guided by the security measures provided in handling all personal information collected. Personal information collected is processed, stored, and later on disposed of via shredding and permanently deleted in our electronic files in accordance with R.A No. 9470 otherwise known as the National Archive of the Philippines Act of 2007. In case of a data breach, DOST-SEI shall notify you and inform the National Privacy Commission (NPC) in accordance with NPC Circular 16-03 on Personal Data Breach Management. 
 
-        Processing of Personal Data
+        RIGHTS OF THE DATA SUBJECT
 
-        The personal information being collected by DOST-SEI are used for the purpose as specified in the various transaction systems and functional units of the organization.
+        As the Data Subject, you have the right to be informed of the personal information being collected, processed, and stored by DOST-SEI as well as to access, object, rectify, and block the same. 
 
-        Data Protection
+        CONTACT DETAILS OF THE DOST-SEI DATA PRIVACY OFFICER (DPO) 
 
-        The DOST-SEI, in compliance with RA 10173, shall implement reasonable and appropriate organizational, physical, and technical security measures for the protection of personal information collected.
+        For questions or concerns, you may contact our Data Protection Officer through the following details:
 
-        Only authorized personnel are permitted to have access to the collected information. They shall be guided by the security measures provided in handling all personal information collected.
+        Direct Line: +63 2 8710 7462
 
-        Personal information collected are processed, stored, and later on disposed of via shredding and permanently deleted in our electronic files in accordance to R.A No. 9470 otherwise known as the National Archive of the Philippines Act of 2007.
-
-        In case of data breach, DOST-SEI shall notify you and inform the National Privacy Commission (NPC) in accordance with NPC Circular 16-03 on Personal Data Breach Management.
-
-        Rights of the Data Subject
-        As the Data Subject, you have the right to be informed of the personal information being collected, processed, and stored by DOST-SEI as well as to access, object, rectify, and block the same.
-
-
-
-        Contact Details of the DOST-SEI Data Privacy Officer (DPO)
-        For questions or concerns, you may contact:
-        
-        Mr. Philip Bue
-        Data Protection Officer
-        Direct Line: +63 2 8775 9043`
+        E-mail: dpo@sei.dost.gov.ph`
 
     }
   }
@@ -860,6 +835,11 @@ body {
   margin: auto;
   margin-top: 2%;
   height: 100%;
+}
+
+.dataPolicyText {
+  font-size: 1.4em;
+  color: #acc2f1
 }
 
 ::-webkit-scrollbar {
