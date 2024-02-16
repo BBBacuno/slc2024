@@ -1,6 +1,7 @@
 <script>
 import { ref, reactive } from 'vue'
 import axios from 'axios'
+import { date } from 'quasar'
 
 const baseURL = process.env.NODE_ENV ? "http://localhost/SLC_api" : "/SLC_api"
 const axiosInit = axios.create({
@@ -119,26 +120,15 @@ const yearLevel_options = ref([
 ])
 
 const yearAward_options = ref([
-  {
-    label: '2019',
-    value: 1
-  },
-  {
-    label: '2020',
-    value: 2
-  },
-  {
-    label: '2021',
-    value: 3
-  },
-  {
-    label: '2022',
-    value: 4
-  },
-  {
-    label: '2023',
-    value: 5
-  }
+  Number(date.formatDate(Date.now(), 'YYYY')),
+  Number(date.formatDate(Date.now(), 'YYYY')) - 1,
+  Number(date.formatDate(Date.now(), 'YYYY')) - 2,
+  Number(date.formatDate(Date.now(), 'YYYY')) - 3,
+  Number(date.formatDate(Date.now(), 'YYYY')) - 4,
+  Number(date.formatDate(Date.now(), 'YYYY')) - 5,
+  Number(date.formatDate(Date.now(), 'YYYY')) - 6,
+  Number(date.formatDate(Date.now(), 'YYYY')) - 7,
+  Number(date.formatDate(Date.now(), 'YYYY')) - 8
 ])
 
 const registrant_columns = [
@@ -700,7 +690,7 @@ const testSubmit = () => {
   formInput.course = '5'
   formInput.scholarProgram = '2'
   formInput.yearLevel = '1'
-  formInput.yearAward = '2'
+  formInput.yearAward = '2023'
   formInput.association = 'President of GuruGuru Club'
   formInput.pretest = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,]
   formInput.expectation = 'a lot'

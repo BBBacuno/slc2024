@@ -16,7 +16,7 @@
           <q-input outlined rounded v-model="formInput.email" type="email" :color="formColor" :label-color="formColor"
             label="Email Address" :rules="[(val) => val.includes('@') || 'Only valid email']" lazy-rules>
             <template v-slot:before>
-              <q-icon style="color: #3948ab85" name="mail" size="lg" />
+              <q-icon class="logo-color" name="mail" size="lg" />
             </template>
           </q-input>
           <div class="button-container" v-show="!OTPVerified">
@@ -31,7 +31,7 @@
           <q-input outlined rounded color="indigo-7" label-color="indigo-7" v-model="otp" class="text-fields"
             type="number" label="OTP from your Email" hint="6-digit OTP" lazy-rules>
             <template v-slot:before>
-              <q-icon style="color: #3948ab85" name="key" size="lg" />
+              <q-icon class="logo-color" name="key" size="lg" />
             </template>
           </q-input>
           <div class="button-container">
@@ -46,7 +46,7 @@
                 :label-color="formColor" label="Email to Register"
                 :rules="[(val) => val.includes('@') || 'Only valid email']" lazy-rules>
                 <template v-slot:before>
-                  <q-icon style="color: #3948ab85" name="mail" size="lg" />
+                  <q-icon class="logo-color" name="mail" size="lg" />
                 </template>
               </q-input>
               <q-input @input="val => { formInput.fName = val.toUpperCase() }" outlined rounded v-model="formInput.fName"
@@ -54,21 +54,21 @@
                 hint="Name inputted will reflect on certificates" :rules="[(val) => val && val.length > 0 || 'Required']"
                 lazy-rules>
                 <template v-slot:before>
-                  <q-icon style="color: #3948ab85" name="person" size="lg" />
+                  <q-icon class="logo-color" name="person" size="lg" />
                 </template>
               </q-input>
               <q-input @input="val => { formInput.mName = val.toUpperCase() }" outlined rounded v-model="formInput.mName"
                 :color="formColor" :label-color="formColor" label="Middle Name" hint="Put N/A if not applicable"
                 :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
                 <template v-slot:before>
-                  <q-icon style="color: #3948ab85" name="people" size="lg" />
+                  <q-icon class="logo-color" name="people" size="lg" />
                 </template>
               </q-input>
               <q-input @input="val => { formInput.lName = val.toUpperCase() }" outlined rounded v-model="formInput.lName"
                 :color="formColor" :label-color="formColor" label="Last Name"
                 :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
                 <template v-slot:before>
-                  <q-icon style="color: #3948ab85" name="diversity_3" size="lg" />
+                  <q-icon class="logo-color" name="diversity_3" size="lg" />
                 </template>
               </q-input>
 
@@ -77,7 +77,7 @@
               <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.suffix"
                 label="Suffix" :options="suffix_options" emit-value map-options lazy-rules>
                 <template v-slot:before>
-                  <q-icon style="color: #3948ab85" name="groups_3" size="lg" />
+                  <q-icon class="logo-color" name="groups_3" size="lg" />
                 </template>
                 <template v-slot:append>
                   <q-icon name="close" @click="formInput.suffix = null" class="remove-selection"
@@ -89,7 +89,7 @@
                   (val) => (val && val.length > 0) || 'Required Field',
                 ]">
                 <template v-slot:before>
-                  <q-icon style="color: #3948ab85" name="cake" size="lg" />
+                  <q-icon class="logo-color" name="cake" size="lg" />
                 </template>
                 <template v-slot:append>
                   <q-icon style="color: #3948ab85; margin-right: 10px" name="event" class="cursor-pointer">
@@ -107,11 +107,11 @@
               <div class="radios">
                 <q-radio v-model="formInput.sex" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="1"
                   size="xl" color="indigo-7">
-                  <q-icon style="color: #3948ab85" name="male" size="xl" />Male
+                  <q-icon class="logo-color" name="male" size="xl" />Male
                 </q-radio>
                 <q-radio v-model="formInput.sex" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="2"
                   size="xl" color="indigo-7">
-                  <q-icon style="color: #3948ab85" name="female" size="xl" />Female
+                  <q-icon class="logo-color" name="female" size="xl" />Female
                 </q-radio>
               </div>
               <q-input rounded outlined v-model="formInput.phoneNumber" type="number" maxlength="11" :color="formColor"
@@ -121,7 +121,7 @@
                     '11 digit phone number only',
                 ]">
                 <template v-slot:before>
-                  <q-icon style="color: #3948ab85" name="phone" size="lg" />
+                  <q-icon class="logo-color" name="phone" size="lg" />
                 </template>
               </q-input>
             </div>
@@ -154,7 +154,7 @@
               <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.univRegion"
                 label="Region of your School" :options="region_options" emit-value map-options lazy-rules>
                 <template v-slot:before>
-                  <q-icon style="color: #3948ab85" name="map" size="lg" />
+                  <q-icon class="logo-color" name="map" size="lg" />
                 </template>
               </q-select>
               <q-slide-transition :duration="700">
@@ -173,7 +173,7 @@
                       </q-item>
                     </template>
                     <template v-slot:before>
-                      <q-icon style="color: #3948ab85" name="mode_of_travel" size="lg" />
+                      <q-icon class="logo-color" name="mode_of_travel" size="lg" />
                     </template>
                     <template v-slot:append>
                       <q-icon name="close" @click="formInput.univCity = null" class="remove-selection"
@@ -193,7 +193,7 @@
                       </q-item>
                     </template>
                     <template v-slot:before>
-                      <q-icon style="color: #3948ab85" name="school" size="lg" />
+                      <q-icon class="logo-color" name="school" size="lg" />
                     </template>
                     <template v-slot:append>
                       <q-icon name="close" @click="formInput.university = null" class="remove-selection"
@@ -219,7 +219,7 @@
                       </q-item>
                     </template>
                     <template v-slot:before>
-                      <q-icon style="color: #3948ab85" name="golf_course" size="lg" />
+                      <q-icon class="logo-color" name="golf_course" size="lg" />
                     </template>
                     <template v-slot:append>
                       <q-icon name="close" @click="formInput.course = null" class="remove-selection"
@@ -231,7 +231,7 @@
                       (val) => (val && val > 0) || 'Required Field',
                     ]">
                     <template v-slot:before>
-                      <q-icon style="color: #3948ab85" name="settings_input_composite" size="lg" />
+                      <q-icon class="logo-color" name="settings_input_composite" size="lg" />
                     </template>
                   </q-select>
                   <q-select outlined rounded :color="formColor" :label-color="formColor"
@@ -240,7 +240,7 @@
                       (val) => (val && val > 0) || 'Required Field',
                     ]">
                     <template v-slot:before>
-                      <q-icon style="color: #3948ab85" name="auto_graph" size="lg" />
+                      <q-icon class="logo-color" name="auto_graph" size="lg" />
                     </template>
                   </q-select>
                   <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.yearAward"
@@ -248,14 +248,14 @@
                       (val) => (val && val > 0) || 'Required Field',
                     ]">
                     <template v-slot:before>
-                      <q-icon style="color: #3948ab85" name="verified_user" size="lg" />
+                      <q-icon class="logo-color" name="verified_user" size="lg" />
                     </template>
                   </q-select>
                   <q-input outlined rounded v-model="formInput.association" :color="formColor" :label-color="formColor"
                     label="Associations" hint="e.g Member/President of Scholars Club"
                     :rules="[(val) => val.length > 0 || 'Required']" lazy-rules>
                     <template v-slot:before>
-                      <q-icon style="color: #3948ab85" name="sort" size="lg" />
+                      <q-icon class="logo-color" name="sort" size="lg" />
                     </template>
                   </q-input>
                 </div>
@@ -266,14 +266,14 @@
                     label="Designation" :rules="[(val) => val.length > 0 || 'Required']" lazy-rules
                     hint="e.g. Project Director, University Coordinator">
                     <template v-slot:before>
-                      <q-icon style="color: #3948ab85" name="sort" size="lg" />
+                      <q-icon class="logo-color" name="sort" size="lg" />
                     </template>
                   </q-input>
                   <q-input outlined rounded v-model="formInput.position" :color="formColor" :label-color="formColor"
                     label="Position" :rules="[(val) => val.length > 0 || 'Required']" lazy-rules
                     hint="e.g. Senior Science Research Specialist">
                     <template v-slot:before>
-                      <q-icon style="color: #3948ab85" name="sort" size="lg" />
+                      <q-icon class="logo-color" name="sort" size="lg" />
                     </template>
                   </q-input>
                 </div>
@@ -310,7 +310,7 @@
             <q-input v-model="formInput.expectation" :color="formColor" :label-color="formColor" filled rounded
               :rules="[(val) => val.length > 0 || 'Required Field']" lazy-rules>
               <template v-slot:before>
-                <q-icon style="color: #3948ab85" name="psychology_alt" size="lg" />
+                <q-icon class="logo-color" name="psychology_alt" size="lg" />
               </template>
             </q-input>
           </div>
@@ -358,7 +358,7 @@
   <q-dialog v-model="allRequired" persistent>
     <q-card style="width: 300px !important" class="prompt">
       <q-card-section class="q-pb-none text-center">
-        <q-icon style="color: #3948ab85" name="error" size="70px" />
+        <q-icon class="logo-color" name="error" size="70px" />
       </q-card-section>
       <q-card-section class="q-pa-md text-center">
         <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
@@ -413,7 +413,7 @@
   <q-dialog v-model="errorWarning" persistent>
     <q-card style="min-width: 350px" class="prompt">
       <q-card-section class="q-pb-none text-center">
-        <q-icon style="color: #3948ab85" name="error" size="70px" />
+        <q-icon class="logo-color" name="error" size="70px" />
       </q-card-section>
       <q-card-section class="q-pa-md text-center">
         <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
@@ -431,7 +431,7 @@
   <q-dialog v-model="notListed" persistent>
     <q-card style="min-width: 350px" class="prompt">
       <q-card-section class="q-pb-none text-center">
-        <q-icon style="color: #3948ab85" name="error" size="70px" />
+        <q-icon class="logo-color" name="error" size="70px" />
       </q-card-section>
       <q-card-section class="q-pa-md text-center">
         <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
@@ -449,7 +449,7 @@
   <q-dialog v-model="OTPNotMatch" persistent>
     <q-card style="min-width: 350px" class="prompt">
       <q-card-section class="q-pb-none text-center">
-        <q-icon style="color: #3948ab85" name="error" size="70px" />
+        <q-icon class="logo-color" name="error" size="70px" />
       </q-card-section>
       <q-card-section class="q-pa-md text-center">
         <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
@@ -467,7 +467,7 @@
   <q-dialog v-model="alreadySubmitted" persistent>
     <q-card style="min-width: 350px" class="prompt">
       <q-card-section class="q-pb-none text-center">
-        <q-icon style="color: #3948ab85" name="error" size="70px" />
+        <q-icon class="logo-color" name="error" size="70px" />
       </q-card-section>
       <q-card-section class="q-pa-md text-center">
         <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
@@ -634,7 +634,7 @@ export default {
     const filtered_univCity = ref(univCity_options.value)
     const filtered_course = ref(course_options.value)
     const dataPolicyMenu = ref(false)
-    const greeting = ref(true)
+    const greeting = ref(false)
     const conformeCheck = ref(false)
 
     const OTPValid = () => {
@@ -675,7 +675,7 @@ export default {
       formInput.yearLevel = '1'
       formInput.yearAward = '2'
       formInput.association = 'President of GuruGuru Club'
-      formInput.pretest = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,]
+      formInput.pretest = [1, 2, 3, 4, 5, 4, 3, 2, 1, 2, 3, 4, 5, 4, 3, 2, 1, 2, 3, 4, 5, 4, 3, 2, 1, 2, 3, 4, 5, 4]
       formInput.expectation = 'a lot'
       formInput.designation = 1
       formInput.position = 2
@@ -1180,5 +1180,9 @@ input[type='number']::-webkit-inner-spin-button {
 /* Firefox */
 input[type='number'] {
   appearance: textfield;
+}
+
+.logo-color {
+  color: #3948ab85
 }
 </style>
