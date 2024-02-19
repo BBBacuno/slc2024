@@ -555,9 +555,7 @@ const submitResponse = (action, id) => {
         !formInput.university ||
         !formInput.yearLevel ||
         !formInput.course ||
-        !formInput.yearAward ||
-        formInput.pretest.filter(v => v).length < 30 ||
-        !formInput.expectation
+        !formInput.yearAward
       )) || ((formInput.participant == 2) && (
         !formInput.fName ||
         !formInput.mName ||
