@@ -633,7 +633,7 @@ export default {
     const filtered_univCity = ref(univCity_options.value)
     const filtered_course = ref(course_options.value)
     const dataPolicyMenu = ref(false)
-    const greeting = ref(false)
+    const greeting = ref(true)
     const conformeCheck = ref(false)
 
     const OTPValid = () => {
@@ -655,30 +655,6 @@ export default {
       }
       return formData;
     };
-
-    const testSubmit = () => {
-      formInput.email = 'bondavidbacuno@gmail.com'
-      formInput.fName = 'Bon David'
-      formInput.mName = 'Bernardo'
-      formInput.lName = 'Bacuño'
-      formInput.suffix = null
-      formInput.sex = 1
-      formInput.birthDate = '01/02/2003'
-      formInput.phoneNumber = '09663407046'
-      formInput.participant = '1'
-      formInput.university = '150'
-      formInput.univRegion = '3'
-      formInput.univCity = '60'
-      formInput.course = '5'
-      formInput.scholarProgram = '2'
-      formInput.yearLevel = '1'
-      formInput.yearAward = '2'
-      formInput.association = 'President of GuruGuru Club'
-      formInput.pretest = [1, 2, 3, 4, 5, 4, 3, 2, 1, 2, 3, 4, 5, 4, 3, 2, 1, 2, 3, 4, 5, 4, 3, 2, 1, 2, 3, 4, 5, 4]
-      formInput.expectation = 'a lot'
-      formInput.designation = 1
-      formInput.position = 2
-    }
 
     const submitResponse = () => {
       pleaseWait.value = true

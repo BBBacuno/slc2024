@@ -119,7 +119,10 @@
                 <q-toggle v-model="props.row.attending"
                   @click="updateAttending(props.row.email, props.row.attending, 'REGISTER')" />
               </q-td>
-              <q-td v-if="props.cols.name != 'attending'" v-for="col in props.cols.slice(1)" :key="col.name"
+              <q-td>
+                {{ props.row.masterid }}
+              </q-td>
+              <q-td v-if="props.cols.name != 'attending'" v-for="col in props.cols.slice(2)" :key="col.name"
                 :props="props">
                 {{ col.value }}
               </q-td>
@@ -134,6 +137,7 @@
                 <div class="text-left">Full Name: {{ props.row.fname + ' ' + (props.row.mname == 'N/A' ?
                   '' : props.row.mname) + ' ' + props.row.lname +
                   ' ' + props.row.suffix }}</div>
+                <div class="text-left">Sex: {{ props.row.email }}</div>
                 <div class="text-left">Sex: {{ props.row.sex }}</div>
                 <div class="text-left">Birthdate: {{ props.row.birthdate }}</div>
                 <div class="text-left">Phone Number: {{ props.row.phoneNumber }}</div>
@@ -327,6 +331,7 @@
               <q-icon style="color: #3948ab85" name="school" size="lg" />
             </template>
           </q-select>
+          <q-toggle label="Print QR" v-model="printQR"></q-toggle>
         </div>
       </q-card>
     </q-page-container>
@@ -841,6 +846,9 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
+  <div id='print' class="print-only">
+    <q-img :src="baseURL + '/assets/emailAttachments/qrPrint.png'" width="250px" height="250px" />
+  </div>
 </template>
 
 <script>
@@ -1090,6 +1098,7 @@ export default defineComponent({
   setup() {
     const leftDrawerOpen = ref(false)
     const $q = useQuasar()
+    const printQR = ref(false)
 
     const checkAttendance = (ev) => {
       $q.loading.show({
@@ -1107,10 +1116,58 @@ export default defineComponent({
         '&day=' +
         attendanceDay.value
       ).then(function (response) {
-        qrcode.value = null
+
         setTimeout(() => { $q.loading.hide() }, 1000)
         setTimeout(() => { attendanceChecked.value = response.data.inout }, 1000)
         attendanceName.value = response.data.fName
+
+        console.log(response.data.inout)
+        if (['FIRST', 'IN', 'OUT'].includes(response.data.inout) && printQR.value) {
+          axiosInit.get(
+            '/operations/generateQRPrint.php?qrcode=' +
+            qrcode.value
+          ).then(function (response) {
+            // console.log(response.data.inout)
+            const prtHtml = document.getElementById('print').innerHTML;
+            const WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+
+            WinPrint.document.write(`<!DOCTYPE html>
+            <html>
+              <head>
+                <style>
+                @media print {
+                  html, body {
+                    width: 10in;
+                    height:10in;
+                    position:absolute;
+                  },
+                  @page {
+                    margin-top: 0;
+                    margin-bottom: 0;
+                    width: 10in;
+                    height:10in;
+                  }
+                  body {
+                    padding-top: 72px;
+                    padding-bottom: 72px ;
+                  }
+                }
+                </style
+              </head>
+              <body>
+                ${prtHtml}
+              </body>
+            </html>`);
+
+            WinPrint.document.close();
+            WinPrint.focus();
+            setTimeout(function () {
+              WinPrint.print();
+              WinPrint.close();
+            }, 250);
+          })
+        }
+        qrcode.value = null
         setTimeout(() => { attendanceChecked.value = false }, 3500)
       })
     }
@@ -1164,6 +1221,8 @@ export default defineComponent({
       pretest_columnsExport,
       ranNum,
       exportDialog,
+      baseURL,
+      printQR,
       formColor: 'indigo-7',
       exportByRegion_column: ['Export All', 'Region 1', 'Region 2', 'Region 3', 'Region 4-A', 'Region 4-B', 'Region 5', 'Region 6', 'Region 7', 'Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12', 'NCR', 'CAR', 'CARAGA', 'BARMM'],
       attendanceConduct_options: ['NCR 1', 'NCR 2', 'Region 1 and CAR', 'Region 2 and 3', 'Region 4-A and 5', 'Region 4-B and 6', 'Region 7 and 8', 'Region 9 and BARMM', 'Region 11 and 12', 'Region 10 and CARAGA', 'CBPSME VisMin', 'CBPSME Luzon'],

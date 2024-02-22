@@ -142,8 +142,15 @@ const registrant_columns = [
     format: val => `${val}`,
   },
   {
+    name: 'masterid',
+    label: 'ID',
+    align: 'left',
+    field: 'masterid',
+    format: val => `${val}`,
+    sortable: true
+  },
+  {
     name: 'fullname',
-    required: true,
     label: 'Full Name',
     align: 'left',
     field: 'fullname',
@@ -174,7 +181,7 @@ const registrant_columns = [
     label: 'email',
     align: 'left',
     field: 'email',
-    format: val => `${val}`,
+    format: val => val.substring(0, 2) + val?.substring(2).replaceAll(val?.substring(2), '*'.repeat(val.length - 2)),
     sortable: true
   },
   {
@@ -199,11 +206,11 @@ const masterList_columns = [
     format: val => `${val}`,
   },
   {
-    name: 'fullname',
+    name: 'id',
     required: true,
-    label: 'Full Name',
+    label: 'ID',
     align: 'left',
-    field: 'fullname',
+    field: 'id',
     format: val => `${val}`,
     sortable: true
   },
@@ -213,16 +220,7 @@ const masterList_columns = [
     label: 'Email',
     align: 'left',
     field: 'email',
-    format: val => `${val}`,
-    sortable: true
-  },
-  {
-    name: 'univRegion',
-    required: true,
-    label: 'Region',
-    align: 'left',
-    field: 'univRegion',
-    format: val => `${val}`,
+    format: val => val.substring(0, 2) + val?.substring(2).replaceAll(val?.substring(2), '*'.repeat(val.length - 2)),
     sortable: true
   },
   {
@@ -233,16 +231,7 @@ const masterList_columns = [
     field: 'conduct',
     format: val => `${val}`,
     sortable: true
-  },
-  {
-    name: 'participant',
-    required: true,
-    label: 'Type',
-    align: 'left',
-    field: 'participant',
-    format: val => val == 1 ? 'Scholar' : 'Coordinator',
-    sortable: true
-  },
+  }
 ]
 
 const pretest_columns = [
@@ -654,12 +643,6 @@ const submitResponse = (action, id) => {
       formInput.email +
       '&id=' +
       formInput.id +
-      '&fullname=' +
-      formInput.fullName +
-      '&region=' +
-      formInput.univRegion +
-      '&participant=' +
-      formInput.participant +
       '&conduct=' +
       formInput.conduct
     ).then(function (response) {
@@ -673,7 +656,7 @@ const submitResponse = (action, id) => {
 }
 
 const testSubmit = () => {
-  formInput.email = 'bondavidbacuno@gmail.com'
+  formInput.email = 'bonbacuno@gmail.com'
   formInput.fName = 'Bon David'
   formInput.mName = 'Bernardo'
   formInput.lName = 'Bacuño'

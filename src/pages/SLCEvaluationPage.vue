@@ -328,7 +328,7 @@
                   (pageNum == 10 && formInput.bulante.filter(v => v).length < 5)"></q-btn>
             </div>
           </div>
-          <div class="button-container" style="width: 100%;" v-show="pageNum == 11">
+          <div class="button-container" style="width: 100%;" v-show="pagenum == 11">
             <q-btn @click="submitResponse()" label="submit" type="submit" color="primary" class="button-submit"></q-btn>
           </div>
           <!--  v-show="pageNum == 11" -->
