@@ -306,34 +306,58 @@
           </div>
         </transition-group>
       </q-card>
-      <q-card class="evaluation" style="
-            -webkit-border-radius: 60px;
-            -moz-border-radius: 60px;
-            border-radius: 60px;
-            height: 40vh;
-            min-width: 300px;
-            width: 20vw;
-            margin-top: 1.5vh;
-            overflow: hidden;
-            padding: 0;
-            border: 10px solid rgba(255, 255, 255, 0);
-          " id="topElement">
-        <div style="margin: auto; padding: 20px;">
-          <q-select outlined rounded color="indigo-7" label-color="indigo-7" v-model="attendanceConduct"
-            class="text-fields" label="Batch" :options="attendanceConduct_options">
-            <template v-slot:before>
-              <q-icon style="color: #3948ab85" name="school" size="lg" />
-            </template>
-          </q-select>
-          <q-select outlined rounded color="indigo-7" label-color="indigo-7" v-model="attendanceDay" class="text-fields"
-            label="Conduct" :options="attendanceDay_options">
-            <template v-slot:before>
-              <q-icon style="color: #3948ab85" name="school" size="lg" />
-            </template>
-          </q-select>
-          <q-toggle label="Print QR" v-model="printQR"></q-toggle>
-        </div>
-      </q-card>
+      <div style="text-align: center">
+        <q-card class="evaluation" style="
+          display: inline-block;
+          -webkit-border-radius: 60px;
+          -moz-border-radius: 60px;
+          border-radius: 60px;
+          height: 40vh;
+          min-width: 300px;
+          width: 20vw;
+          margin-top: 1.5vh;
+          margin-inline: 50px;
+          overflow: hidden;
+          padding: 0;
+          border: 10px solid rgba(255, 255, 255, 0);">
+          <div style="margin: auto; padding: 20px;">
+            <q-select outlined rounded color="indigo-7" label-color="indigo-7" v-model="attendanceConduct"
+              class="text-fields" label="Batch" :options="attendanceConduct_options">
+              <template v-slot:before>
+                <q-icon style="color: #3948ab85" name="school" size="lg" />
+              </template>
+            </q-select>
+            <q-select outlined rounded color="indigo-7" label-color="indigo-7" v-model="attendanceDay" class="text-fields"
+              label="Conduct" :options="attendanceDay_options">
+              <template v-slot:before>
+                <q-icon style="color: #3948ab85" name="school" size="lg" />
+              </template>
+            </q-select>
+            <q-toggle label="Print QR" v-model="printQR"></q-toggle>
+          </div>
+        </q-card>
+        <q-card class="evaluation" style="
+          display: inline-block;
+          -webkit-border-radius: 60px;
+          -moz-border-radius: 60px;
+          border-radius: 60px;
+          height: 40vh;
+          min-width: 300px;
+          width: 20vw;
+          margin-top: 1.5vh;
+          margin-inline: 50px;
+          padding: 0;
+          border: 10px solid rgba(255, 255, 255, 0);">
+          <q-input v-model="nametag" label="Nickname" :maxlength="14" />
+          <q-select :options="['Scholar', 'Coordinator', 'Custom']" v-model="isScholar" />
+          <div v-if="isScholar == 'Custom'">
+            <q-input v-model="customTag" label="Custom Nametag" :maxlength="14" />
+          </div>
+          <div class="button-container" style="margin-bottom: 25px;">
+            <q-btn label="Print" @click="printNametag" primary color="primary" />
+          </div>
+        </q-card>
+      </div>
     </q-page-container>
 
     <!-- in and out monitoring -->
@@ -773,46 +797,12 @@
     <q-card style="min-width: 950px" class="prompt">
       <q-card-section>
         <div class="form-container">
-          <q-input outlined rounded v-model="formInput.fullName" :color="formColor" :label-color="formColor"
-            label="Full Name" :rules="[(val) => val.length > 0 || 'Required']" lazy-rules>
-            <template v-slot:before>
-              <q-icon style="color: #3948ab85" name="mail" size="lg" />
-            </template>
-          </q-input>
           <q-input outlined rounded v-model="formInput.email" type="email" :color="formColor" :label-color="formColor"
             label="Email" :rules="[(val) => val.includes('@') || 'Only valid email']" lazy-rules>
             <template v-slot:before>
               <q-icon style="color: #3948ab85" name="mail" size="lg" />
             </template>
           </q-input>
-          <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.univRegion"
-            label="Region of your School" :options="region_options" emit-value map-options lazy-rules>
-            <template v-slot:before>
-              <q-icon style="color: #3948ab85" name="map" size="lg" />
-            </template>
-          </q-select>
-          <div class="radios">
-            <div label="Scholar" style="
-                  background-size: contain;
-                  background-repeat: no-repeat;
-                  background-position: center;
-                  cursor: pointer;
-                ">
-              <q-img src="/radio-option1.png" alt="" srcset="" @click="selectParticipantType(1)"
-                :class="{ 'pulsate-bck': formInput.participant == 1 }"
-                style="height: 20vh; width: 20vh; filter: grayscale(100%)" />
-            </div>
-            <div style="
-                  background-size: contain;
-                  background-repeat: no-repeat;
-                  background-position: center;
-                  cursor: pointer;
-                ">
-              <q-img src="/radio-option2.png" alt="" srcset="" @click="selectParticipantType(2)"
-                :class="{ 'pulsate-bck': formInput.participant == 2 }"
-                style="height: 20vh; width: 20vh; filter: grayscale(100%)" />
-            </div>
-          </div>
           <q-select outlined rounded color="indigo-7" label-color="indigo-7" v-model="formInput.conduct"
             class="text-fields" label="Batch" :options="attendanceConduct_options">
             <template v-slot:before>
@@ -847,7 +837,48 @@
     </q-card>
   </q-dialog>
   <div id='print' class="print-only">
-    <q-img :src="baseURL + '/assets/emailAttachments/qrPrint.png'" width="250px" height="250px" />
+    <img :src="baseURL + '/assets/emailAttachments/qrPrint.png'" style="
+    width: 100%;
+    height: 100%;
+    text-align: center;" />
+  </div>
+  <div id='printname' class="print-only" style="padding: 0; margin: 0; overflow: hidden;">
+    <span style="
+    display: flex;
+  justify-content: center;
+    width: 99%;
+    height: 80%;
+    font-size: 30px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    font-family: 'Fragment Mono', monospace;
+    font-weight: 400px;
+    font-style: normal;
+    letter-spacing: 0px;
+    overflow: hidden;
+    white-space:nowrap;
+    ">
+      {{ isScholar == 'Custom' ? customTag : isScholar }}
+    </span>
+    <span style="
+    display: flex;
+    justify-content: center;
+    width: 99%;
+    max-width: 90mm;
+    height: 80%;
+    font-size: 40px;
+    margin: 0 auto;
+    padding: 0;
+    font-family: 'Fragment Mono', monospace;
+    font-weight: 600px;
+    font-style: normal;
+    letter-spacing: 0px;
+    transform: scale(1, 1.5);
+    overflow: hidden;
+    white-space:nowrap;
+    ">
+      {{ nametag }}
+    </span>
   </div>
 </template>
 
@@ -1135,24 +1166,17 @@ export default defineComponent({
             <html>
               <head>
                 <style>
-                @media print {
-                  html, body {
-                    width: 10in;
-                    height:10in;
-                    position:absolute;
-                  },
-                  @page {
-                    margin-top: 0;
-                    margin-bottom: 0;
-                    width: 10in;
-                    height:10in;
-                  }
-                  body {
-                    padding-top: 72px;
-                    padding-bottom: 72px ;
+                @media print{ 
+                  body, html, div {
+                    height: 95vh !important;
+                    width: 95vw !important;
+                    margin: 0;
+                    padding: 0;
+                    display: inline-block;
+                    overflow: hidden;
                   }
                 }
-                </style
+                </style>
               </head>
               <body>
                 ${prtHtml}
@@ -1224,6 +1248,9 @@ export default defineComponent({
       baseURL,
       printQR,
       formColor: 'indigo-7',
+      nametag: ref(null),
+      isScholar: ref('Scholar'),
+      customTag: ref(null),
       exportByRegion_column: ['Export All', 'Region 1', 'Region 2', 'Region 3', 'Region 4-A', 'Region 4-B', 'Region 5', 'Region 6', 'Region 7', 'Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12', 'NCR', 'CAR', 'CARAGA', 'BARMM'],
       attendanceConduct_options: ['NCR 1', 'NCR 2', 'Region 1 and CAR', 'Region 2 and 3', 'Region 4-A and 5', 'Region 4-B and 6', 'Region 7 and 8', 'Region 9 and BARMM', 'Region 11 and 12', 'Region 10 and CARAGA', 'CBPSME VisMin', 'CBPSME Luzon'],
       attendanceDay_options: ['Day 0', 'Day 1', 'Day 2', 'Day 3'],
@@ -1464,6 +1491,41 @@ export default defineComponent({
           }
           navigationToggle('inOut')
         })
+      },
+      printNametag() {
+        const prtHtml = document.getElementById('printname').innerHTML;
+        const WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+
+        WinPrint.document.write(`<!DOCTYPE html>
+        <html>
+          <head>
+            <style>
+            @page{
+              margin: 0
+            },
+            @media print{ 
+              body, html, div {
+                height: 90mm !important;
+                width: 38mm !important;
+                margin: 0;
+                padding: 0;
+                display: inline-block;
+                white-space:nowrap;
+              }
+            }
+            </style>
+          </head>
+          <body>
+            ${prtHtml}
+          </body>
+        </html>`);
+
+        WinPrint.document.close();
+        WinPrint.focus();
+        setTimeout(function () {
+          WinPrint.print();
+          WinPrint.close();
+        }, 250);
       }
     }
   }
