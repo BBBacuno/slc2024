@@ -528,8 +528,8 @@
 </template>
 
 <script>
-import { useQuasar } from "quasar"
-import { ref, reactive } from 'vue'
+import { useQuasar, useMeta } from "quasar"
+import { ref } from 'vue'
 import axios from 'axios'
 import {
   yearAward_options,
@@ -547,13 +547,17 @@ import {
   scrollToElement,
   testSubmit,
   formInput
-} from '../components/DefineInitials.vue'
+} from '../components/DefineInitials.vue';
 
 const baseURL = import.meta.env.DEV ? "http://localhost/SLC_api" : "/SLC_api";
 const axiosInit = axios.create({
   baseURL,
   withCredentials: true,
 });
+
+const metaData = {
+  title: 'SLC Registration',
+}
 
 
 const accept = ref(false)
@@ -628,6 +632,8 @@ export default {
     pleaseWait.value = false
   },
   setup() {
+    useMeta(metaData)
+
     const $q = useQuasar();
     const filtered_university = ref(university_options.value)
     const filtered_univCity = ref(univCity_options.value)

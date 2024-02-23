@@ -506,7 +506,7 @@
 </template>
 
 <script>
-import { useQuasar } from "quasar";
+import { useQuasar, useMeta } from "quasar";
 import { ref, reactive } from 'vue';
 import axios from 'axios';
 
@@ -515,6 +515,10 @@ const axiosInit = axios.create({
   baseURL,
   withCredentials: true,
 });
+
+const metaData = {
+  title: 'SLC Evaluation',
+}
 
 const formInput = reactive({
   af: [null],
@@ -588,6 +592,7 @@ const sendOTP = () => {
 
 export default {
   setup() {
+    useMeta(metaData)
     const $q = useQuasar();
     const conformeCheck = ref(false)
 

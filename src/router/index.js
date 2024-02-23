@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import SLCRegistrationPage from "../pages/SLCRegistrationPage.vue"
-import AdminDashboard from "../pages/AdminDashboard.vue";
+import SLCRegistrationPage from "../pages/SLCRegistrationPage.vue";
 import SLCEvaluationPage from "../pages/SLCEvaluationPage.vue";
 
 const routes = [
@@ -9,13 +8,6 @@ const routes = [
     name: "Home",
     components: {
       default: SLCRegistrationPage,
-    },
-  },
-  {
-    path: '/admin', 
-    name: 'Admin',
-    components: {
-      default: AdminDashboard,
     },
   },
   {
