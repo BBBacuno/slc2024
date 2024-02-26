@@ -1017,7 +1017,7 @@ label.q-field {
   backdrop-filter: blur(8px);
   /* Chrome and Opera */
   box-shadow: 0px 10px 15px 10px rgb(0 0 0 / 15%);
-  background-color: rgba(180, 52, 19, 0.644);
+  background-color: rgba(194, 24, 24, 0.54);
   -webkit-border-top-left-radius: 25px;
   -webkit-border-bottom-left-radius: 25px;
   -moz-border-radius-topleft: 25px;

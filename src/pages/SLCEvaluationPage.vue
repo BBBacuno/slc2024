@@ -844,7 +844,7 @@ body {
 
 .dataPolicyText {
   font-size: 1.4em;
-  color: #acc2f1
+  color: #ffffea
 }
 
 ::-webkit-scrollbar {
