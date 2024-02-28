@@ -532,6 +532,8 @@ import { useQuasar, useMeta } from "quasar"
 import { ref } from 'vue'
 import axios from 'axios'
 import {
+  baseURL,
+  axiosInit,
   yearAward_options,
   yearLevel_options,
   scholarProgram_options,
@@ -548,12 +550,6 @@ import {
   testSubmit,
   formInput
 } from '../components/DefineInitials.vue';
-
-const baseURL = import.meta.env.DEV ? "http://localhost/SLC_api" : "/SLC_api";
-const axiosInit = axios.create({
-  baseURL,
-  withCredentials: true,
-});
 
 const metaData = {
   title: 'SLC Registration',

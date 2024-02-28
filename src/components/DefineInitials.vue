@@ -691,6 +691,7 @@ const toFormData = (obj) => {
 
 export {
   axiosInit,
+  baseURL,
   yearAward_options,
   yearLevel_options,
   scholarProgram_options,

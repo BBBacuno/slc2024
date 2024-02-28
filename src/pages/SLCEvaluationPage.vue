@@ -508,13 +508,10 @@
 <script>
 import { useQuasar, useMeta } from "quasar";
 import { ref, reactive } from 'vue';
-import axios from 'axios';
-
-const baseURL = import.meta.env.DEV ? "http://localhost/SLC_api" : "/SLC_api";
-const axiosInit = axios.create({
+import {
   baseURL,
-  withCredentials: true,
-});
+  axiosInit
+} from '../components/DefineInitials.vue';
 
 const metaData = {
   title: 'SLC Evaluation',
