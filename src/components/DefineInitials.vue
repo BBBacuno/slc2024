@@ -3,7 +3,7 @@ import { ref, reactive } from 'vue'
 import axios from 'axios'
 import { date } from 'quasar'
 
-const baseURL = process.env.NODE_ENV ? "http://localhost/SLC_api" : "/SLC_api"
+const baseURL = import.meta.env.DEV ? "http://localhost/SLC_api" : "/SLC_api"
 const axiosInit = axios.create({
   baseURL,
   withCredentials: true
