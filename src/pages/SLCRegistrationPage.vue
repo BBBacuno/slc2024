@@ -30,6 +30,7 @@
         <div v-show="OTPSent && !OTPVerified">
           <q-input outlined rounded color="indigo-7" label-color="indigo-7" v-model="otp" class="text-fields"
             type="number" label="OTP from your Email" hint="6-digit OTP" lazy-rules>
+
             <template v-slot:before>
               <q-icon class="logo-color" name="key" size="lg" />
             </template>
@@ -45,28 +46,32 @@
               <q-input outlined rounded v-model="formInput.email" readonly type="email" :color="formColor"
                 :label-color="formColor" label="Email to Register"
                 :rules="[(val) => val.includes('@') || 'Only valid email']" lazy-rules>
+
                 <template v-slot:before>
                   <q-icon class="logo-color" name="mail" size="lg" />
                 </template>
               </q-input>
-              <q-input @input="val => { formInput.fName = val.toUpperCase() }" outlined rounded v-model="formInput.fName"
-                :color="formColor" :label-color="formColor" label="First Name"
-                hint="Name inputted will reflect on certificates" :rules="[(val) => val && val.length > 0 || 'Required']"
-                lazy-rules>
+              <q-input @input="val => { formInput.fName = val.toUpperCase() }" outlined rounded
+                v-model="formInput.fName" :color="formColor" :label-color="formColor" label="First Name"
+                hint="Name inputted will reflect on certificates"
+                :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
+
                 <template v-slot:before>
                   <q-icon class="logo-color" name="person" size="lg" />
                 </template>
               </q-input>
-              <q-input @input="val => { formInput.mName = val.toUpperCase() }" outlined rounded v-model="formInput.mName"
-                :color="formColor" :label-color="formColor" label="Middle Name" hint="Put N/A if not applicable"
-                :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
+              <q-input @input="val => { formInput.mName = val.toUpperCase() }" outlined rounded
+                v-model="formInput.mName" :color="formColor" :label-color="formColor" label="Middle Name"
+                hint="Put N/A if not applicable" :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
+
                 <template v-slot:before>
                   <q-icon class="logo-color" name="people" size="lg" />
                 </template>
               </q-input>
-              <q-input @input="val => { formInput.lName = val.toUpperCase() }" outlined rounded v-model="formInput.lName"
-                :color="formColor" :label-color="formColor" label="Last Name"
+              <q-input @input="val => { formInput.lName = val.toUpperCase() }" outlined rounded
+                v-model="formInput.lName" :color="formColor" :label-color="formColor" label="Last Name"
                 :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
+
                 <template v-slot:before>
                   <q-icon class="logo-color" name="diversity_3" size="lg" />
                 </template>
@@ -76,21 +81,24 @@
             <div v-show="OTPVerified" class="right-container">
               <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.suffix"
                 label="Suffix" :options="suffix_options" emit-value map-options lazy-rules>
+
                 <template v-slot:before>
                   <q-icon class="logo-color" name="groups_3" size="lg" />
                 </template>
+
                 <template v-slot:append>
                   <q-icon name="close" @click="formInput.suffix = null" class="remove-selection"
                     v-show="formInput.suffix"></q-icon>
                 </template>
               </q-select>
               <q-input outlined rounded :color="formColor" :label-color="formColor" label="Birthdate"
-                v-model="formInput.birthDate" @click="$refs.birthdateProxy.show()" :rules="[
-                  (val) => (val && val.length > 0) || 'Required Field',
-                ]">
+                v-model="formInput.birthDate" @click="$refs.birthdateProxy.show()"
+                :rules="[(val) => (val && val.length > 0) || 'Required Field']">
+
                 <template v-slot:before>
                   <q-icon class="logo-color" name="cake" size="lg" />
                 </template>
+
                 <template v-slot:append>
                   <q-icon style="color: #3948ab85; margin-right: 10px" name="event" class="cursor-pointer">
                     <q-popup-proxy cover transition-show="scale" transition-hide="scale" ref="birthdateProxy">
@@ -115,11 +123,9 @@
                 </q-radio>
               </div>
               <q-input rounded outlined v-model="formInput.phoneNumber" type="number" maxlength="11" :color="formColor"
-                :label-color="formColor" label="Phone Number" lazy-rules :rules="[
-                  (val) =>
-                    (val && val.length == 11) ||
-                    '11 digit phone number only',
-                ]">
+                :label-color="formColor" label="Phone Number" lazy-rules
+                :rules="[(val) => (val && val.length == 11) || '11 digit phone number only']">
+
                 <template v-slot:before>
                   <q-icon class="logo-color" name="phone" size="lg" />
                 </template>
@@ -153,6 +159,7 @@
             <div class="left-container">
               <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.univRegion"
                 label="Region of your School" :options="region_options" emit-value map-options lazy-rules>
+
                 <template v-slot:before>
                   <q-icon class="logo-color" name="map" size="lg" />
                 </template>
@@ -161,10 +168,10 @@
                 <div v-show="formInput.participant == 1 || (formInput.univRegion == 13 && formInput.participant == 2)">
                   <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.univCity"
                     use-input emit-value map-options input-debounce="0" label="City of your University"
-                    :options="filtered_univCity" @filter="filter_univCity" behavior="menu" lazy-rules :rules="[
-                      (val) => (val && val > 0) || 'Required Field',
-                    ]"
+                    :options="filtered_univCity" @filter="filter_univCity" behavior="menu" lazy-rules
+                    :rules="[(val) => (val && val > 0) || 'Required Field',]"
                     v-show="formInput.participant == 1 || (formInput.participant == 2 && formInput.univRegion == 13)">
+
                     <template v-slot:no-option>
                       <q-item>
                         <q-item-section class="text-grey">
@@ -172,19 +179,21 @@
                         </q-item-section>
                       </q-item>
                     </template>
+
                     <template v-slot:before>
                       <q-icon class="logo-color" name="mode_of_travel" size="lg" />
                     </template>
+
                     <template v-slot:append>
                       <q-icon name="close" @click="formInput.univCity = null" class="remove-selection"
                         v-show="formInput.univCity"></q-icon>
                     </template>
                   </q-select>
                   <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.university"
-                    use-input emit-value map-options input-debounce="0" label="University" :options="filtered_university"
-                    @filter="filter_university" behavior="menu" lazy-rules :rules="[
-                      (val) => (val && val > 0) || 'Required Field',
-                    ]">
+                    use-input emit-value map-options input-debounce="0" label="University"
+                    :options="filtered_university" @filter="filter_university" behavior="menu" lazy-rules
+                    :rules="[(val) => (val && val > 0) || 'Required Field',]">
+
                     <template v-slot:no-option>
                       <q-item>
                         <q-item-section class="text-grey">
@@ -192,9 +201,11 @@
                         </q-item-section>
                       </q-item>
                     </template>
+
                     <template v-slot:before>
                       <q-icon class="logo-color" name="school" size="lg" />
                     </template>
+
                     <template v-slot:append>
                       <q-icon name="close" @click="formInput.university = null" class="remove-selection"
                         v-show="formInput.university"></q-icon>
@@ -208,9 +219,9 @@
                 <div v-show="formInput.participant == 1">
                   <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.course"
                     use-input emit-value map-options input-debounce="0" label="Course" :options="filtered_course"
-                    @filter="filter_course" behavior="menu" lazy-rules :rules="[
-                      (val) => (val && val > 0) || 'Required Field',
-                    ]">
+                    @filter="filter_course" behavior="menu" lazy-rules
+                    :rules="[(val) => (val && val > 0) || 'Required Field']">
+
                     <template v-slot:no-option>
                       <q-item>
                         <q-item-section class="text-grey">
@@ -218,35 +229,36 @@
                         </q-item-section>
                       </q-item>
                     </template>
+
                     <template v-slot:before>
                       <q-icon class="logo-color" name="golf_course" size="lg" />
                     </template>
+
                     <template v-slot:append>
                       <q-icon name="close" @click="formInput.course = null" class="remove-selection"
                         v-show="formInput.course"></q-icon>
                     </template>
                   </q-select>
                   <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.yearLevel"
-                    label="Year Level" :options="yearLevel_options" emit-value map-options lazy-rules :rules="[
-                      (val) => (val && val > 0) || 'Required Field',
-                    ]">
+                    label="Year Level" :options="yearLevel_options" emit-value map-options lazy-rules
+                    :rules="[(val) => (val && val > 0) || 'Required Field']">
+
                     <template v-slot:before>
                       <q-icon class="logo-color" name="settings_input_composite" size="lg" />
                     </template>
                   </q-select>
                   <q-select outlined rounded :color="formColor" :label-color="formColor"
                     v-model="formInput.scholarProgram" label="Scholarship Program" :options="scholarProgram_options"
-                    emit-value map-options lazy-rules :rules="[
-                      (val) => (val && val > 0) || 'Required Field',
-                    ]">
+                    emit-value map-options lazy-rules :rules="[(val) => (val && val > 0) || 'Required Field']">
+
                     <template v-slot:before>
                       <q-icon class="logo-color" name="auto_graph" size="lg" />
                     </template>
                   </q-select>
                   <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.yearAward"
-                    label="Year Award" :options="yearAward_options" emit-value map-options lazy-rules :rules="[
-                      (val) => (val && val > 0) || 'Required Field',
-                    ]">
+                    label="Year Award" :options="yearAward_options" emit-value map-options lazy-rules
+                    :rules="[(val) => (val && val > 0) || 'Required Field']">
+
                     <template v-slot:before>
                       <q-icon class="logo-color" name="verified_user" size="lg" />
                     </template>
@@ -254,6 +266,7 @@
                   <q-input outlined rounded v-model="formInput.association" :color="formColor" :label-color="formColor"
                     label="Associations" hint="e.g Member/President of Scholars Club"
                     :rules="[(val) => val.length > 0 || 'Required']" lazy-rules>
+
                     <template v-slot:before>
                       <q-icon class="logo-color" name="sort" size="lg" />
                     </template>
@@ -265,6 +278,7 @@
                   <q-input outlined rounded v-model="formInput.designation" :color="formColor" :label-color="formColor"
                     label="Designation" :rules="[(val) => val.length > 0 || 'Required']" lazy-rules
                     hint="e.g. Project Director, University Coordinator">
+
                     <template v-slot:before>
                       <q-icon class="logo-color" name="sort" size="lg" />
                     </template>
@@ -272,6 +286,7 @@
                   <q-input outlined rounded v-model="formInput.position" :color="formColor" :label-color="formColor"
                     label="Position" :rules="[(val) => val.length > 0 || 'Required']" lazy-rules
                     hint="e.g. Senior Science Research Specialist">
+
                     <template v-slot:before>
                       <q-icon class="logo-color" name="sort" size="lg" />
                     </template>
@@ -309,6 +324,7 @@
             {{ "31. " + questions.lastQuestion }}
             <q-input v-model="formInput.expectation" :color="formColor" :label-color="formColor" filled rounded
               :rules="[(val) => val.length > 0 || 'Required Field']" lazy-rules>
+
               <template v-slot:before>
                 <q-icon class="logo-color" name="psychology_alt" size="lg" />
               </template>
@@ -326,23 +342,22 @@
             <div v-show="pageNum < 3 && !(pageNum == 2 && formInput.participant == 2)" style="width: 25%;">
               <q-btn label="Next" @click="pageNum++, scrollToElement('#topElement')" color="teal" class="button-submit"
                 style="width: 100%; height: 12%" :disabled="((
-                  (pageNum == 1) && (
-                    !formInput.fName ||
-                    !formInput.mName ||
-                    !formInput.lName ||
-                    !formInput.sex ||
-                    !formInput.birthDate ||
-                    !formInput.phoneNumber
-                  )) || ((pageNum == 2) && (
-                    !formInput.univRegion ||
-                    !formInput.univCity ||
-                    !formInput.university ||
-                    !formInput.yearLevel ||
-                    !formInput.course ||
-                    !formInput.yearAward ||
-                    !formInput.scholarProgram
-                  )))"></q-btn>
-              <!--  -->
+          (pageNum == 1) && (
+            !formInput.fName ||
+            !formInput.mName ||
+            !formInput.lName ||
+            !formInput.sex ||
+            !formInput.birthDate ||
+            !formInput.phoneNumber
+          )) || ((pageNum == 2) && (
+            !formInput.univRegion ||
+            !formInput.univCity ||
+            !formInput.university ||
+            !formInput.yearLevel ||
+            !formInput.course ||
+            !formInput.yearAward ||
+            !formInput.scholarProgram
+          )))"></q-btn>
             </div>
           </div>
           <div class="button-container" style="width: 100%;"
@@ -399,9 +414,9 @@
 
       <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
         Your
-        <b>SLC 2024</b> will just start right<br />here.
-        an email will be sent to you containing<br />
-        your proof of registration. <br />
+        <b>SLC 2024</b> journey is about to start right here.<br />
+        An email will be sent to you containing<br />
+        your proof of registration.<br />
 
       </q-card-section>
 
@@ -488,8 +503,8 @@
       <q-img src="/SLCGreetingLogo3.png" class="pulsate-logo greeting-logo" v-close-popup />
     </q-card>
   </q-dialog>
-  <q-dialog v-model="dataPolicyMenu" position="left" transition-show="slide-right" transition-hide="slide-left" maximized
-    :persistent="!conformeCheck">
+  <q-dialog v-model="dataPolicyMenu" position="left" transition-show="slide-right" transition-hide="slide-left"
+    maximized :persistent="!conformeCheck">
     <q-card class="dataPolicy" style="
       -webkit-border-radius: 25px;
       -moz-border-radius: 25px;
