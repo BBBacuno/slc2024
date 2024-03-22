@@ -348,7 +348,7 @@
             !formInput.lName ||
             !formInput.sex ||
             !formInput.birthDate ||
-            !formInput.phoneNumber
+            formInput.phoneNumber.length != 11
           )) || ((pageNum == 2) && (
             !formInput.univRegion ||
             !formInput.univCity ||
@@ -805,7 +805,7 @@ export default {
           ' 29. As a leader if one of my team members is struggling to complete a task on time I would pitch in to ensure that it gets done properly.',
           ' 30. I take one task at a time for a better output.',
         ],
-        lastQuestion: 'Please identify and describe the specific skills and knowledge that you are expecting to learn from the Leadership Boot Camp.'
+        lastQuestion: 'Please identify and describe the specific skills and knowledge that you are expecting to learn from the Leadership Camp.'
       },
       dataPolicyText: `This form collects your personal information and post-evaluation of the activity for future improvements and research study.  The DOST-SEI, in compliance with R.A. 10173, implements reasonable and appropriate organizational, physical, and technical security measures for the protection of your personal information collected. Only the DOST-SEI employees are permitted to have access to the collected information. They shall be guided by the security measures provided in handling all personal information collected. Personal information collected is processed, stored, and later on disposed of via shredding and permanently deleted in our electronic files in accordance with R.A No. 9470 otherwise known as the National Archive of the Philippines Act of 2007. In case of a data breach, DOST-SEI shall notify you and inform the National Privacy Commission (NPC) in accordance with NPC Circular 16-03 on Personal Data Breach Management. 
 

@@ -20,8 +20,8 @@
           <q-toggle v-model="accept" @click="dataPolicyMenu = accept">
             I accept the <b>Data Privacy Notice Terms</b>
           </q-toggle>
-          <q-btn unelevated rounded size="lg" label="Start Evaluation" color="teal" :disabled="!accept" style="width: 50%"
-            @click="sendOTP()" />
+          <q-btn unelevated rounded size="lg" label="Start Evaluation" color="teal" :disabled="!accept"
+            style="width: 50%" @click="sendOTP()" />
         </div>
       </div>
     </div>
@@ -284,32 +284,32 @@
           <br>{{ questions.five2 }}
           <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
             v-model="formInput.five2" label="Comment" lazy-rules :rules="[
-              (val) => (val && val.length > 0) || 'Required Field',
-            ]" />
+      (val) => (val && val.length > 0) || 'Required Field',
+    ]" />
           <br>{{ questions.five3 }}
           <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
             v-model="formInput.five3" label="Comment" lazy-rules :rules="[
-              (val) => (val && val.length > 0) || 'Required Field',
-            ]" />
+      (val) => (val && val.length > 0) || 'Required Field',
+    ]" />
           <br>{{ questions.five4 }}
           <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
             v-model="formInput.five4" label="Comment" lazy-rules :rules="[
-              (val) => (val && val.length > 0) || 'Required Field',
-            ]" />
+      (val) => (val && val.length > 0) || 'Required Field',
+    ]" />
           <br>{{ questions.five5 }}
           <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
             v-model="formInput.five5" label="Comment" lazy-rules :rules="[
-              (val) => (val && val.length > 0) || 'Required Field',
-            ]" />
+      (val) => (val && val.length > 0) || 'Required Field',
+    ]" />
           <br>{{ questions.five6 }}
           <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
             v-model="formInput.five6" label="Comment" lazy-rules :rules="[
-              (val) => (val && val.length > 0) || 'Required Field',
-            ]" />
+      (val) => (val && val.length > 0) || 'Required Field',
+    ]" />
         </div>
         <div class="button-container">
           <!-- for testing pre input data -->
-          <!-- <q-btn @click="testSubmit()" label="test" /> -->
+          <q-btn @click="testSubmit()" label="test" />
           <div class="radios" style="width: 100%;">
             <div v-show="pageNum > 1" style="width: 25%;">
               <q-btn label="Back" @click="pageNum--" color="teal" class="button-submit" style="width: 100%;"></q-btn>
@@ -317,19 +317,19 @@
             <div v-show="pageNum < 11" style="width: 25%;  ">
               <q-btn label="Next" @click="pageNum++, scrollToElement('#topElement')" color="teal" class="button-submit"
                 style="width: 100%; height: 12%" :disabled="(pageNum == 1 && formInput.af.filter(v => v).length < 6) ||
-                  (pageNum == 2 && formInput.c.filter(v => v).length < 5) ||
-                  (pageNum == 3 && formInput.q.filter(v => v).length < 7) ||
-                  (pageNum == 4 && formInput.org.filter(v => v).length < 7) ||
-                  (pageNum == 5 && formInput.out.filter(v => v).length < 7) ||
-                  (pageNum == 6 && formInput.romero.filter(v => v).length < 5) ||
-                  (pageNum == 7 && formInput.cangrejo.filter(v => v).length < 5) ||
-                  (pageNum == 8 && formInput.acala.filter(v => v).length < 5) ||
-                  (pageNum == 9 && formInput.chua.filter(v => v).length < 5) ||
-                  (pageNum == 10 && formInput.bulante.filter(v => v).length < 5)"></q-btn>
+      (pageNum == 2 && formInput.c.filter(v => v).length < 5) ||
+      (pageNum == 3 && formInput.q.filter(v => v).length < 7) ||
+      (pageNum == 4 && formInput.org.filter(v => v).length < 7) ||
+      (pageNum == 5 && formInput.out.filter(v => v).length < 7) ||
+      (pageNum == 6 && formInput.romero.filter(v => v).length < 5) ||
+      (pageNum == 7 && formInput.cangrejo.filter(v => v).length < 5) ||
+      (pageNum == 8 && formInput.acala.filter(v => v).length < 5) ||
+      (pageNum == 9 && formInput.chua.filter(v => v).length < 5) ||
+      (pageNum == 10 && formInput.bulante.filter(v => v).length < 5)"></q-btn>
             </div>
           </div>
           <div class="button-container" style="width: 100%;" v-show="pageNum == 11">
-            <q-btn @click="submitResponse()" label="submit" type="submit" color="primary" class="button-submit"></q-btn>
+            <q-btn @click="submitResponse()" label="submit" color="primary" class="button-submit"></q-btn>
           </div>
           <!--  v-show="pageNum == 11" -->
         </div>
@@ -381,13 +381,14 @@
       <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
         Your
         <b>SLC 2024</b> experience have been succesfully<br />concluded.
-        an email will be sent to you containing<br />
-        your proof of evaluation. <br />
+        An email will be sent to you containing<br />
+        your proof of evaluation after a few minutes. <br /> <br />
+        Please present the received email to your coordinator.
 
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="OK" color="green" @click="refreshPage()" v-close-popup />
+        <q-btn flat label="OK" color="green" @click="verify = false" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -466,8 +467,8 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
-  <q-dialog v-model="dataPolicyMenu" position="left" transition-show="slide-right" transition-hide="slide-left" maximized
-    :persistent="!conformeCheck">
+  <q-dialog v-model="dataPolicyMenu" position="left" transition-show="slide-right" transition-hide="slide-left"
+    maximized :persistent="!conformeCheck">
     <q-card class="dataPolicy" style="
       -webkit-border-radius: 25px;
       -moz-border-radius: 25px;
@@ -509,7 +510,6 @@
 import { useQuasar, useMeta } from "quasar";
 import { ref, reactive } from 'vue';
 import {
-  baseURL,
   axiosInit
 } from '../components/DefineInitials.vue';
 
@@ -556,9 +556,9 @@ const attended = ref(null)
 const index = ref(null)
 const dataPolicyMenu = ref(null)
 
-const refreshPage = () => {
-  location.href = "/";
-};
+// const refreshPage = () => {
+//   location.href = "/";
+// };
 
 const scrollToElement = (el) => {
   const myDiv = document.querySelector(el);
@@ -601,58 +601,11 @@ export default {
       return formData;
     };
 
-    const submitResponse = () => {
-      pleaseWait.value = true
-      if (
-        !formInput.email ||
-        formInput.af.filter(v => v).length < 6 ||
-        formInput.c.filter(v => v).length < 5 ||
-        formInput.q.filter(v => v).length < 7 ||
-        formInput.org.filter(v => v).length < 7 ||
-        formInput.out.filter(v => v).length < 7 ||
-        formInput.romero.filter(v => v).length < 5 ||
-        formInput.acala.filter(v => v).length < 5 ||
-        formInput.cangrejo.filter(v => v).length < 5 ||
-        formInput.chua.filter(v => v).length < 5 ||
-        formInput.bulante.filter(v => v).length < 5 ||
-        !formInput.five1 ||
-        !formInput.five2 ||
-        !formInput.five3 ||
-        !formInput.five4 ||
-        !formInput.five5 ||
-        !formInput.five6
-
-      ) {
-        pleaseWait.value = false
-        allRequired.value = true
-      } else {
-
-        const dlInsert = toFormData(formInput);
-        axiosInit.post(
-          "record/submitEval.php", dlInsert, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          }
-        }
-        ).then(function (response) {
-          if (response.data.success) {
-            pleaseWait.value = false
-            congrats.value = true
-          }
-          else {
-            pleaseWait.value = false
-            errorWarning.value = true
-          }
-        })
-      }
-    }
-
     return {
       scrollToElement,
       toFormData,
-      submitResponse,
       sendOTP,
-      refreshPage,
+      // refreshPage,
       dataPolicyMenu,
       formInput,
       accept,
@@ -770,8 +723,52 @@ export default {
 
         Direct Line: +63 2 8710 7462
 
-        E-mail: dpo@sei.dost.gov.ph`
+        E-mail: dpo@sei.dost.gov.ph`,
+      submitResponse() {
+        pleaseWait.value = true
+        if (
+          !formInput.email ||
+          formInput.af.filter(v => v).length < 6 ||
+          formInput.c.filter(v => v).length < 5 ||
+          formInput.q.filter(v => v).length < 7 ||
+          formInput.org.filter(v => v).length < 7 ||
+          formInput.out.filter(v => v).length < 7 ||
+          formInput.romero.filter(v => v).length < 5 ||
+          formInput.acala.filter(v => v).length < 5 ||
+          formInput.cangrejo.filter(v => v).length < 5 ||
+          formInput.chua.filter(v => v).length < 5 ||
+          formInput.bulante.filter(v => v).length < 5 ||
+          !formInput.five1 ||
+          !formInput.five2 ||
+          !formInput.five3 ||
+          !formInput.five4 ||
+          !formInput.five5 ||
+          !formInput.five6
 
+        ) {
+          pleaseWait.value = false
+          allRequired.value = true
+        } else {
+
+          const dlInsert = toFormData(formInput);
+          axiosInit.post(
+            "record/submitEval.php", dlInsert, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            }
+          }
+          ).then(function (response) {
+            if (response.data.success) {
+              pleaseWait.value = false
+              congrats.value = true
+            }
+            else {
+              pleaseWait.value = false
+              errorWarning.value = true
+            }
+          })
+        }
+      }
     }
   }
 }
