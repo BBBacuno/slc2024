@@ -348,6 +348,7 @@
             !formInput.lName ||
             !formInput.sex ||
             !formInput.birthDate ||
+            !formInput.phoneNumber ||
             formInput.phoneNumber.length != 11
           )) || ((pageNum == 2) && (
             !formInput.univRegion ||
