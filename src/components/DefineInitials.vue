@@ -3,7 +3,7 @@ import { ref, reactive } from 'vue'
 import axios from 'axios'
 import { date } from 'quasar'
 
-const baseURL = import.meta.env.DEV ? "http://localhost/SLC_api" : "/SLC_api"
+const baseURL = import.meta.env.DEV ? "http://localhost:8080/SLC_api" : "/SLC_api"
 const axiosInit = axios.create({
   baseURL,
   withCredentials: true
@@ -23,17 +23,17 @@ const errorWarning = ref(null)
 const allRequired = ref(false)
 
 
-axiosInit.get("/getdata/getRegions.php").then(function (response) {
+axiosInit.get("slc/getdata/getRegions.php").then(function (response) {
   region_options.value = response.data;
 })
 
-axiosInit.get("/getdata/getCities.php").then(function (response) {
+axiosInit.get("slc/getdata/getCities.php").then(function (response) {
   univCity_options.value = response.data;
 })
-axiosInit.get("/getdata/getCourses.php").then(function (response) {
+axiosInit.get("slc/getdata/getCourses.php").then(function (response) {
   course_options.value = response.data;
 })
-axiosInit.get("/getdata/getUniversities.php").then(function (response) {
+axiosInit.get("slc/getdata/getUniversities.php").then(function (response) {
   university_options.value = response.data;
 })
 
@@ -563,7 +563,7 @@ const submitResponse = (action, id) => {
 
       const dlInsert = toFormData(formInput);
       axiosInit.post(
-        "/record/submitRegistrant.php", dlInsert, {
+        "slc/record/submitRegistrant.php", dlInsert, {
         headers: {
           "Content-Type": "multipart/form-data",
         }
@@ -623,7 +623,7 @@ const submitResponse = (action, id) => {
       formInput.yearAward = !Number.isInteger(formInput.yearAward) && formInput.yearAward != null ? yearAward_options.value.filter(obj => formInput.yearAward == obj.label)[0].value : formInput.yearAward
       const dlInsert = toFormData(formInput);
       axiosInit.post(
-        '/operations/updateRegistrant.php', dlInsert,
+        'slc/operations/updateRegistrant.php', dlInsert,
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -639,7 +639,7 @@ const submitResponse = (action, id) => {
 
   }
   else if (action == 'MASTER') {
-    axiosInit.get('/operations/updateMasterList.php?email=' +
+    axiosInit.get('slc/operations/updateMasterList.php?email=' +
       formInput.email +
       '&id=' +
       formInput.id +

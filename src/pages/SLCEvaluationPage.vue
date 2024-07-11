@@ -265,6 +265,117 @@
           </div>
         </div>
         <div v-show="pageNum == 11">
+          <br><b>{{ "Gender" }}</b>
+          <br>{{ questions.gad[0] }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div style="display: inline-block" v-for="val in radio_val.slice(2).reverse()">
+                <li>
+                  <q-btn :outline="formInput.gad[0] != gad_options[val - 1]"
+                    :unelevated="formInput.gad[0] == gad_options[val - 1]" :label="gad_options[val - 1]"
+                    @click="formInput.gad[0] = gad_options[val - 1]"
+                    :class="formInput.gad[0] == gad_options[val - 1] ? 'pulsate-bck' : ''"
+                    :color="formInput.gad[0] == gad_options[val - 1] ? gad_colors[val - 1] : 'purple-5'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+            </ul>
+            <p style="font-size: 0.8em;">Note:<br>
+              1. Gender-Blind - failure to recognize different situations, roles, needs, and interests of women, men,
+              and other genders, as well as the existing gender inequality<br>
+              2. Gender-Sensitive - aware of how gender influences the opportunities of individuals in society and
+              recognizes different needs of women, men, and other genders<br>
+              3. Gender-Responsive - actively addresses the different situations, roles, needs, and interests of women,
+              men, and other genders, as well as the causes of gender inequality<br>
+            </p>
+          </div>
+
+          <br>{{ questions.gad[1] }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div style="display: inline-block" v-for="val in radio_val.slice(3).reverse()">
+                <li>
+                  <q-btn :outline="formInput.gad[1] != yesno_options[val - 1]"
+                    :unelevated="formInput.gad[1] == yesno_options[val - 1]" :label="yesno_options[val - 1]" @click="() => {
+      formInput.gad[1] = yesno_options[val - 1]
+      if (formInput.gad[1] == 'No') {
+        formInput.gad[2] = 'N/A'
+      }
+      else {
+        formInput.gad[2] = ''
+      }
+    }" :class="formInput.gad[1] == yesno_options[val - 1] ? 'pulsate-bck' : ''"
+                    :color="formInput.gad[1] == yesno_options[val - 1] ? gad_colors[val - 1] : 'purple-5'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+            </ul>
+          </div>
+          <q-slide-transition>
+            <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
+              v-model="formInput.gad[2]"
+              :label="formInput.gad[1] == 'Yes' ? 'If yes, Please Specify' : 'If no, Why not'" lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Required Field']" v-if="formInput.gad[1] == 'Yes'" />
+          </q-slide-transition>
+
+          <br>{{ questions.gad[2] }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div style="display: inline-block" v-for="val in radio_val.slice(3).reverse()">
+                <li>
+                  <q-btn :outline="formInput.gad[3] != yesno_options[val - 1]"
+                    :unelevated="formInput.gad[3] == yesno_options[val - 1]" :label="yesno_options[val - 1]" @click="() => {
+      formInput.gad[3] = yesno_options[val - 1]
+      if (formInput.gad[3] == 'No') {
+        formInput.gad[4] = 'N/A'
+      }
+      else {
+        formInput.gad[4] = ''
+      }
+    }" :class="formInput.gad[3] == yesno_options[val - 1] ? 'pulsate-bck' : ''"
+                    :color="formInput.gad[3] == yesno_options[val - 1] ? gad_colors[val - 1] : 'purple-5'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+            </ul>
+          </div>
+          <q-slide-transition>
+            <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
+              v-model="formInput.gad[4]"
+              :label="formInput.gad[3] == 'Yes' ? 'If yes, Please Specify' : 'If no, Why not'" lazy-rules
+              :rules="[(val) => (val && val.length > 0) || 'Required Field']" v-if="formInput.gad[3] == 'Yes'" />
+          </q-slide-transition>
+
+          <br>{{ questions.gad[3] }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div style="display: inline-block" v-for="val in radio_val.slice(3).reverse()">
+                <li>
+                  <q-btn :outline="formInput.gad[5] != yesno_options[val - 1]"
+                    :unelevated="formInput.gad[5] == yesno_options[val - 1]" :label="yesno_options[val - 1]" @click="() => {
+      formInput.gad[5] = yesno_options[val - 1]
+      if (formInput.gad[5] == 'Yes') {
+        formInput.gad[6] = 'N/A'
+      }
+      else {
+        formInput.gad[6] = ''
+      }
+    }" :class="formInput.gad[5] == yesno_options[val - 1] ? 'pulsate-bck' : ''"
+                    :color="formInput.gad[5] == yesno_options[val - 1] ? gad_colors[val - 1] : 'purple-5'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+            </ul>
+          </div>
+          <q-slide-transition>
+            <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
+              v-model="formInput.gad[6]"
+              :label="formInput.gad[5] == 'Yes' ? 'If yes, Please Specify' : 'If No, In your opinion, what comprises  a safe space and gender-fair language?'"
+              lazy-rules :rules="[(val) => (val && val.length > 0) || 'Required Field']"
+              v-if="formInput.gad[5] == 'No'" />
+          </q-slide-transition>
+        </div>
+        <div v-show="pageNum == 12">
           <br><b>{{ "OVERALL RATING" }}</b>
           <br>{{ questions.five1 }}
           <div class="radios">
@@ -292,8 +403,32 @@
       (val) => (val && val.length > 0) || 'Required Field',
     ]" />
           <br>{{ questions.five4 }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div style="display: inline-block">
+                <li>
+                  <q-btn :outline="formInput.five4[0] != yesno_options[0]"
+                    :unelevated="formInput.five4[0] == yesno_options[0]" :label="yesno_options[0]"
+                    @click="formInput.five4[0] = yesno_options[0]"
+                    :class="formInput.five4[0] == yesno_options[0] ? 'pulsate-bck' : ''"
+                    :color="formInput.five4[0] == yesno_options[0] ? likertScaleColor[4] : 'indigo-7'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+              <div style="display: inline-block">
+                <li>
+                  <q-btn :outline="formInput.five4[0] != yesno_options[1]"
+                    :unelevated="formInput.five4[0] == yesno_options[1]" :label="yesno_options[1]"
+                    @click="formInput.five4[0] = yesno_options[1]"
+                    :class="formInput.five4[0] == yesno_options[1] ? 'pulsate-bck' : ''"
+                    :color="formInput.five4[0] == yesno_options[1] ? likertScaleColor[1] : 'indigo-7'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+            </ul>
+          </div>
           <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
-            v-model="formInput.five4" label="Comment" lazy-rules :rules="[
+            v-model="formInput.five4[1]" label="Comment" lazy-rules :rules="[
       (val) => (val && val.length > 0) || 'Required Field',
     ]" />
           <br>{{ questions.five5 }}
@@ -314,7 +449,7 @@
             <div v-show="pageNum > 1" style="width: 25%;">
               <q-btn label="Back" @click="pageNum--" color="teal" class="button-submit" style="width: 100%;"></q-btn>
             </div>
-            <div v-show="pageNum < 11" style="width: 25%;  ">
+            <div v-show="pageNum < 12" style="width: 25%;  ">
               <q-btn label="Next" @click="pageNum++, scrollToElement('#topElement')" color="teal" class="button-submit"
                 style="width: 100%; height: 12%" :disabled="(pageNum == 1 && formInput.af.filter(v => v).length < 6) ||
       (pageNum == 2 && formInput.c.filter(v => v).length < 5) ||
@@ -325,10 +460,11 @@
       (pageNum == 7 && formInput.cangrejo.filter(v => v).length < 5) ||
       (pageNum == 8 && formInput.acala.filter(v => v).length < 5) ||
       (pageNum == 9 && formInput.chua.filter(v => v).length < 5) ||
-      (pageNum == 10 && formInput.bulante.filter(v => v).length < 5)"></q-btn>
+      (pageNum == 10 && formInput.bulante.filter(v => v).length < 5) ||
+      (pageNum == 11 && formInput.gad.filter(v => v).length < 7)"></q-btn>
             </div>
           </div>
-          <div class="button-container" style="width: 100%;" v-show="pageNum == 11">
+          <div class="button-container" style="width: 100%;" v-show="pageNum == 12">
             <q-btn @click="submitResponse()" label="submit" color="primary" class="button-submit"></q-btn>
           </div>
           <!--  v-show="pageNum == 11" -->
@@ -529,10 +665,11 @@ const formInput = reactive({
   chua: [null],
   bulante: [null],
   acala: [null],
+  gad: [null],
   five1: null,
   five2: null,
   five3: null,
-  five4: null,
+  five4: [null],
   five5: null,
   five6: null,
   email: null
@@ -569,7 +706,7 @@ const scrollToElement = (el) => {
 const sendOTP = () => {
   pleaseWait.value = true;
   axiosInit
-    .get('/record/checkEmailforEval.php?email=' + formInput.email)
+    .get('slc/record/checkEmailforEval.php?email=' + formInput.email)
     .then(function (response) {
       if (response.data.dupe === true) {
         pleaseWait.value = false;
@@ -639,11 +776,15 @@ export default {
         formInput.five1 = 5
         formInput.five2 = "yay"
         formInput.five3 = "yay"
-        formInput.five4 = "yay"
+        formInput.five4[0] = "Yes"
+        formInput.five4[1] = "yay"
         formInput.five5 = "yay"
         formInput.five6 = "yay"
       },
       radio_val: [5, 4, 3, 2, 1],
+      gad_options: ['Gender-Blind', 'Gender-Sensitive', 'Gender-Responsive'],
+      yesno_options: ['Yes', 'No'],
+      gad_colors: ['pink-5', 'purple-7', 'deep-purple-6'],
       rpRatingDesc: ['Needs Improvement', 'Fair', 'Satisfactory', 'Very Satisfactory', 'Excellent'],
       overallScaleDesc: ['Very Poor', 'Poor', 'Satisfactory', 'Very Satisfactory', 'Excellent'],
       likertScaleDesc: ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'],
@@ -704,6 +845,12 @@ export default {
           "5. Demonstrated keenness to the participants’ needs and other requirements related to the activity. ",
 
         ],
+        gad: [
+          '1.	Rate how gender was recognized in the camp with regard to the topics discussed, access to opportunities given to the participants, as well as the goals and objectives the activity aims to achieve.',
+          '2.	Have you had any experience during the camp that hindered effective facilitation of learning and comfortable stay in the venue due to your sex assigned at birth, sexual orientation, gender identity, or gender expression?',
+          '3.	Have you had any experience of feeling  being unsafe in the presence of any hotel staff, coordinators, facilitators, and co-scholars?',
+          '4.	Did the camp foster a safe space for your expressions and identities, as well as the observance of gender-fair language?'
+        ],
         five1: "1.	How would you rate the overall conduct of the leadership camp?",
         five2: "2. What important insight/s did you get from the training?  ",
         five3: "3. Please indicate your comments/suggestions for improvement, if there is any. ",
@@ -741,7 +888,7 @@ export default {
           !formInput.five1 ||
           !formInput.five2 ||
           !formInput.five3 ||
-          !formInput.five4 ||
+          formInput.five4.filter(v => v).length < 2 ||
           !formInput.five5 ||
           !formInput.five6
 
@@ -752,7 +899,7 @@ export default {
 
           const dlInsert = toFormData(formInput);
           axiosInit.post(
-            "record/submitEval.php", dlInsert, {
+            "slc/record/submitEval.php", dlInsert, {
             headers: {
               "Content-Type": "multipart/form-data",
             }

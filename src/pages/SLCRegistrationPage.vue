@@ -598,7 +598,7 @@ const refreshPage = () => {
 const sendOTP = () => {
   pleaseWait.value = true;
   axiosInit
-    .get('/auth/sendOTP.php?email=' + formInput.email)
+    .get('slc/auth/sendOTP.php?email=' + formInput.email)
     .then(function (response) {
       if (response.data.regExists === true) {
         pleaseWait.value = false;
@@ -619,17 +619,17 @@ const sendOTP = () => {
 export default {
   beforeMount() {
 
-    pleaseWait.value = true
+    // pleaseWait.value = true
 
-    axiosInit.get("/getdata/getCourses.php").then(function (response) {
-      course_options.value = response.data;
-    })
-    axiosInit.get("/getdata/getUniversities.php").then(function (response) {
-      university_options.value = response.data;
-    })
-    axiosInit.get("/getdata/getCities.php").then(function (response) {
-      univCity_options.value = response.data;
-    })
+    // axiosInit.get("slc/getdata/getCourses.php").then(function (response) {
+    //   course_options.value = response.data;
+    // })
+    // axiosInit.get("/getdata/getUniversities.php").then(function (response) {
+    //   university_options.value = response.data;
+    // })
+    // axiosInit.get("/getdata/getCities.php").then(function (response) {
+    //   univCity_options.value = response.data;
+    // })
 
     univCity_options.value = [
       {
@@ -641,7 +641,7 @@ export default {
         value: 2
       }
     ]
-    pleaseWait.value = false
+    // pleaseWait.value = false
   },
   setup() {
     useMeta(metaData)
@@ -894,12 +894,6 @@ E-mail: dpo@sei.dost.gov.ph`,
   font-family: montserrat;
   overflow: scroll;
   font-size: 1.3em;
-}
-
-body {
-  background-image: url('/background.jpg');
-  background-size: 100%;
-  background-repeat: repeat;
 }
 
 .radios {
