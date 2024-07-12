@@ -313,9 +313,9 @@
           </div>
           <q-slide-transition>
             <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
-              v-model="formInput.gad[2]"
-              :label="formInput.gad[1] == 'Yes' ? 'If yes, Please Specify' : 'If no, Why not'" lazy-rules
-              :rules="[(val) => (val && val.length > 0) || 'Required Field']" v-if="formInput.gad[1] == 'Yes'" />
+              v-model="formInput.gad[2]" :label="formInput.gad[1] == 'Yes' ? 'Please Specify' : 'If no, Why not'"
+              lazy-rules :rules="[(val) => (val && val.length > 0) || 'Required Field']"
+              v-if="formInput.gad[1] == 'Yes'" />
           </q-slide-transition>
 
           <br>{{ questions.gad[2] }}
@@ -341,8 +341,7 @@
           </div>
           <q-slide-transition>
             <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
-              v-model="formInput.gad[4]"
-              :label="formInput.gad[3] == 'Yes' ? 'If yes, Please Specify' : 'If no, Why not'" lazy-rules
+              v-model="formInput.gad[4]" :label="formInput.gad[3] == 'Yes' ? 'Please Specify' : 'Why not'" lazy-rules
               :rules="[(val) => (val && val.length > 0) || 'Required Field']" v-if="formInput.gad[3] == 'Yes'" />
           </q-slide-transition>
 
@@ -370,7 +369,7 @@
           <q-slide-transition>
             <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
               v-model="formInput.gad[6]"
-              :label="formInput.gad[5] == 'Yes' ? 'If yes, Please Specify' : 'If No, In your opinion, what comprises  a safe space and gender-fair language?'"
+              :label="formInput.gad[5] == 'Yes' ? 'If yes, Please Specify' : 'In your opinion, what comprises  a safe space and gender-fair language?'"
               lazy-rules :rules="[(val) => (val && val.length > 0) || 'Required Field']"
               v-if="formInput.gad[5] == 'No'" />
           </q-slide-transition>
@@ -677,7 +676,7 @@ const formInput = reactive({
 
 const accept = ref(false)
 // test verify
-const verify = ref(false)
+const verify = ref(true)
 const otpSuccess = ref(null)
 const otp = ref(null)
 const isOTPSixDigit = ref(null)
@@ -687,7 +686,7 @@ const congrats = ref(null)
 const errorWarning = ref(null)
 const notListed = ref(null)
 const isScreenMD = ref(null)
-const pageNum = ref(1)
+const pageNum = ref(11)
 const alreadySubmitted = ref(null)
 const attended = ref(null)
 const index = ref(null)
