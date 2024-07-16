@@ -76,9 +76,6 @@
                   <q-icon class="logo-color" name="diversity_3" size="lg" />
                 </template>
               </q-input>
-
-            </div>
-            <div v-show="OTPVerified" class="right-container">
               <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.suffix"
                 label="Suffix" :options="suffix_options" emit-value map-options lazy-rules>
 
@@ -91,6 +88,9 @@
                     v-show="formInput.suffix"></q-icon>
                 </template>
               </q-select>
+            </div>
+            <div v-show="OTPVerified" class="right-container">
+
               <q-input outlined rounded :color="formColor" :label-color="formColor" label="Birthdate"
                 v-model="formInput.birthDate" @click="$refs.birthdateProxy.show()"
                 :rules="[(val) => (val && val.length > 0) || 'Required Field']">
@@ -122,6 +122,43 @@
                   <q-icon class="logo-color" name="female" size="xl" />Female
                 </q-radio>
               </div>
+              <br>{{ "Are you a member of LGBTQ community?" }}
+              <div class="radios">
+                <ul style="list-style-type: none; padding: 0; margin: 0; ">
+                  <div style="display: inline-block" v-for="val in radio_val.slice(3).reverse()">
+                    <li>
+                      <q-btn :outline="formInput.lgbt[0] != yesno_options[val - 1]"
+                        :unelevated="formInput.lgbt[0] == yesno_options[val - 1]" :label="yesno_options[val - 1]"
+                        @click="() => { formInput.lgbt[0] = yesno_options[val - 1]; }"
+                        :class="formInput.lgbt[0] == yesno_options[val - 1] ? 'pulsate-bck' : ''"
+                        :color="formInput.lgbt[0] == yesno_options[val - 1] ? gad_colors[val - 1] : 'purple-5'"
+                        style="margin-inline: 10px; margin-block: 5px" />
+                    </li>
+                  </div>
+                </ul>
+              </div>
+              <q-slide-transition>
+                <div v-if="formInput.lgbt[0]">
+                  {{ formInput.lgbt[0] == 'Yes' ?
+          'Are you okay to be roomed together with a cisgender*?'
+          : 'Are you okay to be roomed together with a member of LGBTQ ? ' }}
+                  <div class="radios">
+                    <ul style="list-style-type: none; padding: 0; margin: 0; ">
+                      <div style="display: inline-block" v-for="val in radio_val.slice(3).reverse()">
+                        <li>
+                          <q-btn :outline="formInput.lgbt[1] != yesno_options[val - 1]"
+                            :unelevated="formInput.lgbt[1] == yesno_options[val - 1]" :label="yesno_options[val - 1]"
+                            @click="() => { formInput.lgbt[1] = yesno_options[val - 1]; }"
+                            :class="formInput.lgbt[1] == yesno_options[val - 1] ? 'pulsate-bck' : ''"
+                            :color="formInput.lgbt[1] == yesno_options[val - 1] ? gad_colors[val - 1] : 'purple-5'"
+                            style="margin-inline: 10px; margin-block: 5px" />
+                        </li>
+                      </div>
+                    </ul>
+                  </div>
+                </div>
+
+              </q-slide-transition>
               <q-input rounded outlined v-model="formInput.phoneNumber" type="number" maxlength="11" :color="formColor"
                 :label-color="formColor" label="Phone Number" lazy-rules
                 :rules="[(val) => (val && val.length == 11) || '11 digit phone number only']">
@@ -347,6 +384,7 @@
             !formInput.mName ||
             !formInput.lName ||
             !formInput.sex ||
+            formInput.lgbt.length != 2 ||
             !formInput.birthDate ||
             !formInput.phoneNumber ||
             formInput.phoneNumber.length != 11
@@ -573,7 +611,7 @@ const metaData = {
 
 
 const accept = ref(false)
-// skip otp verification
+// test otp verification
 const OTPVerified = ref(false)
 const otp = ref(null)
 const isOTPSixDigit = ref(null)
@@ -656,7 +694,7 @@ export default {
 
     const OTPValid = () => {
       axiosInit
-        .get("/auth/checkOTP.php?otp=" + otp.value + "&email=" + formInput.email)
+        .get("slc/auth/checkOTP.php?otp=" + otp.value + "&email=" + formInput.email)
         .then(function (response) {
           if (response.data.OTPVerified === true) {
             OTPVerified.value = true;
@@ -709,7 +747,7 @@ export default {
       } else {
         const dlInsert = toFormData(formInput);
         axiosInit.post(
-          "/record/submitRegistrant.php", dlInsert, {
+          "slc/record/submitRegistrant.php", dlInsert, {
           headers: {
             "Content-Type": "multipart/form-data",
           }
@@ -773,6 +811,8 @@ export default {
       radio_val: [5, 4, 3, 2, 1],
       likertScaleDesc: ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'],
       likertScaleColor: ['red-6', 'red-4', 'teal-4', 'green-4', 'green-6'],
+      yesno_options: ['Yes', 'No'],
+      gad_colors: ['pink-5', 'purple-7', 'deep-purple-6'],
       questions: {
         af: [
           ' 1. I am familiar with the common leadership approaches.',

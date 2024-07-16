@@ -44,6 +44,7 @@ const formInput = reactive({
   lName: null,
   suffix: null,
   sex: null,
+  lgbt: [null],
   birthDate: null,
   phoneNumber: null,
   participant: null,
