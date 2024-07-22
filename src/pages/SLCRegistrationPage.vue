@@ -405,7 +405,7 @@
           </div>
         </div>
         <!-- remove comment to enable testing with pre-input data -->
-        <!-- <q-btn label="test" @click="testSubmit()" /> -->
+        <q-btn label="test" @click="testSubmit()" />
       </q-form>
     </div>
   </q-card>
@@ -602,7 +602,10 @@ import {
   region_options,
   scrollToElement,
   testSubmit,
-  formInput
+  formInput,
+  university_options,
+  univCity_options,
+  course_options
 } from '../components/DefineInitials.vue';
 
 const metaData = {
@@ -612,7 +615,7 @@ const metaData = {
 
 const accept = ref(false)
 // test otp verification
-const OTPVerified = ref(false)
+const OTPVerified = ref(true)
 const otp = ref(null)
 const isOTPSixDigit = ref(null)
 const allRequired = ref(null)
@@ -622,9 +625,9 @@ const errorWarning = ref(null)
 const notListed = ref(null)
 const alreadySubmitted = ref(null)
 const OTPSent = ref(false)
-const university_options = ref(null)
-const univCity_options = ref(null)
-const course_options = ref(null)
+// const university_options = ref(null)
+// const univCity_options = ref(null)
+// const course_options = ref(null)
 const OTPNotMatch = ref(null)
 
 const refreshPage = () => {
@@ -669,16 +672,16 @@ export default {
     //   univCity_options.value = response.data;
     // })
 
-    univCity_options.value = [
-      {
-        label: 'Aklan',
-        value: 1
-      },
-      {
-        label: 'Metro Manila',
-        value: 2
-      }
-    ]
+    // univCity_options.value = [
+    //   {
+    //     label: 'Aklan',
+    //     value: 1
+    //   },
+    //   {
+    //     label: 'Metro Manila',
+    //     value: 2
+    //   }
+    // ]
     // pleaseWait.value = false
   },
   setup() {
