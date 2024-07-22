@@ -23,17 +23,17 @@ const errorWarning = ref(null)
 const allRequired = ref(false)
 
 
-axiosInit.get("slc/getdata/getRegions.php").then(function (response) {
+axiosInit.get("general/getRegions.php?conduct=slc").then(function (response) {
   region_options.value = response.data;
 })
 
-axiosInit.get("slc/getdata/getCities.php").then(function (response) {
+axiosInit.get("general/getCities.php").then(function (response) {
   univCity_options.value = response.data;
 })
-axiosInit.get("slc/getdata/getCourses.php").then(function (response) {
+axiosInit.get("general/getCourses.php").then(function (response) {
   course_options.value = response.data;
 })
-axiosInit.get("slc/getdata/getUniversities.php").then(function (response) {
+axiosInit.get("general/getUniversities.php").then(function (response) {
   university_options.value = response.data;
 })
 
