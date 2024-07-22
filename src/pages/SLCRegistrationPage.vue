@@ -405,7 +405,7 @@
           </div>
         </div>
         <!-- remove comment to enable testing with pre-input data -->
-        <q-btn label="test" @click="testSubmit()" />
+        <!-- <q-btn label="test" @click="testSubmit()" /> -->
       </q-form>
     </div>
   </q-card>
@@ -615,7 +615,7 @@ const metaData = {
 
 const accept = ref(false)
 // test otp verification
-const OTPVerified = ref(true)
+const OTPVerified = ref(false)
 const otp = ref(null)
 const isOTPSixDigit = ref(null)
 const allRequired = ref(null)
