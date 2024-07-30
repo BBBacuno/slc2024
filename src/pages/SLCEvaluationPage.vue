@@ -676,7 +676,7 @@ const formInput = reactive({
 
 const accept = ref(false)
 // test verify
-const verify = ref(true)
+const verify = ref(false)
 const otpSuccess = ref(null)
 const otp = ref(null)
 const isOTPSixDigit = ref(null)
@@ -686,7 +686,7 @@ const congrats = ref(null)
 const errorWarning = ref(null)
 const notListed = ref(null)
 const isScreenMD = ref(null)
-const pageNum = ref(11)
+const pageNum = ref(1)
 const alreadySubmitted = ref(null)
 const attended = ref(null)
 const index = ref(null)
