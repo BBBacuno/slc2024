@@ -182,7 +182,7 @@
           <q-separator />
         </div>
         <div v-show="pageNum == 8">
-          <br><b>{{ "DR. NESTOR G. ACALA " }}</b>
+          <br><b>{{ "DR. JAYEEL CORNELIO " }}</b>
           <div v-for="(item, index) in questions.speakers" :key="item.id">
             <br>{{ item }}
             <div class="radios">

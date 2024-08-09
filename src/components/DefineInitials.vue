@@ -94,6 +94,10 @@ const scholarProgram_options = ref([
   {
     label: 'RA 10612',
     value: 3
+  },
+  {
+    label: 'Bangon Marawi',
+    value: 4
   }
 ])
 

@@ -614,7 +614,6 @@ const metaData = {
 
 
 const accept = ref(false)
-// test otp verification
 const OTPVerified = ref(false)
 const otp = ref(null)
 const isOTPSixDigit = ref(null)
@@ -625,9 +624,6 @@ const errorWarning = ref(null)
 const notListed = ref(null)
 const alreadySubmitted = ref(null)
 const OTPSent = ref(false)
-// const university_options = ref(null)
-// const univCity_options = ref(null)
-// const course_options = ref(null)
 const OTPNotMatch = ref(null)
 
 const refreshPage = () => {
@@ -658,32 +654,6 @@ const sendOTP = () => {
 };
 
 export default {
-  beforeMount() {
-
-    // pleaseWait.value = true
-
-    // axiosInit.get("slc/getdata/getCourses.php").then(function (response) {
-    //   course_options.value = response.data;
-    // })
-    // axiosInit.get("/getdata/getUniversities.php").then(function (response) {
-    //   university_options.value = response.data;
-    // })
-    // axiosInit.get("/getdata/getCities.php").then(function (response) {
-    //   univCity_options.value = response.data;
-    // })
-
-    // univCity_options.value = [
-    //   {
-    //     label: 'Aklan',
-    //     value: 1
-    //   },
-    //   {
-    //     label: 'Metro Manila',
-    //     value: 2
-    //   }
-    // ]
-    // pleaseWait.value = false
-  },
   setup() {
     useMeta(metaData)
 
