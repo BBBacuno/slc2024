@@ -181,7 +181,7 @@
           </div>
           <q-separator />
         </div>
-        <div v-show="pageNum == 8">
+        <!-- <div v-show="pageNum == 8">
           <br><b>{{ "DR. JAYEEL CORNELIO " }}</b>
           <div v-for="(item, index) in questions.speakers" :key="item.id">
             <br>{{ item }}
@@ -194,6 +194,27 @@
                       :label="rpRatingDesc[val - 1]" @click="formInput.acala[index] = val"
                       :class="formInput.acala[index] == val ? 'pulsate-bck' : ''"
                       :color="formInput.acala[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                      style="margin-inline: 10px; margin-block: 5px" />
+                  </li>
+                </div>
+              </ul>
+            </div>
+          </div>
+          <q-separator />
+        </div> -->
+        <div v-show="pageNum == 8">
+          <br><b>{{ "JAYEEL S. CORNELIO Ph. D." }}</b>
+          <div v-for="(item, index) in questions.speakers" :key="item.id">
+            <br>{{ item }}
+            <div class="radios">
+              <ul style="list-style-type: none; padding: 0; margin: 0; ">
+                <div v-for="val in radio_val" :key="val.id"
+                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                  <li>
+                    <q-btn :outline="formInput.cornelio[index] != val" :unelevated="formInput.cornelio[index] == val"
+                      :label="rpRatingDesc[val - 1]" @click="formInput.cornelio[index] = val"
+                      :class="formInput.cornelio[index] == val ? 'pulsate-bck' : ''"
+                      :color="formInput.cornelio[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
                       style="margin-inline: 10px; margin-block: 5px" />
                   </li>
                 </div>
@@ -223,27 +244,6 @@
           </div>
           <q-separator />
         </div>
-        <!-- <div v-show="pageNum == 10">
-          <br><b>{{ "JAYEEL S. CORNELIO Ph. D." }}</b>
-          <div v-for="(item, index) in questions.speakers" :key="item.id">
-            <br>{{ item }}
-            <div class="radios">
-              <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                <div v-for="val in radio_val" :key="val.id"
-                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
-                  <li>
-                    <q-btn :outline="formInput.cornelio[index] != val" :unelevated="formInput.cornelio[index] == val"
-                      :label="rpRatingDesc[val - 1]" @click="formInput.cornelio[index] = val"
-                      :class="formInput.cornelio[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.cornelio[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px" />
-                  </li>
-                </div>
-              </ul>
-            </div>
-          </div>
-          <q-separator />
-        </div> -->
         <div v-show="pageNum == 10">
           <br><b>{{ "MS. ROSEJELYNN C. BULANTE " }}</b>
           <div v-for="(item, index) in questions.speakers" :key="item.id">
@@ -457,7 +457,7 @@
       (pageNum == 5 && formInput.out.filter(v => v).length < 7) ||
       (pageNum == 6 && formInput.romero.filter(v => v).length < 5) ||
       (pageNum == 7 && formInput.cangrejo.filter(v => v).length < 5) ||
-      (pageNum == 8 && formInput.acala.filter(v => v).length < 5) ||
+      (pageNum == 8 && formInput.cornelio.filter(v => v).length < 5) ||
       (pageNum == 9 && formInput.chua.filter(v => v).length < 5) ||
       (pageNum == 10 && formInput.bulante.filter(v => v).length < 5) ||
       (pageNum == 11 && formInput.gad.filter(v => v).length < 7)"></q-btn>
@@ -466,7 +466,6 @@
           <div class="button-container" style="width: 100%;" v-show="pageNum == 12">
             <q-btn @click="submitResponse()" label="submit" color="primary" class="button-submit"></q-btn>
           </div>
-          <!--  v-show="pageNum == 11" -->
         </div>
       </q-form>
     </div>
@@ -523,7 +522,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="OK" color="green" @click="verify = false" v-close-popup />
+        <q-btn flat label="OK" color="green" @click="verify = false, refreshPage()" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -541,7 +540,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="OK" color="grey" v-close-popup @click="verify = false" />
+        <q-btn flat label="OK" color="grey" v-close-popup @click="verify = false, refreshPage()" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -663,7 +662,7 @@ const formInput = reactive({
   cangrejo: [null],
   chua: [null],
   bulante: [null],
-  acala: [null],
+  // acala: [null],
   gad: [null],
   five1: null,
   five2: null,
@@ -761,6 +760,7 @@ export default {
       conformeCheck,
       isScreenMD: ref($q.screen.lt.md ? 'md' : 'xl'),
       testSubmit() {
+        pageNum.value = 12
         formInput.email = 'bonbacuno@gmail.com'
         formInput.af = [1, 2, 3, 4, 5, 1]
         formInput.c = [1, 2, 3, 4, 5]
@@ -768,7 +768,7 @@ export default {
         formInput.org = [1, 2, 3, 4, 5, 1, 2]
         formInput.out = [1, 2, 3, 4, 5, 1, 2]
         formInput.romero = [1, 2, 3, 4, 5]
-        formInput.acala = [1, 2, 3, 4, 5]
+        formInput.cornelio = [1, 2, 3, 4, 5]
         formInput.cangrejo = [1, 2, 3, 4, 5]
         formInput.chua = [1, 2, 3, 4, 5]
         formInput.bulante = [1, 2, 3, 4, 5]
@@ -880,7 +880,7 @@ export default {
           formInput.org.filter(v => v).length < 7 ||
           formInput.out.filter(v => v).length < 7 ||
           formInput.romero.filter(v => v).length < 5 ||
-          formInput.acala.filter(v => v).length < 5 ||
+          formInput.cornelio.filter(v => v).length < 5 ||
           formInput.cangrejo.filter(v => v).length < 5 ||
           formInput.chua.filter(v => v).length < 5 ||
           formInput.bulante.filter(v => v).length < 5 ||
