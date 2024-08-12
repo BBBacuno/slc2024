@@ -443,7 +443,7 @@
         </div>
         <div class="button-container">
           <!-- for testing pre input data -->
-          <q-btn @click="testSubmit()" label="test" />
+          <!-- <q-btn @click="testSubmit()" label="test" /> -->
           <div class="radios" style="width: 100%;">
             <div v-show="pageNum > 1" style="width: 25%;">
               <q-btn label="Back" @click="pageNum--" color="teal" class="button-submit" style="width: 100%;"></q-btn>
@@ -676,7 +676,7 @@ const formInput = reactive({
 
 const accept = ref(false)
 // test verify
-const verify = ref(true)
+const verify = ref(false)
 const otpSuccess = ref(null)
 const otp = ref(null)
 const isOTPSixDigit = ref(null)
