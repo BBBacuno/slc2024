@@ -181,8 +181,8 @@
           </div>
           <q-separator />
         </div>
-        <!-- <div v-show="pageNum == 8">
-          <br><b>{{ "DR. JAYEEL CORNELIO " }}</b>
+        <div v-show="pageNum == 8">
+          <br><b>{{ "DR. NESTOR ACALA" }}</b>
           <div v-for="(item, index) in questions.speakers" :key="item.id">
             <br>{{ item }}
             <div class="radios">
@@ -201,8 +201,8 @@
             </div>
           </div>
           <q-separator />
-        </div> -->
-        <div v-show="pageNum == 8">
+        </div>
+        <div v-show="pageNum == 9">
           <br><b>{{ "JAYEEL S. CORNELIO Ph. D." }}</b>
           <div v-for="(item, index) in questions.speakers" :key="item.id">
             <br>{{ item }}
@@ -223,7 +223,7 @@
           </div>
           <q-separator />
         </div>
-        <div v-show="pageNum == 9">
+        <div v-show="pageNum == 10">
           <br><b>{{ "PROF. MICHAEL CHARLESTON B. CHUA" }}</b>
           <div v-for="(item, index) in questions.speakers" :key="item.id">
             <br>{{ item }}
@@ -244,7 +244,7 @@
           </div>
           <q-separator />
         </div>
-        <div v-show="pageNum == 10">
+        <div v-show="pageNum == 11">
           <br><b>{{ "MS. ROSEJELYNN C. BULANTE " }}</b>
           <div v-for="(item, index) in questions.speakers" :key="item.id">
             <br>{{ item }}
@@ -264,7 +264,7 @@
             </div>
           </div>
         </div>
-        <div v-show="pageNum == 11">
+        <div v-show="pageNum == 12">
           <br><b>{{ "Gender" }}</b>
           <br>{{ questions.gad[0] }}
           <div class="radios">
@@ -374,7 +374,7 @@
               v-if="formInput.gad[5] == 'No'" />
           </q-slide-transition>
         </div>
-        <div v-show="pageNum == 12">
+        <div v-show="pageNum == 13">
           <br><b>{{ "OVERALL RATING" }}</b>
           <br>{{ questions.five1 }}
           <div class="radios">
@@ -443,12 +443,12 @@
         </div>
         <div class="button-container">
           <!-- for testing pre input data -->
-          <!-- <q-btn @click="testSubmit()" label="test" /> -->
+          <q-btn @click="testSubmit()" label="test" />
           <div class="radios" style="width: 100%;">
             <div v-show="pageNum > 1" style="width: 25%;">
               <q-btn label="Back" @click="pageNum--" color="teal" class="button-submit" style="width: 100%;"></q-btn>
             </div>
-            <div v-show="pageNum < 12" style="width: 25%;  ">
+            <div v-show="pageNum < 13" style="width: 25%;  ">
               <q-btn label="Next" @click="pageNum++, scrollToElement('#topElement')" color="teal" class="button-submit"
                 style="width: 100%; height: 12%" :disabled="(pageNum == 1 && formInput.af.filter(v => v).length < 6) ||
       (pageNum == 2 && formInput.c.filter(v => v).length < 5) ||
@@ -457,10 +457,11 @@
       (pageNum == 5 && formInput.out.filter(v => v).length < 7) ||
       (pageNum == 6 && formInput.romero.filter(v => v).length < 5) ||
       (pageNum == 7 && formInput.cangrejo.filter(v => v).length < 5) ||
-      (pageNum == 8 && formInput.cornelio.filter(v => v).length < 5) ||
-      (pageNum == 9 && formInput.chua.filter(v => v).length < 5) ||
-      (pageNum == 10 && formInput.bulante.filter(v => v).length < 5) ||
-      (pageNum == 11 && formInput.gad.filter(v => v).length < 7)"></q-btn>
+      (pageNum == 8 && formInput.acala.filter(v => v).length < 5) ||
+      (pageNum == 9 && formInput.cornelio.filter(v => v).length < 5) ||
+      (pageNum == 10 && formInput.chua.filter(v => v).length < 5) ||
+      (pageNum == 11 && formInput.bulante.filter(v => v).length < 5) ||
+      (pageNum == 12 && formInput.gad.filter(v => v).length < 7)"></q-btn>
             </div>
           </div>
           <div class="button-container" style="width: 100%;" v-show="pageNum == 12">
@@ -662,7 +663,7 @@ const formInput = reactive({
   cangrejo: [null],
   chua: [null],
   bulante: [null],
-  // acala: [null],
+  acala: [null],
   gad: [null],
   five1: null,
   five2: null,
@@ -675,7 +676,7 @@ const formInput = reactive({
 
 const accept = ref(false)
 // test verify
-const verify = ref(false)
+const verify = ref(true)
 const otpSuccess = ref(null)
 const otp = ref(null)
 const isOTPSixDigit = ref(null)
