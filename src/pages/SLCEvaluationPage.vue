@@ -464,7 +464,7 @@
       (pageNum == 12 && formInput.gad.filter(v => v).length < 7)"></q-btn>
             </div>
           </div>
-          <div class="button-container" style="width: 100%;" v-show="pageNum == 12">
+          <div class="button-container" style="width: 100%;" v-show="pageNum == 13">
             <q-btn @click="submitResponse()" label="submit" color="primary" class="button-submit"></q-btn>
           </div>
         </div>
@@ -632,7 +632,6 @@
             research study. I understand that my personal information is protected by R.A. 10173, Data Privacy Act of
             2012.
           </p>
-          <!-- </q-checkbox> -->
 
           <q-btn v-close-popup label="I Agree" color="green-6" />
         </div>
@@ -692,9 +691,9 @@ const attended = ref(null)
 const index = ref(null)
 const dataPolicyMenu = ref(null)
 
-// const refreshPage = () => {
-//   location.href = "/";
-// };
+const refreshPage = () => {
+  location.href = "/";
+};
 
 const scrollToElement = (el) => {
   const myDiv = document.querySelector(el);
@@ -741,7 +740,7 @@ export default {
       scrollToElement,
       toFormData,
       sendOTP,
-      // refreshPage,
+      refreshPage,
       dataPolicyMenu,
       formInput,
       accept,
