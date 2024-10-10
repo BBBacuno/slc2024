@@ -26,449 +26,447 @@
       </div>
     </div>
     <div v-show="verify" id="parentContainer">
-      <q-form>
-        <div v-show="pageNum == 1">
-          <p style="justify-content: center;">
-            <b>DIRECTIONS</b>: Using a 5-point Likert scale, please put a checkmark (✓) on the
-            appropriate column that represents the extent of your agreement to the following
-            statements about some quality dimensions of this activity.
-            All fields required.
-          </p>
-          <q-separator />
-          <br><br><b>{{ "Access and Facilities" }}</b>
-          <div v-for="(item, index) in questions.af" :key="item.id">
-            <br>{{ item }}
-            <div class="radios">
-              <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                <div v-for="val in radio_val" :key="val.id"
-                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
-                  <li>
-                    <q-btn :outline="formInput.af[index] != val" :unelevated="formInput.af[index] == val"
-                      :label="likertScaleDesc[val - 1]" @click="formInput.af[index] = val"
-                      :class="formInput.af[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.af[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px" />
-                  </li>
-                </div>
-              </ul>
-            </div>
-          </div>
-          <q-separator />
-        </div>
-        <div v-show="pageNum == 2">
-          <br><b>{{ "Communication" }}</b>
-          <div v-for="(item, index) in questions.c" :key="item.id">
-            <br>{{ item }}
-            <div class="radios">
-              <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                <div v-for="val in radio_val" :key="val.id"
-                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
-                  <li>
-                    <q-btn :outline="formInput.c[index] != val" :unelevated="formInput.c[index] == val"
-                      :label="likertScaleDesc[val - 1]" @click="formInput.c[index] = val"
-                      :class="formInput.c[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.c[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px" />
-                  </li>
-                </div>
-              </ul>
-            </div>
-          </div>
-          <q-separator />
-        </div>
-        <div v-show="pageNum == 3">
-          <br><b>{{ "Quality" }}</b>
-          <div v-for="(item, index) in questions.q" :key="item.id">
-            <br>{{ item }}
-            <div class="radios">
-              <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                <div v-for="val in radio_val" :key="val.id"
-                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
-                  <li>
-                    <q-btn :outline="formInput.q[index] != val" :unelevated="formInput.q[index] == val"
-                      :label="likertScaleDesc[val - 1]" @click="formInput.q[index] = val"
-                      :class="formInput.q[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.q[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px" />
-                  </li>
-                </div>
-              </ul>
-            </div>
-          </div>
-          <q-separator />
-        </div>
-        <div v-show="pageNum == 4">
-          <br><b>{{ "Organization" }}</b>
-          <div v-for="(item, index) in questions.org" :key="item.id">
-            <br>{{ item }}
-            <div class="radios">
-              <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                <div v-for="val in radio_val" :key="val.id"
-                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
-                  <li>
-                    <q-btn :outline="formInput.org[index] != val" :unelevated="formInput.org[index] == val"
-                      :label="likertScaleDesc[val - 1]" @click="formInput.org[index] = val"
-                      :class="formInput.org[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.org[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px" />
-                  </li>
-                </div>
-              </ul>
-            </div>
-          </div>
-          <q-separator />
-        </div>
-        <div v-show="pageNum == 5">
-          <br><b>{{ "Outcome" }}</b>
-          <div v-for="(item, index) in questions.out" :key="item.id">
-            <br>{{ item }}
-            <div class="radios">
-              <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                <div v-for="val in radio_val" :key="val.id"
-                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
-                  <li>
-                    <q-btn :outline="formInput.out[index] != val" :unelevated="formInput.out[index] == val"
-                      :label="likertScaleDesc[val - 1]" @click="formInput.out[index] = val"
-                      :class="formInput.out[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.out[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px" />
-                  </li>
-                </div>
-              </ul>
-            </div>
-          </div>
-          <q-separator />
-        </div>
-        <div v-show="pageNum == 6">
-          <br><b>{{ "DR. SEGUNDO JOAQUIN E. ROMERO, JR. " }}</b>
-          <div v-for="(item, index) in questions.speakers" :key="item.id">
-            <br>{{ item }}
-            <div class="radios">
-              <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                <div v-for="val in radio_val" :key="val.id"
-                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
-                  <li>
-                    <q-btn :outline="formInput.romero[index] != val" :unelevated="formInput.romero[index] == val"
-                      :label="rpRatingDesc[val - 1]" @click="formInput.romero[index] = val"
-                      :class="formInput.romero[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.romero[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px" />
-                  </li>
-                </div>
-              </ul>
-            </div>
-          </div>
-          <q-separator />
-        </div>
-        <div v-show="pageNum == 7">
-          <br><b>{{ "ENGR. BERNIE C. CANGREJO" }}</b>
-          <div v-for="(item, index) in questions.speakers" :key="item.id">
-            <br>{{ item }}
-            <div class="radios">
-              <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                <div v-for="val in radio_val" :key="val.id"
-                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
-                  <li>
-                    <q-btn :outline="formInput.cangrejo[index] != val" :unelevated="formInput.cangrejo[index] == val"
-                      :label="rpRatingDesc[val - 1]" @click="formInput.cangrejo[index] = val"
-                      :class="formInput.cangrejo[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.cangrejo[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px" />
-                  </li>
-                </div>
-              </ul>
-            </div>
-          </div>
-          <q-separator />
-        </div>
-        <div v-show="pageNum == 8">
-          <br><b>{{ "DR. NESTOR ACALA" }}</b>
-          <div v-for="(item, index) in questions.speakers" :key="item.id">
-            <br>{{ item }}
-            <div class="radios">
-              <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                <div v-for="val in radio_val" :key="val.id"
-                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
-                  <li>
-                    <q-btn :outline="formInput.acala[index] != val" :unelevated="formInput.acala[index] == val"
-                      :label="rpRatingDesc[val - 1]" @click="formInput.acala[index] = val"
-                      :class="formInput.acala[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.acala[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px" />
-                  </li>
-                </div>
-              </ul>
-            </div>
-          </div>
-          <q-separator />
-        </div>
-        <div v-show="pageNum == 9">
-          <br><b>{{ "JAYEEL S. CORNELIO Ph. D." }}</b>
-          <div v-for="(item, index) in questions.speakers" :key="item.id">
-            <br>{{ item }}
-            <div class="radios">
-              <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                <div v-for="val in radio_val" :key="val.id"
-                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
-                  <li>
-                    <q-btn :outline="formInput.cornelio[index] != val" :unelevated="formInput.cornelio[index] == val"
-                      :label="rpRatingDesc[val - 1]" @click="formInput.cornelio[index] = val"
-                      :class="formInput.cornelio[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.cornelio[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px" />
-                  </li>
-                </div>
-              </ul>
-            </div>
-          </div>
-          <q-separator />
-        </div>
-        <div v-show="pageNum == 10">
-          <br><b>{{ "PROF. MICHAEL CHARLESTON B. CHUA" }}</b>
-          <div v-for="(item, index) in questions.speakers" :key="item.id">
-            <br>{{ item }}
-            <div class="radios">
-              <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                <div v-for="val in radio_val" :key="val.id"
-                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
-                  <li>
-                    <q-btn :outline="formInput.chua[index] != val" :unelevated="formInput.chua[index] == val"
-                      :label="rpRatingDesc[val - 1]" @click="formInput.chua[index] = val"
-                      :class="formInput.chua[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.chua[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px" />
-                  </li>
-                </div>
-              </ul>
-            </div>
-          </div>
-          <q-separator />
-        </div>
-        <div v-show="pageNum == 11">
-          <br><b>{{ "MS. ROSEJELYNN C. BULANTE " }}</b>
-          <div v-for="(item, index) in questions.speakers" :key="item.id">
-            <br>{{ item }}
-            <div class="radios">
-              <ul style="list-style-type: none; padding: 0; margin: 0; ">
-                <div v-for="val in radio_val" :key="val.id"
-                  :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
-                  <li>
-                    <q-btn :outline="formInput.bulante[index] != val" :unelevated="formInput.bulante[index] == val"
-                      :label="rpRatingDesc[val - 1]" @click="formInput.bulante[index] = val"
-                      :class="formInput.bulante[index] == val ? 'pulsate-bck' : ''"
-                      :color="formInput.bulante[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
-                      style="margin-inline: 10px; margin-block: 5px" />
-                  </li>
-                </div>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div v-show="pageNum == 12">
-          <br><b>{{ "Gender" }}</b>
-          <br>{{ questions.gad[0] }}
-          <div class="radios">
-            <ul style="list-style-type: none; padding: 0; margin: 0; ">
-              <div style="display: inline-block" v-for="val in radio_val.slice(2).reverse()">
-                <li>
-                  <q-btn :outline="formInput.gad[0] != gad_options[val - 1]"
-                    :unelevated="formInput.gad[0] == gad_options[val - 1]" :label="gad_options[val - 1]"
-                    @click="formInput.gad[0] = gad_options[val - 1]"
-                    :class="formInput.gad[0] == gad_options[val - 1] ? 'pulsate-bck' : ''"
-                    :color="formInput.gad[0] == gad_options[val - 1] ? gad_colors[val - 1] : 'purple-5'"
-                    style="margin-inline: 10px; margin-block: 5px" />
-                </li>
-              </div>
-            </ul>
-            <p style="font-size: 0.8em;">Note:<br>
-              1. Gender-Blind - failure to recognize different situations, roles, needs, and interests of women, men,
-              and other genders, as well as the existing gender inequality<br>
-              2. Gender-Sensitive - aware of how gender influences the opportunities of individuals in society and
-              recognizes different needs of women, men, and other genders<br>
-              3. Gender-Responsive - actively addresses the different situations, roles, needs, and interests of women,
-              men, and other genders, as well as the causes of gender inequality<br>
-            </p>
-          </div>
-
-          <br>{{ questions.gad[1] }}
-          <div class="radios">
-            <ul style="list-style-type: none; padding: 0; margin: 0; ">
-              <div style="display: inline-block" v-for="val in radio_val.slice(3).reverse()">
-                <li>
-                  <q-btn :outline="formInput.gad[1] != yesno_options[val - 1]"
-                    :unelevated="formInput.gad[1] == yesno_options[val - 1]" :label="yesno_options[val - 1]" @click="() => {
-      formInput.gad[1] = yesno_options[val - 1]
-      if (formInput.gad[1] == 'No') {
-        formInput.gad[2] = 'N/A'
-      }
-      else {
-        formInput.gad[2] = ''
-      }
-    }" :class="formInput.gad[1] == yesno_options[val - 1] ? 'pulsate-bck' : ''"
-                    :color="formInput.gad[1] == yesno_options[val - 1] ? gad_colors[val - 1] : 'purple-5'"
-                    style="margin-inline: 10px; margin-block: 5px" />
-                </li>
-              </div>
-            </ul>
-          </div>
-          <q-slide-transition>
-            <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
-              v-model="formInput.gad[2]" :label="formInput.gad[1] == 'Yes' ? 'Please Specify' : 'If no, Why not'"
-              lazy-rules :rules="[(val) => (val && val.length > 0) || 'Required Field']"
-              v-if="formInput.gad[1] == 'Yes'" />
-          </q-slide-transition>
-
-          <br>{{ questions.gad[2] }}
-          <div class="radios">
-            <ul style="list-style-type: none; padding: 0; margin: 0; ">
-              <div style="display: inline-block" v-for="val in radio_val.slice(3).reverse()">
-                <li>
-                  <q-btn :outline="formInput.gad[3] != yesno_options[val - 1]"
-                    :unelevated="formInput.gad[3] == yesno_options[val - 1]" :label="yesno_options[val - 1]" @click="() => {
-      formInput.gad[3] = yesno_options[val - 1]
-      if (formInput.gad[3] == 'No') {
-        formInput.gad[4] = 'N/A'
-      }
-      else {
-        formInput.gad[4] = ''
-      }
-    }" :class="formInput.gad[3] == yesno_options[val - 1] ? 'pulsate-bck' : ''"
-                    :color="formInput.gad[3] == yesno_options[val - 1] ? gad_colors[val - 1] : 'purple-5'"
-                    style="margin-inline: 10px; margin-block: 5px" />
-                </li>
-              </div>
-            </ul>
-          </div>
-          <q-slide-transition>
-            <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
-              v-model="formInput.gad[4]" :label="formInput.gad[3] == 'Yes' ? 'Please Specify' : 'Why not'" lazy-rules
-              :rules="[(val) => (val && val.length > 0) || 'Required Field']" v-if="formInput.gad[3] == 'Yes'" />
-          </q-slide-transition>
-
-          <br>{{ questions.gad[3] }}
-          <div class="radios">
-            <ul style="list-style-type: none; padding: 0; margin: 0; ">
-              <div style="display: inline-block" v-for="val in radio_val.slice(3).reverse()">
-                <li>
-                  <q-btn :outline="formInput.gad[5] != yesno_options[val - 1]"
-                    :unelevated="formInput.gad[5] == yesno_options[val - 1]" :label="yesno_options[val - 1]" @click="() => {
-      formInput.gad[5] = yesno_options[val - 1]
-      if (formInput.gad[5] == 'Yes') {
-        formInput.gad[6] = 'N/A'
-      }
-      else {
-        formInput.gad[6] = ''
-      }
-    }" :class="formInput.gad[5] == yesno_options[val - 1] ? 'pulsate-bck' : ''"
-                    :color="formInput.gad[5] == yesno_options[val - 1] ? gad_colors[val - 1] : 'purple-5'"
-                    style="margin-inline: 10px; margin-block: 5px" />
-                </li>
-              </div>
-            </ul>
-          </div>
-          <q-slide-transition>
-            <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
-              v-model="formInput.gad[6]"
-              :label="formInput.gad[5] == 'Yes' ? 'If yes, Please Specify' : 'In your opinion, what comprises  a safe space and gender-fair language?'"
-              lazy-rules :rules="[(val) => (val && val.length > 0) || 'Required Field']"
-              v-if="formInput.gad[5] == 'No'" />
-          </q-slide-transition>
-        </div>
-        <div v-show="pageNum == 13">
-          <br><b>{{ "OVERALL RATING" }}</b>
-          <br>{{ questions.five1 }}
+      <div v-show="listPages.find(obj => obj.label == 'af').value == pageNum">
+        <p style="justify-content: center;">
+          <b>DIRECTIONS</b>: Using a 5-point Likert scale, please put a checkmark (✓) on the
+          appropriate column that represents the extent of your agreement to the following
+          statements about some quality dimensions of this activity.
+          All fields required.
+        </p>
+        <q-separator />
+        <br><br><b>{{ "Access and Facilities" }}</b>
+        <div v-for="(item, index) in questions.af" :key="item.id">
+          <br>{{ item }}
           <div class="radios">
             <ul style="list-style-type: none; padding: 0; margin: 0; ">
               <div v-for="val in radio_val" :key="val.id"
                 :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
                 <li>
-                  <q-btn :outline="formInput.five1 != val" :unelevated="formInput.five1 == val"
-                    :label="overallScaleDesc[val - 1]" @click="formInput.five1 = val"
-                    :class="formInput.five1 == val ? 'pulsate-bck' : ''"
-                    :color="formInput.five1 == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                  <q-btn :outline="formInput.af[index] != val" :unelevated="formInput.af[index] == val"
+                    :label="likertScaleDesc[val - 1]" @click="formInput.af[index] = val"
+                    :class="formInput.af[index] == val ? 'pulsate-bck' : ''"
+                    :color="formInput.af[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
                     style="margin-inline: 10px; margin-block: 5px" />
                 </li>
               </div>
             </ul>
           </div>
-          <br>{{ questions.five2 }}
-          <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
-            v-model="formInput.five2" label="Comment" lazy-rules :rules="[
-      (val) => (val && val.length > 0) || 'Required Field',
-    ]" />
-          <br>{{ questions.five3 }}
-          <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
-            v-model="formInput.five3" label="Comment" lazy-rules :rules="[
-      (val) => (val && val.length > 0) || 'Required Field',
-    ]" />
-          <br>{{ questions.five4 }}
+        </div>
+        <q-separator />
+      </div>
+      <div v-show="listPages.find(obj => obj.label == 'c').value == pageNum">
+        <br><b>{{ "Communication" }}</b>
+        <div v-for="(item, index) in questions.c" :key="item.id">
+          <br>{{ item }}
           <div class="radios">
             <ul style="list-style-type: none; padding: 0; margin: 0; ">
-              <div style="display: inline-block">
+              <div v-for="val in radio_val" :key="val.id"
+                :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
                 <li>
-                  <q-btn :outline="formInput.five4[0] != yesno_options[0]"
-                    :unelevated="formInput.five4[0] == yesno_options[0]" :label="yesno_options[0]"
-                    @click="formInput.five4[0] = yesno_options[0]"
-                    :class="formInput.five4[0] == yesno_options[0] ? 'pulsate-bck' : ''"
-                    :color="formInput.five4[0] == yesno_options[0] ? likertScaleColor[4] : 'indigo-7'"
-                    style="margin-inline: 10px; margin-block: 5px" />
-                </li>
-              </div>
-              <div style="display: inline-block">
-                <li>
-                  <q-btn :outline="formInput.five4[0] != yesno_options[1]"
-                    :unelevated="formInput.five4[0] == yesno_options[1]" :label="yesno_options[1]"
-                    @click="formInput.five4[0] = yesno_options[1]"
-                    :class="formInput.five4[0] == yesno_options[1] ? 'pulsate-bck' : ''"
-                    :color="formInput.five4[0] == yesno_options[1] ? likertScaleColor[1] : 'indigo-7'"
+                  <q-btn :outline="formInput.c[index] != val" :unelevated="formInput.c[index] == val"
+                    :label="likertScaleDesc[val - 1]" @click="formInput.c[index] = val"
+                    :class="formInput.c[index] == val ? 'pulsate-bck' : ''"
+                    :color="formInput.c[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
                     style="margin-inline: 10px; margin-block: 5px" />
                 </li>
               </div>
             </ul>
           </div>
-          <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
-            v-model="formInput.five4[1]" label="Comment" lazy-rules :rules="[
-      (val) => (val && val.length > 0) || 'Required Field',
-    ]" />
-          <br>{{ questions.five5 }}
-          <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
-            v-model="formInput.five5" label="Comment" lazy-rules :rules="[
-      (val) => (val && val.length > 0) || 'Required Field',
-    ]" />
-          <br>{{ questions.five6 }}
-          <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
-            v-model="formInput.five6" label="Comment" lazy-rules :rules="[
-      (val) => (val && val.length > 0) || 'Required Field',
-    ]" />
         </div>
-        <div class="button-container">
-          <!-- for testing pre input data -->
-          <!-- <q-btn @click="testSubmit()" label="test" /> -->
-          <div class="radios" style="width: 100%;">
-            <div v-show="pageNum > 1" style="width: 25%;">
-              <q-btn label="Back" @click="pageNum--" color="teal" class="button-submit" style="width: 100%;"></q-btn>
-            </div>
-            <div v-show="pageNum < 13" style="width: 25%;  ">
-              <q-btn label="Next" @click="pageNum++, scrollToElement('#topElement')" color="teal" class="button-submit"
-                style="width: 100%; height: 12%" :disabled="(pageNum == 1 && formInput.af.filter(v => v).length < 6) ||
-      (pageNum == 2 && formInput.c.filter(v => v).length < 5) ||
-      (pageNum == 3 && formInput.q.filter(v => v).length < 7) ||
-      (pageNum == 4 && formInput.org.filter(v => v).length < 7) ||
-      (pageNum == 5 && formInput.out.filter(v => v).length < 7) ||
-      (pageNum == 6 && formInput.romero.filter(v => v).length < 5) ||
-      (pageNum == 7 && formInput.cangrejo.filter(v => v).length < 5) ||
-      (pageNum == 8 && formInput.acala.filter(v => v).length < 5) ||
-      (pageNum == 9 && formInput.cornelio.filter(v => v).length < 5) ||
-      (pageNum == 10 && formInput.chua.filter(v => v).length < 5) ||
-      (pageNum == 11 && formInput.bulante.filter(v => v).length < 5) ||
-      (pageNum == 12 && formInput.gad.filter(v => v).length < 7)"></q-btn>
-            </div>
-          </div>
-          <div class="button-container" style="width: 100%;" v-show="pageNum == 13">
-            <q-btn @click="submitResponse()" label="submit" color="primary" class="button-submit"></q-btn>
+        <q-separator />
+      </div>
+      <div v-show="listPages.find(obj => obj.label == 'q').value == pageNum">
+        <br><b>{{ "Quality" }}</b>
+        <div v-for="(item, index) in questions.q" :key="item.id">
+          <br>{{ item }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div v-for="val in radio_val" :key="val.id"
+                :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                <li>
+                  <q-btn :outline="formInput.q[index] != val" :unelevated="formInput.q[index] == val"
+                    :label="likertScaleDesc[val - 1]" @click="formInput.q[index] = val"
+                    :class="formInput.q[index] == val ? 'pulsate-bck' : ''"
+                    :color="formInput.q[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+            </ul>
           </div>
         </div>
-      </q-form>
+        <q-separator />
+      </div>
+      <div v-show="listPages.find(obj => obj.label == 'org').value == pageNum">
+        <br><b>{{ "Organization" }}</b>
+        <div v-for="(item, index) in questions.org" :key="item.id">
+          <br>{{ item }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div v-for="val in radio_val" :key="val.id"
+                :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                <li>
+                  <q-btn :outline="formInput.org[index] != val" :unelevated="formInput.org[index] == val"
+                    :label="likertScaleDesc[val - 1]" @click="formInput.org[index] = val"
+                    :class="formInput.org[index] == val ? 'pulsate-bck' : ''"
+                    :color="formInput.org[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <q-separator />
+      </div>
+      <div v-show="listPages.find(obj => obj.label == 'out').value == pageNum">
+        <br><b>{{ "Outcome" }}</b>
+        <div v-for="(item, index) in questions.out" :key="item.id">
+          <br>{{ item }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div v-for="val in radio_val" :key="val.id"
+                :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                <li>
+                  <q-btn :outline="formInput.out[index] != val" :unelevated="formInput.out[index] == val"
+                    :label="likertScaleDesc[val - 1]" @click="formInput.out[index] = val"
+                    :class="formInput.out[index] == val ? 'pulsate-bck' : ''"
+                    :color="formInput.out[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <q-separator />
+      </div>
+      <div v-show="listPages.find(obj => obj.label == 'romero').value == pageNum">
+        <br><b>{{ "DR. SEGUNDO JOAQUIN E. ROMERO, JR. " }}</b>
+        <div v-for="(item, index) in questions.speakers" :key="item.id">
+          <br>{{ item }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div v-for="val in radio_val" :key="val.id"
+                :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                <li>
+                  <q-btn :outline="formInput.romero[index] != val" :unelevated="formInput.romero[index] == val"
+                    :label="rpRatingDesc[val - 1]" @click="formInput.romero[index] = val"
+                    :class="formInput.romero[index] == val ? 'pulsate-bck' : ''"
+                    :color="formInput.romero[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <q-separator />
+      </div>
+      <div v-show="listPages.find(obj => obj.label == 'cangrejo').value == pageNum">
+        <br><b>{{ "ENGR. BERNIE C. CANGREJO" }}</b>
+        <div v-for="(item, index) in questions.speakers" :key="item.id">
+          <br>{{ item }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div v-for="val in radio_val" :key="val.id"
+                :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                <li>
+                  <q-btn :outline="formInput.cangrejo[index] != val" :unelevated="formInput.cangrejo[index] == val"
+                    :label="rpRatingDesc[val - 1]" @click="formInput.cangrejo[index] = val"
+                    :class="formInput.cangrejo[index] == val ? 'pulsate-bck' : ''"
+                    :color="formInput.cangrejo[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <q-separator />
+      </div>
+      <!-- <div v-show="listPages.find(obj => obj.label == 'biyo').value == pageNum">
+        <br><b>{{ "DR. JOSETTE T. BIYO" }}</b>
+        <div v-for="(item, index) in questions.speakers" :key="item.id">
+          <br>{{ item }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div v-for="val in radio_val" :key="val.id"
+                :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                <li>
+                  <q-btn :outline="formInput.biyo[index] != val" :unelevated="formInput.biyo[index] == val"
+                    :label="rpRatingDesc[val - 1]" @click="formInput.biyo[index] = val"
+                    :class="formInput.biyo[index] == val ? 'pulsate-bck' : ''"
+                    :color="formInput.biyo[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <q-separator />
+      </div> -->
+      <div v-show="listPages.find(obj => obj.label == 'cornelio').value == pageNum">
+        <br><b>{{ "JAYEEL S. CORNELIO Ph. D." }}</b>
+        <div v-for="(item, index) in questions.speakers" :key="item.id">
+          <br>{{ item }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div v-for="val in radio_val" :key="val.id"
+                :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                <li>
+                  <q-btn :outline="formInput.cornelio[index] != val" :unelevated="formInput.cornelio[index] == val"
+                    :label="rpRatingDesc[val - 1]" @click="formInput.cornelio[index] = val"
+                    :class="formInput.cornelio[index] == val ? 'pulsate-bck' : ''"
+                    :color="formInput.cornelio[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <q-separator />
+      </div>
+      <div v-show="listPages.find(obj => obj.label == 'chua').value == pageNum">
+        <br><b>{{ "PROF. MICHAEL CHARLESTON B. CHUA" }}</b>
+        <div v-for="(item, index) in questions.speakers" :key="item.id">
+          <br>{{ item }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div v-for="val in radio_val" :key="val.id"
+                :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                <li>
+                  <q-btn :outline="formInput.chua[index] != val" :unelevated="formInput.chua[index] == val"
+                    :label="rpRatingDesc[val - 1]" @click="formInput.chua[index] = val"
+                    :class="formInput.chua[index] == val ? 'pulsate-bck' : ''"
+                    :color="formInput.chua[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <q-separator />
+      </div>
+      <div v-show="listPages.find(obj => obj.label == 'bulante').value == pageNum">
+        <br><b>{{ "MS. ROSEJELYNN C. BULANTE " }}</b>
+        <div v-for="(item, index) in questions.speakers" :key="item.id">
+          <br>{{ item }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div v-for="val in radio_val" :key="val.id"
+                :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                <li>
+                  <q-btn :outline="formInput.bulante[index] != val" :unelevated="formInput.bulante[index] == val"
+                    :label="rpRatingDesc[val - 1]" @click="formInput.bulante[index] = val"
+                    :class="formInput.bulante[index] == val ? 'pulsate-bck' : ''"
+                    :color="formInput.bulante[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div v-show="listPages.find(obj => obj.label == 'gad').value == pageNum">
+        <br><b>{{ "Gender" }}</b>
+        <br>{{ questions.gad[0] }}
+        <div class="radios">
+          <ul style="list-style-type: none; padding: 0; margin: 0; ">
+            <div style="display: inline-block" v-for="val in radio_val.slice(2).reverse()">
+              <li>
+                <q-btn :outline="formInput.gad[0] != gad_options[val - 1]"
+                  :unelevated="formInput.gad[0] == gad_options[val - 1]" :label="gad_options[val - 1]"
+                  @click="formInput.gad[0] = gad_options[val - 1]"
+                  :class="formInput.gad[0] == gad_options[val - 1] ? 'pulsate-bck' : ''"
+                  :color="formInput.gad[0] == gad_options[val - 1] ? gad_colors[val - 1] : 'purple-5'"
+                  style="margin-inline: 10px; margin-block: 5px" />
+              </li>
+            </div>
+          </ul>
+          <p style="font-size: 0.8em;">Note:<br>
+            1. Gender-Blind - failure to recognize different situations, roles, needs, and interests of women, men,
+            and other genders, as well as the existing gender inequality<br>
+            2. Gender-Sensitive - aware of how gender influences the opportunities of individuals in society and
+            recognizes different needs of women, men, and other genders<br>
+            3. Gender-Responsive - actively addresses the different situations, roles, needs, and interests of women,
+            men, and other genders, as well as the causes of gender inequality<br>
+          </p>
+        </div>
+
+        <br>{{ questions.gad[1] }}
+        <div class="radios">
+          <ul style="list-style-type: none; padding: 0; margin: 0; ">
+            <div style="display: inline-block" v-for="val in radio_val.slice(3).reverse()">
+              <li>
+                <q-btn :outline="formInput.gad[1] != yesno_options[val - 1]"
+                  :unelevated="formInput.gad[1] == yesno_options[val - 1]" :label="yesno_options[val - 1]" @click="() => {
+                    formInput.gad[1] = yesno_options[val - 1]
+                    if (formInput.gad[1] == 'No') {
+                      formInput.gad[2] = 'N/A'
+                    }
+                    else {
+                      formInput.gad[2] = ''
+                    }
+                  }" :class="formInput.gad[1] == yesno_options[val - 1] ? 'pulsate-bck' : ''"
+                  :color="formInput.gad[1] == yesno_options[val - 1] ? gad_colors[val - 1] : 'purple-5'"
+                  style="margin-inline: 10px; margin-block: 5px" />
+              </li>
+            </div>
+          </ul>
+        </div>
+        <q-slide-transition>
+          <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
+            v-model="formInput.gad[2]" :label="formInput.gad[1] == 'Yes' ? 'Please Specify' : 'If no, Why not'"
+            lazy-rules :rules="[(val) => (val && val.length > maxChar) || maxChar + ' Characters Required']" counter
+            v-if="formInput.gad[1] == 'Yes'" />
+        </q-slide-transition>
+
+        <br>{{ questions.gad[2] }}
+        <div class="radios">
+          <ul style="list-style-type: none; padding: 0; margin: 0; ">
+            <div style="display: inline-block" v-for="val in radio_val.slice(3).reverse()">
+              <li>
+                <q-btn :outline="formInput.gad[3] != yesno_options[val - 1]"
+                  :unelevated="formInput.gad[3] == yesno_options[val - 1]" :label="yesno_options[val - 1]" @click="() => {
+                    formInput.gad[3] = yesno_options[val - 1]
+                    if (formInput.gad[3] == 'No') {
+                      formInput.gad[4] = 'N/A'
+                    }
+                    else {
+                      formInput.gad[4] = ''
+                    }
+                  }" :class="formInput.gad[3] == yesno_options[val - 1] ? 'pulsate-bck' : ''"
+                  :color="formInput.gad[3] == yesno_options[val - 1] ? gad_colors[val - 1] : 'purple-5'"
+                  style="margin-inline: 10px; margin-block: 5px" />
+              </li>
+            </div>
+          </ul>
+        </div>
+        <q-slide-transition>
+          <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
+            v-model="formInput.gad[4]" :label="formInput.gad[3] == 'Yes' ? 'Please Specify' : 'Why not'" lazy-rules
+            :rules="[(val) => (val && val.length > maxChar) || maxChar + ' Characters Required']" counter
+            v-if="formInput.gad[3] == 'Yes'" />
+        </q-slide-transition>
+
+        <br>{{ questions.gad[3] }}
+        <div class="radios">
+          <ul style="list-style-type: none; padding: 0; margin: 0; ">
+            <div style="display: inline-block" v-for="val in radio_val.slice(3).reverse()">
+              <li>
+                <q-btn :outline="formInput.gad[5] != yesno_options[val - 1]"
+                  :unelevated="formInput.gad[5] == yesno_options[val - 1]" :label="yesno_options[val - 1]" @click="() => {
+                    formInput.gad[5] = yesno_options[val - 1]
+                    if (formInput.gad[5] == 'Yes') {
+                      formInput.gad[6] = 'N/A'
+                    }
+                    else {
+                      formInput.gad[6] = ''
+                    }
+                  }" :class="formInput.gad[5] == yesno_options[val - 1] ? 'pulsate-bck' : ''"
+                  :color="formInput.gad[5] == yesno_options[val - 1] ? gad_colors[val - 1] : 'purple-5'"
+                  style="margin-inline: 10px; margin-block: 5px" />
+              </li>
+            </div>
+          </ul>
+        </div>
+        <q-slide-transition>
+          <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
+            v-model="formInput.gad[6]"
+            :label="formInput.gad[5] == 'Yes' ? 'If yes, Please Specify' : 'In your opinion, what comprises  a safe space and gender-fair language?'"
+            lazy-rules :rules="[(val) => (val && val.length > maxChar) || maxChar + ' Characters Required']" counter
+            v-if="formInput.gad[5] == 'No'" />
+        </q-slide-transition>
+      </div>
+      <div v-show="listPages.find(obj => obj.label == 'overall').value == pageNum">
+        <br><b>{{ "OVERALL RATING" }}</b>
+        <br>{{ questions.five1 }}
+        <div class="radios">
+          <ul style="list-style-type: none; padding: 0; margin: 0; ">
+            <div v-for="val in radio_val" :key="val.id"
+              :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+              <li>
+                <q-btn :outline="formInput.five1 != val" :unelevated="formInput.five1 == val"
+                  :label="overallScaleDesc[val - 1]" @click="formInput.five1 = val"
+                  :class="formInput.five1 == val ? 'pulsate-bck' : ''"
+                  :color="formInput.five1 == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                  style="margin-inline: 10px; margin-block: 5px" />
+              </li>
+            </div>
+          </ul>
+        </div>
+        <br>{{ questions.five2 }}
+        <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
+          v-model="formInput.five2" label="Comment" lazy-rules
+          :rules="[(val) => (val && val.length > maxChar) || maxChar + ' Characters Required']" counter />
+        <br>{{ questions.five3 }}
+        <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
+          v-model="formInput.five3" label="Comment" lazy-rules
+          :rules="[(val) => (val && val.length > maxChar) || maxChar + ' Characters Field']" counter />
+        <br>{{ questions.five4 }}
+        <div class="radios">
+          <ul style="list-style-type: none; padding: 0; margin: 0; ">
+            <div style="display: inline-block">
+              <li>
+                <q-btn :outline="formInput.five4[0] != yesno_options[0]"
+                  :unelevated="formInput.five4[0] == yesno_options[0]" :label="yesno_options[0]"
+                  @click="formInput.five4[0] = yesno_options[0]"
+                  :class="formInput.five4[0] == yesno_options[0] ? 'pulsate-bck' : ''"
+                  :color="formInput.five4[0] == yesno_options[0] ? likertScaleColor[4] : 'indigo-7'"
+                  style="margin-inline: 10px; margin-block: 5px" />
+              </li>
+            </div>
+            <div style="display: inline-block">
+              <li>
+                <q-btn :outline="formInput.five4[0] != yesno_options[1]"
+                  :unelevated="formInput.five4[0] == yesno_options[1]" :label="yesno_options[1]"
+                  @click="formInput.five4[0] = yesno_options[1]"
+                  :class="formInput.five4[0] == yesno_options[1] ? 'pulsate-bck' : ''"
+                  :color="formInput.five4[0] == yesno_options[1] ? likertScaleColor[1] : 'indigo-7'"
+                  style="margin-inline: 10px; margin-block: 5px" />
+              </li>
+            </div>
+          </ul>
+        </div>
+        <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
+          v-model="formInput.five4[1]" label="Comment" lazy-rules
+          :rules="[(val) => (val && val.length > maxChar) || maxChar + ' Characters Required']" counter />
+        <br>{{ questions.five5 }}
+        <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
+          v-model="formInput.five5" label="Comment" lazy-rules
+          :rules="[(val) => (val && val.length > maxChar) || maxChar + ' Characters Required']" counter />
+        <br>{{ questions.five6 }}
+        <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
+          v-model="formInput.five6" label="Comment" lazy-rules
+          :rules="[(val) => (val && val.length > maxChar) || maxChar + ' Characters Required']" counter />
+      </div>
+      <div class="button-container">
+        <!-- for testing pre input data -->
+        <!-- <q-btn @click="testSubmit()" label="test" /> -->
+        <div class="radios" style="width: 100%;">
+          <div v-show="pageNum > 1" style="width: 25%;">
+            <q-btn label="Back" @click="pageNum--" color="teal" class="button-submit" style="width: 100%;"></q-btn>
+          </div>
+          <div v-show="listPages.find(obj => obj.label == 'overall').value > pageNum" style="width: 25%;  ">
+            <q-btn label="Next" @click="pageNum++, scrollToElement('#topElement')" color="teal" class="button-submit"
+              style="width: 100%; height: 12%"
+              :disabled="(listPages.find(obj => obj.label == 'af').value == pageNum && formInput.af.filter(v => v).length < 6) ||
+                (listPages.find(obj => obj.label == 'c').value == pageNum && formInput.c.filter(v => v).length < 5) ||
+                (listPages.find(obj => obj.label == 'q').value == pageNum && formInput.q.filter(v => v).length < 7) ||
+                (listPages.find(obj => obj.label == 'org').value == pageNum && formInput.org.filter(v => v).length < 7) ||
+                (listPages.find(obj => obj.label == 'out').value == pageNum && formInput.out.filter(v => v).length < 7) ||
+                (listPages.find(obj => obj.label == 'romero').value == pageNum && formInput.romero.filter(v => v).length < 5) ||
+                (listPages.find(obj => obj.label == 'cangrejo').value == pageNum && formInput.cangrejo.filter(v => v).length < 5) ||
+                // (listPages.find(obj => obj.label == 'biyo').value == pageNum && formInput.biyo.filter(v => v).length < 5) ||
+                // (listPages.find(obj => obj.label == 'acala').value == pageNum && formInput.acala.filter(v => v).length < 5) ||
+                (listPages.find(obj => obj.label == 'cornelio').value == pageNum && formInput.cornelio.filter(v => v).length < 5) ||
+                (listPages.find(obj => obj.label == 'chua').value == pageNum && formInput.chua.filter(v => v).length < 5) ||
+                (listPages.find(obj => obj.label == 'bulante').value == pageNum && formInput.bulante.filter(v => v).length < 5) ||
+                (listPages.find(obj => obj.label == 'gad').value == pageNum && formInput.gad.filter(v => v).length < 7)">
+            </q-btn>
+          </div>
+        </div>
+        <div class="button-container" style="width: 100%;"
+          v-show="listPages.find(obj => obj.label == 'overall').value == pageNum">
+          <q-btn @click="submitResponse()" label="submit" color="primary" class="button-submit"></q-btn>
+        </div>
+      </div>
     </div>
   </q-card>
   <q-dialog v-model="allRequired" persistent>
@@ -663,6 +661,7 @@ const formInput = reactive({
   chua: [null],
   bulante: [null],
   acala: [null],
+  // biyo: [null],
   gad: [null],
   five1: null,
   five2: null,
@@ -684,7 +683,6 @@ const pleaseWait = ref(null)
 const congrats = ref(null)
 const errorWarning = ref(null)
 const notListed = ref(null)
-const isScreenMD = ref(null)
 const pageNum = ref(1)
 const alreadySubmitted = ref(null)
 const attended = ref(null)
@@ -727,6 +725,7 @@ export default {
     useMeta(metaData)
     const $q = useQuasar();
     const conformeCheck = ref(false)
+    const maxChar = ref(40)
 
     const toFormData = (obj) => {
       const formData = new FormData();
@@ -758,7 +757,6 @@ export default {
       pageNum,
       index,
       conformeCheck,
-      isScreenMD: ref($q.screen.lt.md ? 'md' : 'xl'),
       testSubmit() {
         pageNum.value = 12
         formInput.email = 'bonbacuno@gmail.com'
@@ -780,6 +778,26 @@ export default {
         formInput.five5 = "yay"
         formInput.five6 = "yay"
       },
+      changePage(page) {
+        pageNum = listPages.filter(obj => obj.label == page).value
+      },
+      listPages: [
+        { label: 'af', value: 1 },
+        { label: 'c', value: 2 },
+        { label: 'q', value: 3 },
+        { label: 'org', value: 4 },
+        { label: 'out', value: 5 },
+        { label: 'romero', value: 6 },
+        { label: 'cornelio', value: 7 },
+        { label: 'cangrejo', value: 8 },
+        // { label: 'biyo', value: 9 },
+        { label: 'chua', value: 9 },
+        { label: 'bulante', value: 10 },
+        { label: 'gad', value: 11 },
+        { label: 'overall', value: 12 },
+        // { label: 'acala', value: 10 },
+      ],
+      maxChar,
       radio_val: [5, 4, 3, 2, 1],
       gad_options: ['Gender-Blind', 'Gender-Sensitive', 'Gender-Responsive'],
       yesno_options: ['Yes', 'No'],
@@ -840,7 +858,7 @@ export default {
           "1. Displayed thorough knowledge of, and provided relevant insights on, the topic discussed.",
           "2. Thoroughly explained and processed the learning activities throughout the training. ",
           "3. Created a good learning environment, sustained the attention of the participants, and encouraged their participation in the duration of the activity.",
-          "4. Managed his time well.",
+          "4. Managed their time well.",
           "5. Demonstrated keenness to the participants’ needs and other requirements related to the activity. ",
 
         ],
@@ -871,6 +889,7 @@ export default {
 
         E-mail: dpo@sei.dost.gov.ph`,
       submitResponse() {
+        formInput.email = 'bonbacuno@gmail.com'
         pleaseWait.value = true
         if (
           !formInput.email ||
@@ -879,17 +898,13 @@ export default {
           formInput.q.filter(v => v).length < 7 ||
           formInput.org.filter(v => v).length < 7 ||
           formInput.out.filter(v => v).length < 7 ||
-          formInput.romero.filter(v => v).length < 5 ||
-          formInput.cornelio.filter(v => v).length < 5 ||
-          formInput.cangrejo.filter(v => v).length < 5 ||
-          formInput.chua.filter(v => v).length < 5 ||
-          formInput.bulante.filter(v => v).length < 5 ||
           !formInput.five1 ||
-          !formInput.five2 ||
-          !formInput.five3 ||
-          formInput.five4.filter(v => v).length < 2 ||
-          !formInput.five5 ||
-          !formInput.five6
+          formInput.five2.length < maxChar.value ||
+          formInput.five3.length < maxChar.value ||
+          formInput.five4.filter(v => v).length.value < 2 ||
+          formInput.five4[1].length < maxChar.value ||
+          formInput.five5.length < maxChar.value ||
+          formInput.five6.length < maxChar.value.value
 
         ) {
           pleaseWait.value = false

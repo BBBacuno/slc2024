@@ -98,6 +98,10 @@ const scholarProgram_options = ref([
   {
     label: 'Bangon Marawi',
     value: 4
+  },
+  {
+    label: 'CBPSME',
+    value: 5
   }
 ])
 
