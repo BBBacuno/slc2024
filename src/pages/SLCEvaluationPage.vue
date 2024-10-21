@@ -636,6 +636,24 @@
       </q-card-section>
     </q-card>
   </q-dialog>
+  <q-dialog v-model="registrationClosed" persistent>
+    <q-card style="min-width: 350px" class="prompt">
+      <q-card-section class="q-pb-none text-center">
+        <q-icon style="color: #3948ab85" name="error" size="70px" />
+      </q-card-section>
+      <q-card-section class="q-pa-md text-center">
+        <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
+        Submissions are currently closed!
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn flat label="OK" color="grey" @click="refreshPage()" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
@@ -689,6 +707,8 @@ const attended = ref(null)
 const index = ref(null)
 const dataPolicyMenu = ref(null)
 
+const registrationClosed = ref(null)
+
 const refreshPage = () => {
   location.href = "/";
 };
@@ -704,7 +724,10 @@ const sendOTP = () => {
   axiosInit
     .get('slc/record/checkEmailforEval.php?email=' + formInput.email)
     .then(function (response) {
-      if (response.data.dupe === true) {
+      if (response.data.restrictEval === true)
+        registrationClosed.value = response.data.restrictEval
+
+      else if (response.data.dupe === true) {
         pleaseWait.value = false;
         alreadySubmitted.value = true
       } else if (response.data.attended === false) {
@@ -740,6 +763,7 @@ export default {
       toFormData,
       sendOTP,
       refreshPage,
+      registrationClosed,
       dataPolicyMenu,
       formInput,
       accept,

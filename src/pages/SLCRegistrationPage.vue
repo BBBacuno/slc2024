@@ -140,8 +140,8 @@
               <q-slide-transition>
                 <div v-if="formInput.lgbt[0]">
                   {{ formInput.lgbt[0] == 'Yes' ?
-          'Are you okay to be roomed together with a cisgender*?'
-          : 'Are you okay to be roomed together with a member of LGBTQ ? ' }}
+                    'Are you okay to be roomed together with a cisgender*?'
+                    : 'Are you okay to be roomed together with a member of LGBTQ ? ' }}
                   <div class="radios">
                     <ul style="list-style-type: none; padding: 0; margin: 0; ">
                       <div style="display: inline-block" v-for="val in radio_val.slice(3).reverse()">
@@ -379,24 +379,24 @@
             <div v-show="pageNum < 3 && !(pageNum == 2 && formInput.participant == 2)" style="width: 25%;">
               <q-btn label="Next" @click="pageNum++, scrollToElement('#topElement')" color="teal" class="button-submit"
                 style="width: 100%; height: 12%" :disabled="((
-          (pageNum == 1) && (
-            !formInput.fName ||
-            !formInput.mName ||
-            !formInput.lName ||
-            !formInput.sex ||
-            formInput.lgbt.length != 2 ||
-            !formInput.birthDate ||
-            !formInput.phoneNumber ||
-            formInput.phoneNumber.length != 11
-          )) || ((pageNum == 2) && (
-            !formInput.univRegion ||
-            !formInput.univCity ||
-            !formInput.university ||
-            !formInput.yearLevel ||
-            !formInput.course ||
-            !formInput.yearAward ||
-            !formInput.scholarProgram
-          )))"></q-btn>
+                  (pageNum == 1) && (
+                    !formInput.fName ||
+                    !formInput.mName ||
+                    !formInput.lName ||
+                    !formInput.sex ||
+                    formInput.lgbt.length != 2 ||
+                    !formInput.birthDate ||
+                    !formInput.phoneNumber ||
+                    formInput.phoneNumber.length != 11
+                  )) || ((pageNum == 2) && (
+                    !formInput.univRegion ||
+                    !formInput.univCity ||
+                    !formInput.university ||
+                    !formInput.yearLevel ||
+                    !formInput.course ||
+                    !formInput.yearAward ||
+                    !formInput.scholarProgram
+                  )))"></q-btn>
             </div>
           </div>
           <div class="button-container" style="width: 100%;"
@@ -563,7 +563,6 @@
       </q-card-section>
       <q-card-section>
         <div class="row items-center justify-end">
-          <!-- <q-checkbox v-model="conformeCheck" size="lg"> -->
           <p class="dataPolicyText">
             CONFORME:
 
@@ -572,11 +571,27 @@
             research study. I understand that my personal information is protected by R.A. 10173, Data Privacy Act of
             2012.
           </p>
-          <!-- </q-checkbox> -->
-
           <q-btn v-close-popup label="I Agree" color="green-6" />
         </div>
       </q-card-section>
+    </q-card>
+  </q-dialog>
+  <q-dialog v-model="registrationClosed" persistent>
+    <q-card style="min-width: 350px" class="prompt">
+      <q-card-section class="q-pb-none text-center">
+        <q-icon style="color: #3948ab85" name="error" size="70px" />
+      </q-card-section>
+      <q-card-section class="q-pa-md text-center">
+        <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
+        Submissions are currently closed!
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn flat label="OK" color="grey" @click="refreshPage()" v-close-popup />
+      </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
@@ -626,6 +641,8 @@ const alreadySubmitted = ref(null)
 const OTPSent = ref(false)
 const OTPNotMatch = ref(null)
 
+const registrationClosed = ref(null)
+
 const refreshPage = () => {
   location.href = "/";
 };
@@ -637,7 +654,11 @@ const sendOTP = () => {
   axiosInit
     .get('slc/auth/sendOTP.php?email=' + formInput.email)
     .then(function (response) {
-      if (response.data.regExists === true) {
+      if (response.data.restrictRegister === true)
+        registrationClosed.value = response.data.restrictRegister
+
+
+      else if (response.data.regExists === true) {
         pleaseWait.value = false;
         alreadySubmitted.value = true
       } else if (response.data.notListed === true) {
@@ -752,6 +773,7 @@ export default {
       OTPValid,
       selectParticipantType,
       testSubmit,
+      registrationClosed,
       formColor: 'grey-10',
       dataPolicyMenu,
       OTPVerified,
