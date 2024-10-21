@@ -171,7 +171,9 @@
 
           </div>
           <div v-show="pageNum == 2">
+            <p class="text-h3 text-center">Type of Participant</p>
             <div class="radios">
+
               <div label="Scholar" style="
                   background-size: contain;
                   background-repeat: no-repeat;
@@ -194,13 +196,15 @@
               </div>
             </div>
             <div class="left-container">
-              <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.univRegion"
-                label="Region of your School" :options="region_options" emit-value map-options lazy-rules>
-
-                <template v-slot:before>
-                  <q-icon class="logo-color" name="map" size="lg" />
-                </template>
-              </q-select>
+              <q-slide-transition :duration="700">
+                <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.univRegion"
+                  label="Region of your School" :options="region_options" emit-value map-options lazy-rules
+                  v-show="formInput.participant">
+                  <template v-slot:before>
+                    <q-icon class="logo-color" name="map" size="lg" />
+                  </template>
+                </q-select>
+              </q-slide-transition>
               <q-slide-transition :duration="700">
                 <div v-show="formInput.participant == 1 || (formInput.univRegion == 13 && formInput.participant == 2)">
                   <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.univCity"
@@ -629,7 +633,8 @@ const metaData = {
 
 
 const accept = ref(false)
-const OTPVerified = ref(false)
+// bypass otp
+const OTPVerified = ref(true)
 const otp = ref(null)
 const isOTPSixDigit = ref(null)
 const allRequired = ref(null)
@@ -796,7 +801,7 @@ export default {
       congrats,
       errorWarning,
       notListed,
-      pageNum,
+      pageNum: 2,
       region_options,
       suffix_options,
       scholarProgram_options,
