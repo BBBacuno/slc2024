@@ -171,7 +171,7 @@
 
           </div>
           <div v-show="pageNum == 2">
-            <p class="text-h3 text-center">Type of Participant</p>
+            <p class="text-h3 text-center q-my-md">Type of Participant</p>
             <div class="radios">
 
               <div label="Scholar" style="
@@ -634,7 +634,7 @@ const metaData = {
 
 const accept = ref(false)
 // bypass otp
-const OTPVerified = ref(true)
+const OTPVerified = ref(false)
 const otp = ref(null)
 const isOTPSixDigit = ref(null)
 const allRequired = ref(null)
@@ -801,7 +801,7 @@ export default {
       congrats,
       errorWarning,
       notListed,
-      pageNum: 2,
+      pageNum,
       region_options,
       suffix_options,
       scholarProgram_options,
