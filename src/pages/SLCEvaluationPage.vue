@@ -22,6 +22,7 @@
           </q-toggle>
           <q-btn unelevated rounded size="lg" label="Start Evaluation" color="teal" :disabled="!accept"
             style="width: 50%" @click="sendOTP()" />
+          <!-- <q-btn @click="testSubmit()" label="test" /> -->
         </div>
       </div>
     </div>
@@ -782,6 +783,7 @@ export default {
       index,
       conformeCheck,
       testSubmit() {
+        verify.value = true
         pageNum.value = 12
         formInput.email = 'bonbacuno@gmail.com'
         formInput.af = [1, 2, 3, 4, 5, 1]
@@ -794,13 +796,14 @@ export default {
         formInput.cangrejo = [1, 2, 3, 4, 5]
         formInput.chua = [1, 2, 3, 4, 5]
         formInput.bulante = [1, 2, 3, 4, 5]
+        formInput.gad = ['Gender-Sensitive', 'Yes', 'N/A', 'Yes', 'N/A', 'Yes', 'N/A']
         formInput.five1 = 5
-        formInput.five2 = "yay"
-        formInput.five3 = "yay"
+        formInput.five2 = "yayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasd"
+        formInput.five3 = "yayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasd"
         formInput.five4[0] = "Yes"
-        formInput.five4[1] = "yay"
-        formInput.five5 = "yay"
-        formInput.five6 = "yay"
+        formInput.five4[1] = "yayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasd"
+        formInput.five5 = "yayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasd"
+        formInput.five6 = "yayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasd"
       },
       changePage(page) {
         pageNum = listPages.filter(obj => obj.label == page).value
@@ -913,7 +916,6 @@ export default {
 
         E-mail: dpo@sei.dost.gov.ph`,
       submitResponse() {
-        formInput.email = 'bonbacuno@gmail.com'
         pleaseWait.value = true
         if (
           !formInput.email ||
@@ -928,7 +930,7 @@ export default {
           formInput.five4.filter(v => v).length.value < 2 ||
           formInput.five4[1].length < maxChar.value ||
           formInput.five5.length < maxChar.value ||
-          formInput.five6.length < maxChar.value.value
+          formInput.five6.length < 10
 
         ) {
           pleaseWait.value = false
