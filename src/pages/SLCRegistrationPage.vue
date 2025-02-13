@@ -1,38 +1,99 @@
 <template>
-  <q-card class="evaluation" style="
-      -webkit-border-radius: 50px;
-      -moz-border-radius: 50px;
-      border-radius: 50px;
-      padding-block: 50px;
-    " id="topElement">
+  <q-card class="evaluation" style="  
+  -webkit-box-shadow: 0px 0px 37px 64px rgba(204,206,219,0.61);
+-moz-box-shadow: 0px 0px 37px 64px rgba(204,206,219,0.61);
+box-shadow: 0px 0px 37px 64px rgba(204,206,219,0.61);
+background-color: #ffffffc2;
+" id="topElement">
     <div id="parentContainer">
       <div>
-        <q-img src="/pubmat-big.jpg" v-show="!OTPVerified" :ratio="2" />
-        <q-img src="/pubmat-small.jpg" v-show="OTPVerified" style="border-radius: 25px;" />
+        <q-img src="/pubmat-big.png" v-show="!OTPVerified" :ratio="2" style="border-radius: 15px" />
+        <q-img src="/pubmat-big2.png" v-show="OTPVerified" style="border-radius: 25px;" />
+      </div>
+      <div style="text-align: center; font-size: 24px; font-weight: 600;">
+        This batch of SLC will be conducted on {{ conduct }}
       </div>
       <q-form>
         <div v-show="!OTPVerified && !OTPSent" style="margin-top: 15px;">
-          This email will be used to further contact you with DOST-SEI and Patriot Programs.
-          <q-input outlined rounded v-model="formInput.email" type="email" :color="formColor" :label-color="formColor"
-            label="Email Address" :rules="[(val) => val.includes('@') || 'Only valid email']" lazy-rules>
+          <q-input outlined rounded v-model="formInput.fName" :color="borderColor" :bg-color="bgColor"
+            :label-color="labelColor" label="First Name" hint="Name inputted will reflect on certificates"
+            :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
+
             <template v-slot:before>
-              <q-icon class="logo-color" name="mail" size="lg" />
+              <q-icon :color="logoColor" name="person" size="lg" />
+            </template>
+          </q-input>
+          <q-input outlined rounded v-model="formInput.mName" :color="borderColor" :bg-color="bgColor"
+            :label-color="labelColor" label="Middle Name" hint="Put N/A if not applicable"
+            :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
+
+            <template v-slot:before>
+              <q-icon :color="logoColor" name="people" size="lg" />
+            </template>
+          </q-input>
+          <q-input outlined rounded v-model="formInput.lName" :color="borderColor" :bg-color="bgColor"
+            :label-color="labelColor" label="Last Name" :rules="[(val) => val && val.length > 0 || 'Required']"
+            lazy-rules>
+
+            <template v-slot:before>
+              <q-icon :color="logoColor" name="diversity_3" size="lg" />
+            </template>
+          </q-input>
+          <q-select outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor"
+            v-model="formInput.suffix" label="Suffix" :options="suffix_options" emit-value map-options lazy-rules>
+
+            <template v-slot:before>
+              <q-icon :color="logoColor" name="groups_3" size="lg" />
+            </template>
+
+            <template v-slot:append>
+              <q-icon name="close" @click="formInput.suffix = null" class="remove-selection"
+                v-show="formInput.suffix"></q-icon>
+            </template>
+          </q-select>
+          <q-input outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor" label="Birthdate"
+            v-model="formInput.birthdate" @click="$refs.birthdateProxy.show()"
+            :rules="[(val) => (val && val.length > 0) || 'Required Field']">
+
+            <template v-slot:before>
+              <q-icon :color="logoColor" name="cake" size="lg" />
+            </template>
+
+            <template v-slot:append>
+              <q-icon style="color: #3948ab85; margin-right: 10px" name="event" class="cursor-pointer">
+                <q-popup-proxy cover transition-show="scale" transition-hide="scale" ref="birthdateProxy">
+                  <q-date v-model="formInput.birthdate" default-year-month="2004/01" default-view="Years"
+                    mask="MMM DD, YYYY" color="blue-grey-6">
+                    <div class="row items-center justify-end">
+                      <q-btn unelevated rounded v-close-popup label="Close" color="teal" flat />
+                    </div>
+                  </q-date>
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+          This email will be used to further contact you with DOST-SEI and Patriot Programs.
+          <q-input outlined rounded v-model="formInput.email" type="email" :color="borderColor" :bg-color="bgColor"
+            :label-color="labelColor" label="Email Address" :rules="[(val) => val.includes('@') || 'Only valid email']"
+            lazy-rules>
+            <template v-slot:before>
+              <q-icon :color="logoColor" name="mail" size="lg" />
             </template>
           </q-input>
           <div class="button-container" v-show="!OTPVerified">
             <q-toggle v-model="accept" @click="accept ? (dataPolicyMenu = !dataPolicyMenu) : ''">
               I accept the <b>Data Privacy Policy Terms</b>
             </q-toggle>
-            <q-btn label="Send OTP" color="primary" class="button-submit" @click="sendOTP"
+            <q-btn label="Send OTP" color="primary" class="button-submit" @click="disclaimer = true"
               :disabled="!accept || formInput.email == null"></q-btn>
           </div>
         </div>
         <div v-show="OTPSent && !OTPVerified">
-          <q-input outlined rounded color="indigo-7" label-color="indigo-7" v-model="otp" class="text-fields"
-            type="number" label="OTP from your Email" hint="6-digit OTP" lazy-rules>
+          <q-input outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor" v-model="otp"
+            class="text-fields" type="number" label="OTP from your Email" hint="6-digit OTP" lazy-rules>
 
             <template v-slot:before>
-              <q-icon class="logo-color" name="key" size="lg" />
+              <q-icon :color="logoColor" name="key" size="lg" />
             </template>
           </q-input>
           <div class="button-container">
@@ -43,44 +104,43 @@
         <div v-show="OTPVerified">
           <div v-show="pageNum == 1" style="display: flex;flex-direction: row; flex-wrap: wrap;">
             <div class="left-container">
-              <q-input outlined rounded v-model="formInput.email" readonly type="email" :color="formColor"
-                :label-color="formColor" label="Email to Register"
+              <q-input outlined rounded v-model="formInput.email" readonly type="email" :color="borderColor"
+                :bg-color="bgColor" :label-color="labelColor" label="Email to Register"
                 :rules="[(val) => val.includes('@') || 'Only valid email']" lazy-rules>
 
                 <template v-slot:before>
-                  <q-icon class="logo-color" name="mail" size="lg" />
+                  <q-icon :color="logoColor" name="mail" size="lg" />
                 </template>
               </q-input>
-              <q-input @input="val => { formInput.fName = val.toUpperCase() }" outlined rounded
-                v-model="formInput.fName" :color="formColor" :label-color="formColor" label="First Name"
-                hint="Name inputted will reflect on certificates"
+              <q-input readonly outlined rounded v-model="formInput.fName" :color="borderColor" :bg-color="bgColor"
+                :label-color="labelColor" label="First Name" hint="Name inputted will reflect on certificates"
                 :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
 
                 <template v-slot:before>
-                  <q-icon class="logo-color" name="person" size="lg" />
+                  <q-icon :color="logoColor" name="person" size="lg" />
                 </template>
               </q-input>
-              <q-input @input="val => { formInput.mName = val.toUpperCase() }" outlined rounded
-                v-model="formInput.mName" :color="formColor" :label-color="formColor" label="Middle Name"
-                hint="Put N/A if not applicable" :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
-
-                <template v-slot:before>
-                  <q-icon class="logo-color" name="people" size="lg" />
-                </template>
-              </q-input>
-              <q-input @input="val => { formInput.lName = val.toUpperCase() }" outlined rounded
-                v-model="formInput.lName" :color="formColor" :label-color="formColor" label="Last Name"
+              <q-input readonly outlined rounded v-model="formInput.mName" :color="borderColor" :bg-color="bgColor"
+                :label-color="labelColor" label="Middle Name" hint="Put N/A if not applicable"
                 :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
 
                 <template v-slot:before>
-                  <q-icon class="logo-color" name="diversity_3" size="lg" />
+                  <q-icon :color="logoColor" name="people" size="lg" />
                 </template>
               </q-input>
-              <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.suffix"
-                label="Suffix" :options="suffix_options" emit-value map-options lazy-rules>
+              <q-input readonly outlined rounded v-model="formInput.lName" :color="borderColor" :bg-color="bgColor"
+                :label-color="labelColor" label="Last Name" :rules="[(val) => val && val.length > 0 || 'Required']"
+                lazy-rules>
 
                 <template v-slot:before>
-                  <q-icon class="logo-color" name="groups_3" size="lg" />
+                  <q-icon :color="logoColor" name="diversity_3" size="lg" />
+                </template>
+              </q-input>
+              <q-select readonly outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor"
+                v-model="formInput.suffix" label="Suffix" :options="suffix_options" emit-value map-options lazy-rules>
+
+                <template v-slot:before>
+                  <q-icon :color="logoColor" name="groups_3" size="lg" />
                 </template>
 
                 <template v-slot:append>
@@ -88,40 +148,26 @@
                     v-show="formInput.suffix"></q-icon>
                 </template>
               </q-select>
-            </div>
-            <div v-show="OTPVerified" class="right-container">
 
-              <q-input outlined rounded :color="formColor" :label-color="formColor" label="Birthdate"
-                v-model="formInput.birthDate" @click="$refs.birthdateProxy.show()"
+              <q-input readonly outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor"
+                label="Birthdate" v-model="formInput.birthdate"
                 :rules="[(val) => (val && val.length > 0) || 'Required Field']">
-
                 <template v-slot:before>
-                  <q-icon class="logo-color" name="cake" size="lg" />
-                </template>
-
-                <template v-slot:append>
-                  <q-icon style="color: #3948ab85; margin-right: 10px" name="event" class="cursor-pointer">
-                    <q-popup-proxy cover transition-show="scale" transition-hide="scale" ref="birthdateProxy">
-                      <q-date v-model="formInput.birthDate" default-year-month="2004/01" default-view="Years"
-                        mask="MMM DD, YYYY">
-                        <div class="row items-center justify-end">
-                          <q-btn unelevated rounded v-close-popup label="Close" color="teal" flat />
-                        </div>
-                      </q-date>
-                    </q-popup-proxy>
-                  </q-icon>
+                  <q-icon :color="logoColor" name="cake" size="lg" />
                 </template>
               </q-input>
               <div class="radios">
                 <q-radio v-model="formInput.sex" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="1"
                   size="xl" color="indigo-7">
-                  <q-icon class="logo-color" name="male" size="xl" />Male
+                  <q-icon :color="logoColor" name="male" size="xl" />Male
                 </q-radio>
                 <q-radio v-model="formInput.sex" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="2"
                   size="xl" color="indigo-7">
-                  <q-icon class="logo-color" name="female" size="xl" />Female
+                  <q-icon :color="logoColor" name="female" size="xl" />Female
                 </q-radio>
               </div>
+            </div>
+            <div v-show="OTPVerified" class="right-container">
               <br>{{ "Are you a member of LGBTQ community?" }}
               <div class="radios">
                 <ul style="list-style-type: none; padding: 0; margin: 0; ">
@@ -159,12 +205,12 @@
                 </div>
 
               </q-slide-transition>
-              <q-input rounded outlined v-model="formInput.phoneNumber" type="number" maxlength="11" :color="formColor"
-                :label-color="formColor" label="Phone Number" lazy-rules
+              <q-input rounded outlined v-model="formInput.phoneNumber" type="number" maxlength="11"
+                :color="borderColor" :bg-color="bgColor" :label-color="labelColor" label="Phone Number" lazy-rules
                 :rules="[(val) => (val && val.length == 11) || '11 digit phone number only']">
 
                 <template v-slot:before>
-                  <q-icon class="logo-color" name="phone" size="lg" />
+                  <q-icon :color="logoColor" name="phone" size="lg" />
                 </template>
               </q-input>
             </div>
@@ -197,20 +243,87 @@
             </div>
             <div class="left-container">
               <q-slide-transition :duration="700">
-                <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.univRegion"
-                  label="Region of your School" :options="region_options" emit-value map-options lazy-rules
-                  v-show="formInput.participant">
+                <q-select outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor"
+                  v-model="formInput.univRegion" label="Region of your School" :options="region_options" emit-value
+                  map-options lazy-rules v-show="formInput.participant">
                   <template v-slot:before>
-                    <q-icon class="logo-color" name="map" size="lg" />
+                    <q-icon :color="logoColor" name="map" size="lg" />
                   </template>
                 </q-select>
               </q-slide-transition>
               <q-slide-transition :duration="700">
                 <div v-show="formInput.participant == 1 || (formInput.univRegion == 13 && formInput.participant == 2)">
-                  <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.univCity"
-                    use-input emit-value map-options input-debounce="0" label="City of your University"
-                    :options="filtered_univCity" @filter="filter_univCity" behavior="menu" lazy-rules
-                    :rules="[(val) => (val && val > 0) || 'Required Field',]"
+                  <q-select outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor"
+                    v-model="formInput.university" use-input emit-value map-options input-debounce="0"
+                    label="University" :options="filtered_university" @filter="filter_university" behavior="menu"
+                    lazy-rules :rules="[(val) => (val && val > 0) || 'Required Field',]">
+
+                    <template v-slot:no-option>
+                      <q-item>
+                        <q-item-section class="text-grey">
+                          No results
+                        </q-item-section>
+                      </q-item>
+                    </template>
+
+                    <template v-slot:before>
+                      <q-icon :color="logoColor" name="school" size="lg" />
+                    </template>
+
+                    <template v-slot:append>
+                      <q-icon name="close" @click="formInput.university = null" class="remove-selection"
+                        v-show="formInput.university"></q-icon>
+                    </template>
+                  </q-select>
+                  <q-select outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor"
+                    v-model="formInput.course" use-input emit-value map-options input-debounce="0"
+                    label="Course / Program" :options="filtered_course" @filter="filter_course" behavior="menu"
+                    lazy-rules :rules="[(val) => (val && val > 0) || 'Required Field']">
+
+                    <template v-slot:no-option>
+                      <q-item>
+                        <q-item-section class="text-grey">
+                          No results
+                        </q-item-section>
+                      </q-item>
+                    </template>
+
+                    <template v-slot:before>
+                      <q-icon :color="logoColor" name="golf_course" size="lg" />
+                    </template>
+
+                    <template v-slot:append>
+                      <q-icon name="close" @click="formInput.course = null" class="remove-selection"
+                        v-show="formInput.course"></q-icon>
+                    </template>
+                  </q-select>
+                  <q-select outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor"
+                    v-model="formInput.scholarProgram" label="Scholarship Program" :options="scholarProgram_options"
+                    emit-value map-options lazy-rules :rules="[(val) => (val && val > 0) || 'Required Field']">
+
+                    <template v-slot:before>
+                      <q-icon :color="logoColor" name="auto_graph" size="lg" />
+                    </template>
+                  </q-select>
+                  <q-select outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor"
+                    v-model="formInput.yearAward" label="Year Award" :options="yearAward_options" emit-value map-options
+                    lazy-rules :rules="[(val) => (val && val > 0) || 'Required Field']">
+
+                    <template v-slot:before>
+                      <q-icon :color="logoColor" name="verified_user" size="lg" />
+                    </template>
+                  </q-select>
+                </div>
+              </q-slide-transition>
+            </div>
+            <div class="right-container">
+              <q-slide-transition :duration="700">
+                <div v-show="formInput.participant == 1">
+
+                  <q-select outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor"
+                    v-model="formInput.univCity" use-input emit-value map-options input-debounce="0"
+                    label="City of your University" :options="filtered_univCity" @filter="filter_univCity"
+                    behavior="menu" lazy-rules :rules="[(val) => (val && val > 0) || 'Required Field',]"
                     v-show="formInput.participant == 1 || (formInput.participant == 2 && formInput.univRegion == 13)">
 
                     <template v-slot:no-option>
@@ -222,7 +335,7 @@
                     </template>
 
                     <template v-slot:before>
-                      <q-icon class="logo-color" name="mode_of_travel" size="lg" />
+                      <q-icon :color="logoColor" name="mode_of_travel" size="lg" />
                     </template>
 
                     <template v-slot:append>
@@ -230,106 +343,42 @@
                         v-show="formInput.univCity"></q-icon>
                     </template>
                   </q-select>
-                  <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.university"
-                    use-input emit-value map-options input-debounce="0" label="University"
-                    :options="filtered_university" @filter="filter_university" behavior="menu" lazy-rules
-                    :rules="[(val) => (val && val > 0) || 'Required Field',]">
-
-                    <template v-slot:no-option>
-                      <q-item>
-                        <q-item-section class="text-grey">
-                          No results
-                        </q-item-section>
-                      </q-item>
-                    </template>
+                  <q-select outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor"
+                    v-model="formInput.yearLevel" label="Year Level" :options="yearLevel_options" emit-value map-options
+                    lazy-rules :rules="[(val) => (val && val > 0) || 'Required Field']">
 
                     <template v-slot:before>
-                      <q-icon class="logo-color" name="school" size="lg" />
-                    </template>
-
-                    <template v-slot:append>
-                      <q-icon name="close" @click="formInput.university = null" class="remove-selection"
-                        v-show="formInput.university"></q-icon>
+                      <q-icon :color="logoColor" name="settings_input_composite" size="lg" />
                     </template>
                   </q-select>
-                </div>
-              </q-slide-transition>
-            </div>
-            <div class="right-container">
-              <q-slide-transition :duration="700">
-                <div v-show="formInput.participant == 1">
-                  <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.course"
-                    use-input emit-value map-options input-debounce="0" label="Course" :options="filtered_course"
-                    @filter="filter_course" behavior="menu" lazy-rules
-                    :rules="[(val) => (val && val > 0) || 'Required Field']">
 
-                    <template v-slot:no-option>
-                      <q-item>
-                        <q-item-section class="text-grey">
-                          No results
-                        </q-item-section>
-                      </q-item>
-                    </template>
 
-                    <template v-slot:before>
-                      <q-icon class="logo-color" name="golf_course" size="lg" />
-                    </template>
-
-                    <template v-slot:append>
-                      <q-icon name="close" @click="formInput.course = null" class="remove-selection"
-                        v-show="formInput.course"></q-icon>
-                    </template>
-                  </q-select>
-                  <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.yearLevel"
-                    label="Year Level" :options="yearLevel_options" emit-value map-options lazy-rules
-                    :rules="[(val) => (val && val > 0) || 'Required Field']">
-
-                    <template v-slot:before>
-                      <q-icon class="logo-color" name="settings_input_composite" size="lg" />
-                    </template>
-                  </q-select>
-                  <q-select outlined rounded :color="formColor" :label-color="formColor"
-                    v-model="formInput.scholarProgram" label="Scholarship Program" :options="scholarProgram_options"
-                    emit-value map-options lazy-rules :rules="[(val) => (val && val > 0) || 'Required Field']">
-
-                    <template v-slot:before>
-                      <q-icon class="logo-color" name="auto_graph" size="lg" />
-                    </template>
-                  </q-select>
-                  <q-select outlined rounded :color="formColor" :label-color="formColor" v-model="formInput.yearAward"
-                    label="Year Award" :options="yearAward_options" emit-value map-options lazy-rules
-                    :rules="[(val) => (val && val > 0) || 'Required Field']">
-
-                    <template v-slot:before>
-                      <q-icon class="logo-color" name="verified_user" size="lg" />
-                    </template>
-                  </q-select>
-                  <q-input outlined rounded v-model="formInput.association" :color="formColor" :label-color="formColor"
-                    label="Associations" hint="e.g Member/President of Scholars Club"
+                  <q-input outlined rounded v-model="formInput.association" :color="borderColor" :bg-color="bgColor"
+                    :label-color="labelColor" label="Associations" hint="e.g Member/President of Scholars Club"
                     :rules="[(val) => val.length > 0 || 'Required']" lazy-rules>
 
                     <template v-slot:before>
-                      <q-icon class="logo-color" name="sort" size="lg" />
+                      <q-icon :color="logoColor" name="sort" size="lg" />
                     </template>
                   </q-input>
                 </div>
               </q-slide-transition>
               <q-slide-transition :duration="700">
                 <div v-show="formInput.participant == 2">
-                  <q-input outlined rounded v-model="formInput.designation" :color="formColor" :label-color="formColor"
-                    label="Designation" :rules="[(val) => val.length > 0 || 'Required']" lazy-rules
-                    hint="e.g. Project Director, University Coordinator">
+                  <q-input outlined rounded v-model="formInput.designation" :color="borderColor" :bg-color="bgColor"
+                    :label-color="labelColor" label="Designation" :rules="[(val) => val.length > 0 || 'Required']"
+                    lazy-rules hint="e.g. Project Director, University Coordinator">
 
                     <template v-slot:before>
-                      <q-icon class="logo-color" name="sort" size="lg" />
+                      <q-icon :color="logoColor" name="sort" size="lg" />
                     </template>
                   </q-input>
-                  <q-input outlined rounded v-model="formInput.position" :color="formColor" :label-color="formColor"
-                    label="Position" :rules="[(val) => val.length > 0 || 'Required']" lazy-rules
-                    hint="e.g. Senior Science Research Specialist">
+                  <q-input outlined rounded v-model="formInput.position" :color="borderColor" :bg-color="bgColor"
+                    :label-color="labelColor" label="Position" :rules="[(val) => val.length > 0 || 'Required']"
+                    lazy-rules hint="e.g. Senior Science Research Specialist">
 
                     <template v-slot:before>
-                      <q-icon class="logo-color" name="sort" size="lg" />
+                      <q-icon :color="logoColor" name="sort" size="lg" />
                     </template>
                   </q-input>
                 </div>
@@ -338,6 +387,18 @@
           </div>
           <!-- && formInput.participant == 1 -->
           <div v-show="pageNum == 3">
+            <div v-for="val in Array.from(Array(questions.validation.length).keys())">
+              <br><b style="font-size: 24px">{{ questions.validation[val].split(':')[0] }}</b><br>
+              {{ questions.validation[val].split(':')[1] }}
+              <q-input outlined rounded v-model="formInput.validation[val]" :color="borderColor" :bg-color="bgColor"
+                :label-color="labelColor" :rules="[(val) => val.length > 0 || 'Required']">
+                <template v-slot:before>
+                  <q-icon :color="logoColor" name="question_answer" size="lg" />
+                </template>
+              </q-input>
+            </div>
+          </div>
+          <div v-show="pageNum == 4">
             <q-separator />
             <p style="justify-content: center;">
               <b>DIRECTIONS</b>: Using a 5-point Likert scale, please put a checkmark (✓) on the
@@ -345,7 +406,7 @@
               statements about some quality dimensions of this activity.
               All fields required.
             </p>
-            <div v-for="(item, index) in questions.af" :key="item.id">
+            <div v-for="(item, index) in questions.pretest" :key="item.id">
               <br>{{ item }}
               <div class="radios">
                 <ul style="list-style-type: none; padding: 0; margin: 0; ">
@@ -362,12 +423,12 @@
                 </ul>
               </div>
             </div>
-            {{ "31. " + questions.lastQuestion }}
-            <q-input v-model="formInput.expectation" :color="formColor" :label-color="formColor" filled rounded
-              :rules="[(val) => val.length > 0 || 'Required Field']" lazy-rules>
+            {{ "31. " + questions.recom }}
+            <q-input v-model="formInput.expectation" :color="borderColor" :bg-color="bgColor" :label-color="labelColor"
+              outlined rounded :rules="[(val) => val.length > 0 || 'Required Field']" lazy-rules>
 
               <template v-slot:before>
-                <q-icon class="logo-color" name="psychology_alt" size="lg" />
+                <q-icon :color="logoColor" name="psychology_alt" size="lg" />
               </template>
             </q-input>
           </div>
@@ -380,7 +441,7 @@
             <div v-show="pageNum > 1" style="width: 25%;">
               <q-btn label="Back" @click="pageNum--" color="teal" class="button-submit" style="width: 100%;"></q-btn>
             </div>
-            <div v-show="pageNum < 3 && !(pageNum == 2 && formInput.participant == 2)" style="width: 25%;">
+            <div v-show="pageNum < 4 && !(pageNum == 2 && formInput.participant == 2)" style="width: 25%;">
               <q-btn label="Next" @click="pageNum++, scrollToElement('#topElement')" color="teal" class="button-submit"
                 style="width: 100%; height: 12%" :disabled="((
                   (pageNum == 1) && (
@@ -389,7 +450,7 @@
                     !formInput.lName ||
                     !formInput.sex ||
                     formInput.lgbt.length != 2 ||
-                    !formInput.birthDate ||
+                    !formInput.birthdate ||
                     !formInput.phoneNumber ||
                     formInput.phoneNumber.length != 11
                   )) || ((pageNum == 2) && (
@@ -404,7 +465,7 @@
             </div>
           </div>
           <div class="button-container" style="width: 100%;"
-            v-show="pageNum == 3 || (pageNum == 2 && formInput.participant == 2)">
+            v-show="pageNum == 4 || (pageNum == 2 && formInput.participant == 2)">
             <q-btn label="submit" type="submit" color="primary" class="button-submit" @click="submitResponse()" />
           </div>
         </div>
@@ -416,7 +477,7 @@
   <q-dialog v-model="allRequired" persistent>
     <q-card style="width: 300px !important" class="prompt">
       <q-card-section class="q-pb-none text-center">
-        <q-icon class="logo-color" name="error" size="70px" />
+        <q-icon color="blue-grey-6" name="error" size="70px" />
       </q-card-section>
       <q-card-section class="q-pa-md text-center">
         <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
@@ -456,8 +517,7 @@
       </q-card-section>
 
       <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
-        Your
-        <b>SLC 2024</b> journey is about to start right here.<br />
+        Your<b>SLC 2025</b> journey is about to start right here.<br />
         An email will be sent to you containing<br />
         your proof of registration.<br />
 
@@ -471,14 +531,14 @@
   <q-dialog v-model="errorWarning" persistent>
     <q-card style="min-width: 350px" class="prompt">
       <q-card-section class="q-pb-none text-center">
-        <q-icon class="logo-color" name="error" size="70px" />
+        <q-icon color="blue-grey-6" name="error" size="70px" />
       </q-card-section>
       <q-card-section class="q-pa-md text-center">
         <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
-        Please try again
+        {{ errMessage }}
       </q-card-section>
 
       <q-card-actions align="right">
@@ -486,58 +546,22 @@
       </q-card-actions>
     </q-card>
   </q-dialog>
-  <q-dialog v-model="notListed" persistent>
+  <q-dialog v-model="disclaimer" persistent>
     <q-card style="min-width: 350px" class="prompt">
       <q-card-section class="q-pb-none text-center">
-        <q-icon class="logo-color" name="error" size="70px" />
+        <q-icon :color="logoColor" name="error" size="70px" />
       </q-card-section>
       <q-card-section class="q-pa-md text-center">
-        <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
+        <div style="font-family: Montserrat; font-size: 25px">Disclaimer</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
-        Kindly contact your respective scholarship coordinator<br>to be able to register.
+        If you have already attended previous batch of SLC<br />You may not proceed.
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="OK" color="grey" v-close-popup />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
-  <q-dialog v-model="OTPNotMatch" persistent>
-    <q-card style="min-width: 350px" class="prompt">
-      <q-card-section class="q-pb-none text-center">
-        <q-icon class="logo-color" name="error" size="70px" />
-      </q-card-section>
-      <q-card-section class="q-pa-md text-center">
-        <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
-      </q-card-section>
-
-      <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
-        OTP do not match! Try Again.
-      </q-card-section>
-
-      <q-card-actions align="right">
-        <q-btn flat label="OK" color="grey" v-close-popup />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
-  <q-dialog v-model="alreadySubmitted" persistent>
-    <q-card style="min-width: 350px" class="prompt">
-      <q-card-section class="q-pb-none text-center">
-        <q-icon class="logo-color" name="error" size="70px" />
-      </q-card-section>
-      <q-card-section class="q-pa-md text-center">
-        <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
-      </q-card-section>
-
-      <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
-        You have already submitted your registration form.
-        <br>Thank you.
-      </q-card-section>
-
-      <q-card-actions align="right">
-        <q-btn flat label="OK" color="grey" v-close-popup />
+        <q-btn flat label="Cancel" color="red-5" v-close-popup />
+        <q-btn label="OK" @click="sendOTP" color="green-5" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -580,51 +604,35 @@
       </q-card-section>
     </q-card>
   </q-dialog>
-  <q-dialog v-model="registrationClosed" persistent>
-    <q-card style="min-width: 350px" class="prompt">
-      <q-card-section class="q-pb-none text-center">
-        <q-icon style="color: #3948ab85" name="error" size="70px" />
-      </q-card-section>
-      <q-card-section class="q-pa-md text-center">
-        <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
-      </q-card-section>
 
-      <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
-        Submissions are currently closed!
-      </q-card-section>
-
-      <q-card-actions align="right">
-        <q-btn flat label="OK" color="grey" @click="refreshPage()" v-close-popup />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
 </template>
 
 <script>
-import { useQuasar, useMeta } from "quasar"
+import { useMeta } from "quasar"
 import { ref } from 'vue'
-import axios from 'axios'
 import {
-  baseURL,
   axiosInit,
   yearAward_options,
   yearLevel_options,
   scholarProgram_options,
   suffix_options,
+  university_options,
+  univCity_options,
+  course_options,
+  region_options,
+
+  filtered_course,
+  filtered_university,
+  filtered_univCity,
+
   filter_course,
   filter_univCity,
   filter_university,
-  filtered_course,
-  filtered_univCity,
-  filtered_university,
   pageNum,
-  region_options,
+
   scrollToElement,
   testSubmit,
-  formInput,
-  university_options,
-  univCity_options,
-  course_options
+  formInput
 } from '../components/DefineInitials.vue';
 
 const metaData = {
@@ -636,69 +644,50 @@ const accept = ref(false)
 // bypass otp
 const OTPVerified = ref(false)
 const otp = ref(null)
-const isOTPSixDigit = ref(null)
 const allRequired = ref(null)
 const pleaseWait = ref(null)
 const congrats = ref(null)
 const errorWarning = ref(null)
-const notListed = ref(null)
-const alreadySubmitted = ref(null)
 const OTPSent = ref(false)
-const OTPNotMatch = ref(null)
+const conduct = ref(null)
 
 const registrationClosed = ref(null)
 
 const refreshPage = () => {
-  location.href = "/";
+  // location.href = "/";
 };
 
-
-
-const sendOTP = () => {
-  pleaseWait.value = true;
-  axiosInit
-    .get('slc/auth/sendOTP.php?email=' + formInput.email)
-    .then(function (response) {
-      if (response.data.restrictRegister === true)
-        registrationClosed.value = response.data.restrictRegister
-
-
-      else if (response.data.regExists === true) {
-        pleaseWait.value = false;
-        alreadySubmitted.value = true
-      } else if (response.data.notListed === true) {
-        pleaseWait.value = false;
-        notListed.value = response.data.notListed;
-      } else if (response.data.emailSent === true) {
-        pleaseWait.value = false;
-        OTPSent.value = response.data.emailSent;
-      } else {
-        pleaseWait.value = false;
-        errorWarning.value = true;
-      }
-    });
-};
 
 export default {
   setup() {
+    axiosInit.get('/general/getConfig.php?' +
+      '&getConduct=' +
+      true
+    ).then(function (response) {
+      if (response.data) {
+        conduct.value = response.data.conduct
+      }
+    })
     useMeta(metaData)
 
-    const $q = useQuasar();
-    const filtered_university = ref(university_options.value)
-    const filtered_univCity = ref(univCity_options.value)
-    const filtered_course = ref(course_options.value)
     const dataPolicyMenu = ref(false)
-    const greeting = ref(true)
     const conformeCheck = ref(false)
+    const errMessage = ref(null)
+    const disclaimer = ref(false)
 
     const OTPValid = () => {
+      pleaseWait.value = true;
       axiosInit
         .get("slc/auth/checkOTP.php?otp=" + otp.value + "&email=" + formInput.email)
         .then(function (response) {
+          pleaseWait.value = false;
           if (response.data.OTPVerified === true) {
             OTPVerified.value = true;
+
           } else {
-            OTPNotMatch.value = true;
+            errorWarning.value = true;
+            errMessage.value = response.data.errMessage
+            // OTPNotMatch.value = true;
           }
         });
     };
@@ -711,6 +700,23 @@ export default {
       return formData;
     };
 
+    const sendOTP = () => {
+      pleaseWait.value = true;
+      const dlInsert = toFormData(formInput);
+      axiosInit
+        .post('slc/auth/sendOTP.php?', dlInsert)
+        .then(function (response) {
+          pleaseWait.value = false;
+          if (response.data.emailSent === true) {
+            OTPSent.value = response.data.emailSent;
+          }
+          else {
+            errorWarning.value = true;
+            errMessage.value = response.data.errMessage
+          }
+        });
+    };
+
     const submitResponse = () => {
       pleaseWait.value = true
       if ((!formInput.participant ||
@@ -719,7 +725,7 @@ export default {
           !formInput.mName ||
           !formInput.lName ||
           !formInput.sex ||
-          !formInput.birthDate ||
+          !formInput.birthdate ||
           !formInput.phoneNumber ||
           !formInput.univRegion ||
           !formInput.univCity ||
@@ -734,7 +740,7 @@ export default {
           !formInput.mName ||
           !formInput.lName ||
           !formInput.sex ||
-          !formInput.birthDate ||
+          !formInput.birthdate ||
           !formInput.phoneNumber ||
           !formInput.univRegion ||
           !formInput.designation ||
@@ -744,6 +750,7 @@ export default {
         pleaseWait.value = false
         allRequired.value = true
       } else {
+        formInput.collatedValidation = formInput.validation.join('|')
         const dlInsert = toFormData(formInput);
         axiosInit.post(
           "slc/record/submitRegistrant.php", dlInsert, {
@@ -759,6 +766,7 @@ export default {
           else {
             pleaseWait.value = false
             errorWarning.value = true
+            errMessage.value = response.data.errMessage
           }
         })
       }
@@ -779,34 +787,47 @@ export default {
       selectParticipantType,
       testSubmit,
       registrationClosed,
-      formColor: 'grey-10',
+
+      borderColor: 'blue-10',
+      labelColor: 'blue-10',
+      bgColor: 'blue-grey-2',
+      logoColor: 'blue-10',
+      conduct,
+
+      disclaimer,
+
+      errMessage,
       dataPolicyMenu,
       OTPVerified,
       OTPSent,
-      OTPNotMatch,
+      yearAward_options,
+      yearLevel_options,
+      scholarProgram_options,
+      suffix_options,
       university_options,
-      filtered_university,
       univCity_options,
-      filtered_univCity,
       course_options,
+      region_options,
+
+      filter_university,
+      filter_univCity,
+      filter_course,
+
       filtered_course,
+      filtered_university,
+      filtered_univCity,
+
       formInput,
       accept,
       otp,
-      greeting,
-      isOTPSixDigit,
+      greeting: ref(false),
       allRequired,
-      alreadySubmitted,
+
       pleaseWait,
       congrats,
       errorWarning,
-      notListed,
+
       pageNum,
-      region_options,
-      suffix_options,
-      scholarProgram_options,
-      yearLevel_options,
-      yearAward_options,
       conformeCheck,
       radio_val: [5, 4, 3, 2, 1],
       likertScaleDesc: ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'],
@@ -814,7 +835,13 @@ export default {
       yesno_options: ['Yes', 'No'],
       gad_colors: ['pink-5', 'purple-7', 'deep-purple-6'],
       questions: {
-        af: [
+        validation: [
+          '1. Core Values: How do you demonstrate professional excellence in your academic or personal endeavors, and how do you plan to continue striving for excellence as a DOST-SEI scholar?',
+          '2. Leadership: As a potential leader, how do you ensure that you lead by example and put the needs of others before your own? Can you provide an example where you exhibited servant leadership in your role as an officer or a volunteer? ',
+          '3. Volunteering Plans: Describe a situation where you took initiative in your community or school to address a social issue or support a cause. What motivated you to take action, and what impact did your efforts have? ',
+          '4. Collaboration: In your opinion, why is fostering camaraderie and solidarity among fellow scholars important, and how would you contribute to strengthening the network of scholars during and after the Scholars Leadership Camp? ',
+        ],
+        pretest: [
           ' 1. I am familiar with the common leadership approaches.',
           ' 2. I understand the steps involved in the communication process.',
           ' 3. I influence others how they think act and accomplish goals.',
@@ -846,7 +873,7 @@ export default {
           ' 29. As a leader if one of my team members is struggling to complete a task on time I would pitch in to ensure that it gets done properly.',
           ' 30. I take one task at a time for a better output.',
         ],
-        lastQuestion: 'Please identify and describe the specific skills and knowledge that you are expecting to learn from the Leadership Camp.'
+        recom: 'Please identify and describe the specific skills and knowledge that you are expecting to learn from the Leadership Camp.'
       },
       dataPolicyText: `This form collects your personal information and post-evaluation of the activity for future improvements and research study.  The DOST-SEI, in compliance with R.A. 10173, implements reasonable and appropriate organizational, physical, and technical security measures for the protection of your personal information collected. Only the DOST-SEI employees are permitted to have access to the collected information. They shall be guided by the security measures provided in handling all personal information collected. Personal information collected is processed, stored, and later on disposed of via shredding and permanently deleted in our electronic files in accordance with R.A No. 9470 otherwise known as the National Archive of the Philippines Act of 2007. In case of a data breach, DOST-SEI shall notify you and inform the National Privacy Commission (NPC) in accordance with NPC Circular 16-03 on Personal Data Breach Management. Additionaly, agreeing with this policy allows DOST - SEI to take any images, videos or graphics taken during conduct for publication and reporting purposes.
 
@@ -861,355 +888,10 @@ For questions or concerns, you may contact our Data Protection Officer through t
 Direct Line: +63 2 8710 7462
 
 E-mail: dpo@sei.dost.gov.ph`,
-      filter_university(val, update) {
-        const temp = university_options.value
-        if (val === '') {
-          update(() => {
-            filtered_university.value = temp
-          })
-          return
-        }
 
-        update(() => {
-          const needle = val.toLowerCase()
-          filtered_university.value = temp.filter((label) => label.label.toLowerCase().indexOf(needle) > -1)
-        })
-      },
-      filter_univCity(val, update) {
-        const temp = univCity_options.value
-        if (val === '') {
-          update(() => {
-            filtered_univCity.value = temp
-          })
-          return
-        }
-
-        update(() => {
-          const needle = val.toLowerCase()
-          filtered_univCity.value = temp.filter((label) => label.label.toLowerCase().indexOf(needle) > -1)
-        })
-      },
-      filter_course(val, update) {
-        const temp = course_options.value
-        if (val === '') {
-          update(() => {
-            filtered_course.value = temp
-          })
-          return
-        }
-
-        update(() => {
-          const needle = val.toLowerCase()
-          filtered_course.value = temp.filter((label) => label.label.toLowerCase().indexOf(needle) > -1)
-        })
-      }
     }
 
   }
 }
 
 </script>
-
-<style>
-.evaluation {
-  padding-block: 55px;
-  padding-inline: 15px;
-  box-shadow: none;
-  width: 60vw;
-  margin-inline: auto;
-  /* min-width: 40vw; */
-  height: 100vh;
-  -webkit-backdrop-filter: blur(8px);
-  /* Safari 9+ */
-  backdrop-filter: blur(8px);
-  /* Chrome and Opera */
-  box-shadow: 0px 10px 15px 10px rgb(0 0 0 / 15%);
-  background-color: rgba(228, 228, 228, 0.627);
-  -webkit-border-top-left-radius: 25px;
-  -webkit-border-bottom-left-radius: 25px;
-  -moz-border-radius-topleft: 25px;
-  -moz-border-radius-bottomleft: 25px;
-  border-top-left-radius: 25px;
-  border-bottom-left-radius: 25px;
-  font-family: montserrat;
-  overflow: scroll;
-  font-size: 1.3em;
-}
-
-.radios {
-  margin-block: 15px;
-  min-width: 100%;
-  padding-inline: 2%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-}
-
-.button-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-}
-
-.button-container>* {
-  margin: auto;
-  margin-top: 2%;
-  height: 100%;
-}
-
-.left-container {
-  display: inline-block;
-  padding-inline: 12px;
-  vertical-align: top;
-  min-width: 340px;
-  width: 50%;
-  margin: auto;
-}
-
-.right-container {
-  display: inline-block;
-  padding-inline: 12px;
-  min-width: 340px;
-  vertical-align: top;
-  width: 50%;
-  margin: auto;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  opacity: 0;
-  margin-top: 40px;
-  margin-bottom: 40px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgb(228, 228, 228);
-  border-radius: 10px;
-  width: 30px;
-  background-clip: padding-box;
-}
-
-.answer-container {
-  width: 80%;
-}
-
-.q-field__control-container {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-evenly;
-}
-
-.q-field__label,
-.q-field__native {
-  padding-inline: 15px;
-}
-
-label.q-field {
-  margin-block: 10px;
-  padding-bottom: 20px;
-}
-
-.button-submit {
-  width: 50%;
-}
-
-.text-fields-rate {
-  width: 25%;
-}
-
-.text-fields-aspect {
-  width: 70%;
-}
-
-.text-fields-overall {
-  width: 90%;
-}
-
-.greeting-container {
-  background: rgb(218, 204, 47);
-  background: radial-gradient(circle, rgba(218, 204, 47, 1) 0%, rgba(14, 98, 142, 1) 24%, rgba(32, 25, 111, 1) 73%, rgba(15, 0, 83, 1) 100%);
-  overflow: hidden;
-}
-
-.greeting-logo {
-  height: 70vh;
-  width: 60%;
-  max-height: 700px;
-  min-width: 340px;
-  max-width: 400px;
-  margin: auto;
-  display: block;
-  margin-top: 15vh;
-  /* overflow: hidden; */
-}
-
-.remove-selection:hover {
-  cursor: pointer;
-}
-
-.dataPolicy {
-  box-shadow: none;
-  margin-left: 22.5vw;
-  margin-right: 22.5vw;
-  min-width: 55vw;
-  height: 85vh;
-  /* border: 5px solid black; */
-  -webkit-backdrop-filter: blur(18px);
-  /* Safari 9+ */
-  backdrop-filter: blur(8px);
-  /* Chrome and Opera */
-  box-shadow: 0px 10px 15px 10px rgb(0 0 0 / 15%);
-  background-color: rgba(194, 24, 24, 0.54);
-  -webkit-border-top-left-radius: 25px;
-  -webkit-border-bottom-left-radius: 25px;
-  -moz-border-radius-topleft: 25px;
-  -moz-border-radius-bottomleft: 25px;
-  border-top-left-radius: 25px;
-  border-bottom-left-radius: 25px;
-  white-space: pre-wrap;
-}
-
-.fade-in {
-  -webkit-animation: fade-in 3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
-  animation: fade-in 3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
-}
-
-@-webkit-keyframes fade-in {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes fade-in {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-.pulsate-bck {
-  -webkit-animation: pulsate-bck .5s ease-in-out both;
-  animation: pulsate-bck .5s ease-in-out both;
-}
-
-@-webkit-keyframes pulsate-bck {
-  0% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    filter: grayscale(100%);
-  }
-
-  50% {
-    -webkit-transform: scale(0.7);
-    transform: scale(0.7);
-    filter: grayscale(50%);
-  }
-
-  100% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    filter: grayscale(0%);
-  }
-}
-
-@keyframes pulsate-bck {
-  0% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    filter: grayscale(100%);
-  }
-
-  50% {
-    -webkit-transform: scale(0.9);
-    transform: scale(0.7);
-    filter: grayscale(50%);
-  }
-
-  100% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    filter: grayscale(0%);
-  }
-}
-
-.pulsate-logo {
-  -webkit-animation: pulsate-logo 4s ease-in-out both infinite;
-  animation: pulsate-logo 4s ease-in-out both infinite;
-}
-
-@-webkit-keyframes pulsate-logo {
-  0% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    filter: grayscale(0%);
-  }
-
-  50% {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-    filter: grayscale(100%);
-  }
-
-  100% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    filter: grayscale(0%);
-  }
-}
-
-@keyframes pulsate-logo {
-  0% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    filter: grayscale(0%);
-  }
-
-  50% {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-    filter: grayscale(100%);
-  }
-
-  100% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    filter: grayscale(0%);
-  }
-}
-
-@media screen and (max-width: 600px) {
-
-  .evaluation,
-  .dataPolicy {
-    width: 100vw;
-    margin: 0;
-  }
-}
-
-/* Chrome, Safari, Edge, Opera */
-input[type='number']::-webkit-outer-spin-button,
-input[type='number']::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type='number'] {
-  appearance: textfield;
-}
-
-.logo-color {
-  color: #3948ab85
-}
-</style>

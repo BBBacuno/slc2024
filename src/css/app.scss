@@ -1,1 +1,260 @@
 // app global css in SCSS form
+@keyframes sideScroll {
+  from { background-position: 0px 0; }
+  to { background-position: -1980px 0; }
+}
+
+
+.evaluation {
+  padding-block: 55px;
+  padding-inline: 15px;
+  width: 60vw;
+  margin-inline: auto;
+  height: 100vh;
+  // -webkit-backdrop-filter: blur(10px);
+  /* Safari 9+ */
+  // backdrop-filter: blur(10px);
+  /* Chrome and Opera */
+
+  // border radius
+  border-radius: 25px;
+  font-family: montserrat;
+  overflow: scroll;
+  font-size: 1.3em;
+
+  // background-image: url(/pubmat-big.png);
+  // background-size: cover;
+}
+
+.radios {
+  margin-block: 15px;
+  min-width: 100%;
+  padding-inline: 2%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.button-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.button-container>* {
+  margin: auto;
+  margin-top: 2%;
+  height: 100%;
+}
+
+.left-container {
+  display: inline-block;
+  padding-inline: 12px;
+  vertical-align: top;
+  min-width: 340px;
+  width: 50%;
+  margin: auto;
+}
+
+.right-container {
+  display: inline-block;
+  padding-inline: 12px;
+  min-width: 340px;
+  vertical-align: top;
+  width: 50%;
+  margin: auto;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  opacity: 0;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(116, 142, 255);
+  border-radius: 10px;
+  width: 30px;
+  background-clip: padding-box;
+}
+
+.answer-container {
+  width: 80%;
+}
+
+.q-field__control-container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+}
+
+.q-field__label,
+.q-field__native {
+  padding-inline: 15px;
+  color: rgb(0, 0, 0);
+  // font-weight: 600;
+}
+
+label.q-field {
+  margin-block: 10px;
+  padding-bottom: 20px;
+}
+
+.button-submit {
+  width: 50%;
+}
+
+.text-fields-rate {
+  width: 25%;
+}
+
+.text-fields-aspect {
+  width: 70%;
+}
+
+.text-fields-overall {
+  width: 90%;
+}
+
+.greeting-container {
+  background: rgb(218, 204, 47);
+  background: radial-gradient(circle, rgba(218, 204, 47, 1) 0%, rgba(14, 98, 142, 1) 24%, rgba(32, 25, 111, 1) 73%, rgba(15, 0, 83, 1) 100%);
+  overflow: hidden;
+}
+
+.greeting-logo {
+  height: 70vh;
+  width: 60%;
+  max-height: 700px;
+  min-width: 340px;
+  max-width: 400px;
+  margin: auto;
+  display: block;
+  margin-top: 15vh;
+  /* overflow: hidden; */
+}
+
+.remove-selection:hover {
+  cursor: pointer;
+}
+
+.dataPolicy {
+  // box-shadow: none;
+  margin-left: 22.5vw;
+  margin-right: 22.5vw;
+  min-width: 55vw;
+  height: 85vh;
+  /* border: 5px solid black; */
+  -webkit-backdrop-filter: blur(18px);
+  /* Safari 9+ */
+  backdrop-filter: blur(8px);
+  /* Chrome and Opera */
+  box-shadow: 0px 10px 15px 10px rgb(0 0 0 / 15%);
+  background-color: rgba(194, 24, 24, 0.54);
+  -webkit-border-top-left-radius: 25px;
+  -webkit-border-bottom-left-radius: 25px;
+  -moz-border-radius-topleft: 25px;
+  -moz-border-radius-bottomleft: 25px;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+  white-space: pre-wrap;
+}
+
+.fade-in {
+  -webkit-animation: fade-in 3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: fade-in 3s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+}
+
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+
+@keyframes pulsate-bck {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    filter: grayscale(100%);
+  }
+
+  50% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.7);
+    filter: grayscale(50%);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    filter: grayscale(0%);
+  }
+}
+
+@keyframes pulsate-logo {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    filter: grayscale(0%);
+  }
+
+  50% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    filter: grayscale(100%);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    filter: grayscale(0%);
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+  .evaluation,
+  .dataPolicy {
+    width: 100vw;
+    margin: 0;
+  }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  appearance: textfield;
+}
+
+
+body {
+  height: 100vh;
+  background-image: url('/background.png');
+  background-size: contain;
+  background-repeat: repeat;
+  backdrop-filter: saturate(70%) blur(4px);
+  animation: sideScroll 25s linear infinite;
+}
+
+
+.dataPolicyText {
+  font-size: 1.4em;
+  color: #ffffea
+}

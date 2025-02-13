@@ -9,9 +9,7 @@ const axiosInit = axios.create({
   withCredentials: true
 })
 
-const filtered_course = ref(null)
-const filtered_university = ref(null)
-const filtered_univCity = ref(null)
+
 const region_options = ref(null)
 const univCity_options = ref(null)
 const course_options = ref(null)
@@ -37,6 +35,10 @@ axiosInit.get("general/getUniversities.php").then(function (response) {
   university_options.value = response.data;
 })
 
+const filtered_course = ref(course_options.value)
+const filtered_university = ref(university_options.value)
+const filtered_univCity = ref(univCity_options.value)
+
 const formInput = reactive({
   email: null,
   fName: null,
@@ -45,7 +47,7 @@ const formInput = reactive({
   suffix: null,
   sex: null,
   lgbt: [null],
-  birthDate: null,
+  birthdate: null,
   phoneNumber: null,
   participant: null,
   university: null,
@@ -57,6 +59,7 @@ const formInput = reactive({
   yearAward: null,
   association: null,
   pretest: [null],
+  validation: [null],
   expectation: null,
   designation: null,
   position: null,
@@ -102,6 +105,10 @@ const scholarProgram_options = ref([
   {
     label: 'CBPSME',
     value: 5
+  },
+  {
+    label: 'ASTHRDP',
+    value: 6
   }
 ])
 
@@ -546,7 +553,7 @@ const submitResponse = (action, id) => {
         !formInput.mName ||
         !formInput.lName ||
         !formInput.sex ||
-        !formInput.birthDate ||
+        !formInput.birthdate ||
         !formInput.phoneNumber ||
         !formInput.univRegion ||
         !formInput.univCity ||
@@ -559,7 +566,7 @@ const submitResponse = (action, id) => {
         !formInput.mName ||
         !formInput.lName ||
         !formInput.sex ||
-        !formInput.birthDate ||
+        !formInput.birthdate ||
         !formInput.phoneNumber ||
         !formInput.univRegion ||
         !formInput.designation ||
@@ -596,7 +603,7 @@ const submitResponse = (action, id) => {
         !formInput.mName ||
         !formInput.lName ||
         !formInput.sex ||
-        !formInput.birthDate ||
+        !formInput.birthdate ||
         !formInput.phoneNumber ||
         !formInput.univRegion ||
         !formInput.univCity ||
@@ -609,7 +616,7 @@ const submitResponse = (action, id) => {
         !formInput.mName ||
         !formInput.lName ||
         !formInput.sex ||
-        !formInput.birthDate ||
+        !formInput.birthdate ||
         !formInput.phoneNumber ||
         !formInput.univRegion ||
         !formInput.designation ||
@@ -670,12 +677,13 @@ const testSubmit = () => {
   formInput.mName = 'Bernardo'
   formInput.lName = 'Bacuño'
   formInput.suffix = null
-  formInput.sex = 1
-  formInput.birthDate = '01/02/2003'
+  formInput.sex = '1'
+  formInput.lgbt = [1, 1]
+  formInput.birthdate = '01/02/2003'
   formInput.phoneNumber = '09663407046'
   formInput.participant = '1'
   formInput.university = '150'
-  formInput.univRegion = '3'
+  formInput.univRegion = '13'
   formInput.univCity = '60'
   formInput.course = '5'
   formInput.scholarProgram = '2'
