@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import SLCRegistrationPage from "../pages/SLCRegistrationPage.vue";
 import SLCConfirmAttendance from "../pages/SLCConfirmAttendance.vue";
-import kickStartPage from "../pages/KickStartPage.vue";
 import SLCEvaluationPage from "../pages/SLCEvaluationPage.vue";
 
 const routes = [
@@ -24,13 +23,6 @@ const routes = [
     name: 'SLCConfirmAttendance',
     components: {
       default: SLCConfirmAttendance,
-    },
-  },
-  {
-    path: '/kickstart', 
-    name: 'kickstart',
-    components: {
-      default: kickStartPage,
     },
   },
   {

@@ -114,10 +114,6 @@ const scholarProgram_options = ref([
 
 const yearLevel_options = ref([
   {
-    label: '1st Year',
-    value: 1
-  },
-  {
     label: '2nd Year',
     value: 2
   },

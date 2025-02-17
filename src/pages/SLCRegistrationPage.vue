@@ -8,7 +8,7 @@ background-color: #ffffffc2;
     <div id="parentContainer">
       <div>
         <q-img src="/pubmat-big.png" v-show="!OTPVerified" :ratio="2" style="border-radius: 15px" />
-        <q-img src="/pubmat-big2.png" v-show="OTPVerified" style="border-radius: 25px;" />
+        <q-img src="/pubmat-small.png" v-show="OTPVerified" style="border-radius: 25px;" />
       </div>
       <div style="text-align: center; font-size: 24px; font-weight: 600;">
         This batch of SLC will be conducted on {{ conduct }}
@@ -423,14 +423,14 @@ background-color: #ffffffc2;
                 </ul>
               </div>
             </div>
-            {{ "31. " + questions.recom }}
+            <!-- {{ "31. " + questions.recom }}
             <q-input v-model="formInput.expectation" :color="borderColor" :bg-color="bgColor" :label-color="labelColor"
               outlined rounded :rules="[(val) => val.length > 0 || 'Required Field']" lazy-rules>
 
               <template v-slot:before>
                 <q-icon :color="logoColor" name="psychology_alt" size="lg" />
               </template>
-            </q-input>
+            </q-input> -->
           </div>
           <q-separator />
         </div>
@@ -733,8 +733,7 @@ export default {
           !formInput.yearLevel ||
           !formInput.course ||
           !formInput.yearAward ||
-          formInput.pretest.filter(v => v).length < 30 ||
-          !formInput.expectation
+          formInput.pretest.filter(v => v).length < 30
         )) || ((formInput.participant == 2) && (
           !formInput.fName ||
           !formInput.mName ||
@@ -839,7 +838,7 @@ export default {
           '1. Core Values: How do you demonstrate professional excellence in your academic or personal endeavors, and how do you plan to continue striving for excellence as a DOST-SEI scholar?',
           '2. Leadership: As a potential leader, how do you ensure that you lead by example and put the needs of others before your own? Can you provide an example where you exhibited servant leadership in your role as an officer or a volunteer? ',
           '3. Volunteering Plans: Describe a situation where you took initiative in your community or school to address a social issue or support a cause. What motivated you to take action, and what impact did your efforts have? ',
-          '4. Collaboration: In your opinion, why is fostering camaraderie and solidarity among fellow scholars important, and how would you contribute to strengthening the network of scholars during and after the Scholars Leadership Camp? ',
+          '4. Expectation: What specific skills or experiences do you expect to gain from this leadership camp? Additionally, in what ways do you believe attending this camp will contribute to your personal growth and development? ',
         ],
         pretest: [
           ' 1. I am familiar with the common leadership approaches.',
@@ -873,7 +872,7 @@ export default {
           ' 29. As a leader if one of my team members is struggling to complete a task on time I would pitch in to ensure that it gets done properly.',
           ' 30. I take one task at a time for a better output.',
         ],
-        recom: 'Please identify and describe the specific skills and knowledge that you are expecting to learn from the Leadership Camp.'
+        // recom: 'Please identify and describe the specific skills and knowledge that you are expecting to learn from the Leadership Camp.'
       },
       dataPolicyText: `This form collects your personal information and post-evaluation of the activity for future improvements and research study.  The DOST-SEI, in compliance with R.A. 10173, implements reasonable and appropriate organizational, physical, and technical security measures for the protection of your personal information collected. Only the DOST-SEI employees are permitted to have access to the collected information. They shall be guided by the security measures provided in handling all personal information collected. Personal information collected is processed, stored, and later on disposed of via shredding and permanently deleted in our electronic files in accordance with R.A No. 9470 otherwise known as the National Archive of the Philippines Act of 2007. In case of a data breach, DOST-SEI shall notify you and inform the National Privacy Commission (NPC) in accordance with NPC Circular 16-03 on Personal Data Breach Management. Additionaly, agreeing with this policy allows DOST - SEI to take any images, videos or graphics taken during conduct for publication and reporting purposes.
 

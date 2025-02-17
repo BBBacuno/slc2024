@@ -11,7 +11,7 @@
     width: 30vw;
     min-width: 360px;
     " for="mainDiv" id="mainDiv">
-      <div class="q-mt-xl" style="margin-top: 60px">
+      <div class="q-mt-xl" style="margin-top: 50px">
         <div style="text-align: center; font-size: 24px; font-weight: 600;">
           Please confirm your attendance through this form
         </div>
@@ -250,6 +250,7 @@
             </div>
           </div>
           <div v-show="OTPSent && !OTPVerified">
+            {{ "An OTP has been sent to your email. Please input the OTP received below" }}
             <q-input dense outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor"
               v-model="otp" class="text-fields" type="number" label="OTP from your Email" hint="6-digit OTP" lazy-rules>
 
@@ -259,7 +260,7 @@
             </q-input>
             <div class="button-container">
               <q-btn unelevated rounded size="md" label="Confirm Attendance" color="teal" style="width: 50%"
-                @click="OTPValid()"></q-btn>
+                @click="confirmDialog = true"></q-btn>
             </div>
           </div>
           <div v-show="OTPVerified">
@@ -295,6 +296,32 @@
 
       <q-card-actions align="right">
         <q-btn flat label="CLOSE" color="red-8" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+  <q-dialog v-model="confirmDialog" persistent>
+    <q-card style="width: 450px !important" class="prompt">
+      <q-card-section class="q-pb-none text-center">
+        <q-icon color="blue-grey-6" name="error" size="70px" />
+      </q-card-section>
+      <q-card-section class="q-pa-md text-center">
+        <div style="font-family: Montserrat; font-size: 30px; font-weight: 600">Before anything!</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 18px">
+        You are confirming that you are <br />
+        <b>{{ formInput.attendance ? 'ATTENDING' : 'NOT ATTENDING' }}</b> SLC 2025. <br /><br />
+        This decision cannot be changed once submitted. Proceed?
+        <br /><br />
+        <span style="font-weight: 200; font-size: 13px;">
+          (Failure to attend SLC 2025 despite confirming your attendance may result to
+          blacklisting of future Patriot activities.)
+        </span>
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn label="Confirm" @click="OTPValid()" color="green-8" v-close-popup />
+        <q-btn flat label="Close" color="red-8" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -378,6 +405,7 @@ const errorWarning = ref(null)
 const OTPSent = ref(false)
 const conduct = ref(null)
 const accept = ref([false, false, false, false, false, false, false, false, false])
+const confirmDialog = ref(false)
 
 const refreshPage = () => {
   // location.href = "/";
@@ -468,6 +496,7 @@ export default {
       logoColor: 'blue-10',
       conduct,
       accept,
+      confirmDialog,
 
 
       errMessage,
