@@ -185,24 +185,34 @@ label.q-field {
 }
 
 
-@keyframes pulsate-bck {
-  0% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    filter: grayscale(100%);
-  }
 
-  50% {
-    -webkit-transform: scale(0.9);
-    transform: scale(0.7);
-    filter: grayscale(50%);
+@mixin mixin-anim($name){
+  @keyframes #{$name} {
+    0% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      filter: grayscale(100%);
+    }
+  
+    50% {
+      -webkit-transform: scale(0.9);
+      transform: scale(0.7);
+      filter: grayscale(50%);
+    }
+  
+    100% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      filter: grayscale(0%);
+    }
   }
+}
 
-  100% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    filter: grayscale(0%);
-  }
+
+@include mixin-anim(pulsate-bck);
+
+.pulsate-bck{
+  animation: pulsate-bck .5s ease-out forwards;
 }
 
 @keyframes pulsate-logo {
@@ -253,7 +263,7 @@ body {
   background-size: contain;
   background-repeat: repeat;
   backdrop-filter: saturate(70%) blur(4px);
-  animation: sideScroll 25s linear infinite;
+  animation: sideScroll 50s linear infinite;
 }
 
 

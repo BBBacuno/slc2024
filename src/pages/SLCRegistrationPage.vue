@@ -10,11 +10,18 @@ background-color: #ffffffc2;
         <q-img src="/pubmat-big.png" v-show="!OTPVerified" :ratio="2" style="border-radius: 15px" />
         <q-img src="/pubmat-small.png" v-show="OTPVerified" style="border-radius: 25px;" />
       </div>
-      <div style="text-align: center; font-size: 24px; font-weight: 600;">
-        This batch of SLC will be conducted on {{ conduct }}
-      </div>
       <q-form>
         <div v-show="!OTPVerified && !OTPSent" style="margin-top: 15px;">
+          <div style="text-align: center; font-size: 24px; font-weight: 600;">
+            This batch of SLC will be conducted on {{ conduct }}
+          </div>
+          <q-input outlined rounded label="SPAS ID" v-model="formInput.spas_id" :color="borderColor" :bg-color="bgColor"
+            :label-color="labelColor" mask="A-####-##-#####" fill-mask
+            :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
+            <template v-slot:before>
+              <q-icon :color="logoColor" name="badge" size="lg" />
+            </template>
+          </q-input>
           <q-input outlined rounded v-model="formInput.fName" :color="borderColor" :bg-color="bgColor"
             :label-color="labelColor" label="First Name" hint="Name inputted will reflect on certificates"
             :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
@@ -54,11 +61,9 @@ background-color: #ffffffc2;
           <q-input outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor" label="Birthdate"
             v-model="formInput.birthdate" @click="$refs.birthdateProxy.show()"
             :rules="[(val) => (val && val.length > 0) || 'Required Field']">
-
             <template v-slot:before>
               <q-icon :color="logoColor" name="cake" size="lg" />
             </template>
-
             <template v-slot:append>
               <q-icon style="color: #3948ab85; margin-right: 10px" name="event" class="cursor-pointer">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale" ref="birthdateProxy">
@@ -72,7 +77,9 @@ background-color: #ffffffc2;
               </q-icon>
             </template>
           </q-input>
-          This email will be used to further contact you with DOST-SEI and Patriot Programs.
+          Please input the email where you received your VFO Certificate.<br>
+          Furthermore, this email will be used to further contact you with DOST-SEI and Patriot Programs.
+
           <q-input outlined rounded v-model="formInput.email" type="email" :color="borderColor" :bg-color="bgColor"
             :label-color="labelColor" label="Email Address" :rules="[(val) => val.includes('@') || 'Only valid email']"
             lazy-rules>
@@ -89,6 +96,11 @@ background-color: #ffffffc2;
           </div>
         </div>
         <div v-show="OTPSent && !OTPVerified">
+          <br><br>
+          We have sent an OTP to your <b>
+            {{ formInput.email?.split('@')[0].substring(0, 2) + '******' +
+              formInput.email?.split('@')[0].slice(-2) + '@' +
+              formInput.email?.split('@')[1].substring(0, 2) + '***...' }}</b> Please input the received OTP below.
           <q-input outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor" v-model="otp"
             class="text-fields" type="number" label="OTP from your Email" hint="6-digit OTP" lazy-rules>
 
@@ -156,6 +168,8 @@ background-color: #ffffffc2;
                   <q-icon :color="logoColor" name="cake" size="lg" />
                 </template>
               </q-input>
+            </div>
+            <div v-show="OTPVerified" class="right-container">
               <div class="radios">
                 <q-radio v-model="formInput.sex" checked-icon="task_alt" unchecked-icon="panorama_fish_eye" val="1"
                   size="xl" color="indigo-7">
@@ -166,8 +180,6 @@ background-color: #ffffffc2;
                   <q-icon :color="logoColor" name="female" size="xl" />Female
                 </q-radio>
               </div>
-            </div>
-            <div v-show="OTPVerified" class="right-container">
               <br>{{ "Are you a member of LGBTQ community?" }}
               <div class="radios">
                 <ul style="list-style-type: none; padding: 0; margin: 0; ">
@@ -188,6 +200,8 @@ background-color: #ffffffc2;
                   {{ formInput.lgbt[0] == 'Yes' ?
                     'Are you okay to be roomed together with a cisgender*?'
                     : 'Are you okay to be roomed together with a member of LGBTQ ? ' }}
+                  <span v-if="formInput.lgbt[0] == 'Yes'" class="text-caption">*gender identity corresponds with the sex
+                    registered for them at birth</span>
                   <div class="radios">
                     <ul style="list-style-type: none; padding: 0; margin: 0; ">
                       <div style="display: inline-block" v-for="val in radio_val.slice(3).reverse()">
@@ -219,26 +233,33 @@ background-color: #ffffffc2;
           <div v-show="pageNum == 2">
             <p class="text-h3 text-center q-my-md">Type of Participant</p>
             <div class="radios">
-
               <div label="Scholar" style="
                   background-size: contain;
                   background-repeat: no-repeat;
                   background-position: center;
                   cursor: pointer;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
                 ">
                 <q-img src="/radio-option1.png" alt="" srcset="" @click="selectParticipantType(1)"
                   :class="{ 'pulsate-bck': formInput.participant == 1 }"
                   style="height: 20vh; width: 20vh; filter: grayscale(100%)" />
+                <b>Scholar</b>
               </div>
               <div style="
                   background-size: contain;
                   background-repeat: no-repeat;
                   background-position: center;
                   cursor: pointer;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
                 ">
                 <q-img src="/radio-option2.png" alt="" srcset="" @click="selectParticipantType(2)"
                   :class="{ 'pulsate-bck': formInput.participant == 2 }"
                   style="height: 20vh; width: 20vh; filter: grayscale(100%)" />
+                <b>Coordinator</b>
               </div>
             </div>
             <div class="left-container">
@@ -461,6 +482,8 @@ background-color: #ffffffc2;
                     !formInput.course ||
                     !formInput.yearAward ||
                     !formInput.scholarProgram
+                  )) || ((pageNum == 3) && (
+                    formInput.validation.filter(obj => obj != null).length != 4
                   )))"></q-btn>
             </div>
           </div>
@@ -470,7 +493,7 @@ background-color: #ffffffc2;
           </div>
         </div>
         <!-- remove comment to enable testing with pre-input data -->
-        <!-- <q-btn label="test" @click="testSubmit()" /> -->
+        <!-- <q-btn label="test" @click="testSubmit(), OTPVerified = true" /> -->
       </q-form>
     </div>
   </q-card>
@@ -517,9 +540,9 @@ background-color: #ffffffc2;
       </q-card-section>
 
       <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
-        Your<b>SLC 2025</b> journey is about to start right here.<br />
+        Your <b>SLC 2025</b> journey is about to start right here.<br />
         An email will be sent to you containing<br />
-        your proof of registration.<br />
+        your status of registration.<br />
 
       </q-card-section>
 
@@ -542,7 +565,7 @@ background-color: #ffffffc2;
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="OK" color="grey" v-close-popup @click="refreshPage()" />
+        <q-btn flat label="OK" color="grey" v-close-popup @click="OTPVerified ? refreshPage() : ''" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -578,8 +601,8 @@ background-color: #ffffffc2;
       border-radius: 25px;  
       ">
       <q-card-section>
-        <div class="text-h5" style="color: #d6ac1f">Data Privacy Notice</div>
-        <div class="text-subtitle2" style="color: #d6ac1f">
+        <div class="text-h3 text-white">Data Privacy Notice</div>
+        <div class="text-subtitle text-white">
           Department of Science and Technology - Science Education Institute
         </div>
       </q-card-section>
@@ -599,7 +622,7 @@ background-color: #ffffffc2;
             research study. I understand that my personal information is protected by R.A. 10173, Data Privacy Act of
             2012.
           </p>
-          <q-btn v-close-popup label="I Agree" color="green-6" />
+          <q-btn v-close-popup label="I Agree" color="green-6" class="q-mb-xl" />
         </div>
       </q-card-section>
     </q-card>
@@ -646,7 +669,7 @@ const OTPVerified = ref(false)
 const otp = ref(null)
 const allRequired = ref(null)
 const pleaseWait = ref(null)
-const congrats = ref(null)
+const congrats = ref(false)
 const errorWarning = ref(null)
 const OTPSent = ref(false)
 const conduct = ref(null)
@@ -654,7 +677,7 @@ const conduct = ref(null)
 const registrationClosed = ref(null)
 
 const refreshPage = () => {
-  // location.href = "/";
+  location.reload()
 };
 
 
@@ -709,6 +732,7 @@ export default {
           pleaseWait.value = false;
           if (response.data.emailSent === true) {
             OTPSent.value = response.data.emailSent;
+            formInput.email = response.data.email
           }
           else {
             errorWarning.value = true;

@@ -3,6 +3,7 @@
         -webkit-border-radius: 50px;
         -moz-border-radius: 50px;
         border-radius: 50px;
+        background-color: #ffffffc2;
       " id="topElement">
     <div v-show="!verify">
       <div v-show="!verify" class="input-forms">
@@ -10,10 +11,11 @@
           <h4>Evaluation</h4>
         </div>
         <br><br>
-        <q-input outlined rounded v-model="formInput.email" type="email" color="indigo-7" label-color="indigo-7"
-          label="Registered Email for SLC 2024" :rules="[(val) => val.includes('@') || 'Only valid email']" lazy-rules>
+        <q-input outlined rounded label="SPAS ID" v-model="formInput.spas_id" color="blue-10" bg-color="blue-grey-3"
+          label-color="blue-10" mask="A-####-##-#####" fill-mask :rules="[(val) => val && val.length > 0 || 'Required']"
+          lazy-rules dense>
           <template v-slot:before>
-            <q-icon style="color: #3948ab85" name="mail" />
+            <q-icon color="blue-10" name="badge" size="md" />
           </template>
         </q-input>
         <div class="button-container">
@@ -514,9 +516,9 @@
 
       <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
         Your
-        <b>SLC 2024</b> experience have been succesfully<br />concluded.
+        <b>SLC 2025</b> experience has been successfully <br />concluded.
         An email will be sent to you containing<br />
-        your proof of evaluation after a few minutes. <br /> <br />
+        your proof of evaluation within a few minutes. <br /> <br />
         Please present the received email to your coordinator.
 
       </q-card-section>
@@ -632,7 +634,7 @@
             2012.
           </p>
 
-          <q-btn v-close-popup label="I Agree" color="green-6" />
+          <q-btn v-close-popup label="I Agree" color="green-6" class="q-mb-xl" />
         </div>
       </q-card-section>
     </q-card>
@@ -711,7 +713,7 @@ const dataPolicyMenu = ref(null)
 const registrationClosed = ref(null)
 
 const refreshPage = () => {
-  location.href = "/";
+  // location.reload()
 };
 
 const scrollToElement = (el) => {
@@ -723,7 +725,7 @@ const scrollToElement = (el) => {
 const sendOTP = () => {
   pleaseWait.value = true;
   axiosInit
-    .get('slc/record/checkEmailforEval.php?email=' + formInput.email)
+    .get('slc/record/checkEmailforEval.php?spas_id=' + formInput.spas_id)
     .then(function (response) {
       if (response.data.restrictEval === true)
         registrationClosed.value = response.data.restrictEval
@@ -785,7 +787,7 @@ export default {
       testSubmit() {
         verify.value = true
         pageNum.value = 12
-        formInput.email = 'bonbacuno@gmail.com'
+        formInput.spas_id = 'U-2022-16-06704'
         formInput.af = [1, 2, 3, 4, 5, 1]
         formInput.c = [1, 2, 3, 4, 5]
         formInput.q = [1, 2, 3, 4, 5, 1, 2]
@@ -918,7 +920,6 @@ export default {
       submitResponse() {
         pleaseWait.value = true
         if (
-          !formInput.email ||
           formInput.af.filter(v => v).length < 6 ||
           formInput.c.filter(v => v).length < 5 ||
           formInput.q.filter(v => v).length < 7 ||

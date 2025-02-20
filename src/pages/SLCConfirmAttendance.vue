@@ -17,6 +17,13 @@
         </div>
         <q-form>
           <div v-show="!OTPVerified && !OTPSent" style="margin-top: 15px;">
+            <q-input outlined rounded label="SPAS ID" v-model="formInput.spas_id" :color="borderColor"
+              :bg-color="bgColor" :label-color="labelColor" mask="A-####-##-#####" fill-mask
+              :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules dense>
+              <template v-slot:before>
+                <q-icon :color="logoColor" name="badge" size="md" />
+              </template>
+            </q-input>
             <q-input outlined rounded v-model="formInput.fName" :color="borderColor" :bg-color="bgColor"
               :label-color="labelColor" label="First Name" :rules="[(val) => val && val.length > 0 || 'Required']"
               lazy-rules dense>
@@ -74,13 +81,13 @@
                 </q-icon>
               </template>
             </q-input>
-            <q-input dense outlined rounded v-model="formInput.email" type="email" :color="borderColor"
+            <!-- <q-input dense outlined rounded v-model="formInput.email" type="email" :color="borderColor"
               :bg-color="bgColor" :label-color="labelColor" label="Email Address"
               :rules="[(val) => val.includes('@') || 'Only valid email']" lazy-rules>
               <template v-slot:before>
                 <q-icon :color="logoColor" name="mail" size="md" />
               </template>
-            </q-input>
+            </q-input> -->
             Will you be attending SLC 2025?
             <div class="radios">
               <q-radio v-model="formInput.attendance" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
@@ -245,12 +252,15 @@
               </div>
             </q-slide-transition>
             <div class="button-container" v-show="!OTPVerified">
-              <q-btn label="Confirm Attendance" color="primary" class="button-submit" @click="sendOTP"
-                :disabled="formInput.email == null"></q-btn>
+              <q-btn label="Confirm Attendance" color="primary" class="button-submit" @click="sendOTP"></q-btn>
             </div>
           </div>
           <div v-show="OTPSent && !OTPVerified">
-            {{ "An OTP has been sent to your email. Please input the OTP received below" }}
+            <br><br>
+            We have sent an OTP to your <b>
+              {{ formInput.email?.split('@')[0].substring(0, 2) + '******' +
+                formInput.email?.split('@')[0].slice(-2) + '@' +
+                formInput.email?.split('@')[1].substring(0, 2) + '***...' }}</b> Please input the received OTP below.
             <q-input dense outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor"
               v-model="otp" class="text-fields" type="number" label="OTP from your Email" hint="6-digit OTP" lazy-rules>
 
@@ -275,7 +285,14 @@
               @click="submitConfirmAttendance()" />
           </div>
           <!-- remove comment to enable testing with pre-input data -->
-          <!-- <q-btn label="test" @click="testSubmit()" /> -->
+          <!-- <q-btn label="test" @click="
+            formInput.spas_id = 'U-2021-16-03278',
+            formInput.fName = 'Joriz',
+            formInput.mName = 'asdasd',
+            formInput.lName = 'Dancel',
+            formInput.birthdate = 'Jan 27, 2003',
+            formInput.attendance = false,
+            accept = [true, true, true, true, true, true, true, true, true]" /> -->
         </q-form>
       </div>
     </q-card>
@@ -310,7 +327,7 @@
 
       <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 18px">
         You are confirming that you are <br />
-        <b>{{ formInput.attendance ? 'ATTENDING' : 'NOT ATTENDING' }}</b> SLC 2025. <br /><br />
+        <b>{{ formInput.attendance == true ? 'ATTENDING' : 'NOT ATTENDING' }}</b> SLC 2025. <br /><br />
         This decision cannot be changed once submitted. Proceed?
         <br /><br />
         <span style="font-weight: 200; font-size: 13px;">
@@ -408,14 +425,13 @@ const accept = ref([false, false, false, false, false, false, false, false, fals
 const confirmDialog = ref(false)
 
 const refreshPage = () => {
-  // location.href = "/";
+  location.reload()
 };
 
 
 export default {
   mounted() {
     if (this.formInput.attendance == true) {
-      console.log('bitch')
       const myDiv = document.querySelector('#mainDiv');
       myDiv.scrollTo({ bottom: 200, behavior: 'smooth' })
     }
@@ -512,14 +528,12 @@ export default {
       errorWarning,
 
       sendOTP() {
-        // console.log(accept.value.every(v => v === true))
         pleaseWait.value = true;
         if (
           !formInput.fName ||
           !formInput.mName ||
           !formInput.lName ||
           !formInput.birthdate ||
-          !formInput.email ||
           !accept.value.every(v => v === true)
         ) {
           pleaseWait.value = false;
@@ -533,6 +547,7 @@ export default {
               pleaseWait.value = false;
               if (response.data.emailSent === true) {
                 OTPSent.value = response.data.emailSent;
+                formInput.email = response.data.email
               }
               else {
                 errorWarning.value = true;
@@ -542,7 +557,6 @@ export default {
         }
       },
       scrollTo() {
-        console.log('bitch2')
         setTimeout(() => {
           const myDiv = document.querySelector('#mainDiv');
           myDiv.scrollTo({ top: 750, behavior: 'smooth' })

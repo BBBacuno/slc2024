@@ -668,28 +668,28 @@ const submitResponse = (action, id) => {
 }
 
 const testSubmit = () => {
-  formInput.email = 'bonbacuno@gmail.com'
-  formInput.fName = 'Bon David'
-  formInput.mName = 'Bernardo'
-  formInput.lName = 'Bacuño'
-  formInput.suffix = null
-  formInput.sex = '1'
-  formInput.lgbt = [1, 1]
-  formInput.birthdate = '01/02/2003'
-  formInput.phoneNumber = '09663407046'
-  formInput.participant = '1'
-  formInput.university = '150'
-  formInput.univRegion = '13'
-  formInput.univCity = '60'
-  formInput.course = '5'
-  formInput.scholarProgram = '2'
-  formInput.yearLevel = '1'
-  formInput.yearAward = '2023'
-  formInput.association = 'President of GuruGuru Club'
+  // formInput.email = 'bonbacuno@gmail.com'
+  // formInput.fName = 'Bon David'
+  // formInput.mName = 'Bernardo'
+  // formInput.lName = 'Bacuño'
+  // formInput.suffix = null
+  // formInput.sex = '1'
+  // formInput.lgbt = [1, 1]
+  // formInput.birthdate = '01/02/2003'
+  // formInput.phoneNumber = '09663407046'
+  // formInput.participant = '1'
+  // formInput.university = '150'
+  // formInput.univRegion = '13'
+  // formInput.univCity = '60'
+  // formInput.course = '5'
+  // formInput.scholarProgram = '2'
+  // formInput.yearLevel = '1'
+  // formInput.yearAward = '2023'
+  // formInput.association = 'President of GuruGuru Club'
   formInput.pretest = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5,]
-  formInput.expectation = 'a lot'
-  formInput.designation = 1
-  formInput.position = 2
+  // formInput.expectation = 'a lot'
+  // formInput.designation = 1
+  // formInput.position = 2
 }
 
 const toFormData = (obj) => {
