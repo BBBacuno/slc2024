@@ -79,6 +79,9 @@ background-color: #ffffffc2;
           </q-input>
           Please input the email where you received your VFO Certificate.<br>
           Furthermore, this email will be used to further contact you with DOST-SEI and Patriot Programs.
+          {{ formInput.email?.split('@')[0]?.substring(0, 2) + '******' +
+            formInput.email?.split('@')[0]?.slice(-2) + '@' +
+            formInput.email?.split('@')[1]?.substring(0, 2) + '***...' }}
 
           <q-input outlined rounded v-model="formInput.email" type="email" :color="borderColor" :bg-color="bgColor"
             :label-color="labelColor" label="Email Address" :rules="[(val) => val.includes('@') || 'Only valid email']"
@@ -97,10 +100,13 @@ background-color: #ffffffc2;
         </div>
         <div v-show="OTPSent && !OTPVerified">
           <br><br>
-          We have sent an OTP to your <b>
-            {{ formInput.email?.split('@')[0].substring(0, 2) + '******' +
-              formInput.email?.split('@')[0].slice(-2) + '@' +
-              formInput.email?.split('@')[1].substring(0, 2) + '***...' }}</b> Please input the received OTP below.
+          We have sent an OTP to your
+          <b>
+            {{ formInput.email?.split('@')[0]?.substring(0, 2) + '******' +
+              formInput.email?.split('@')[0]?.slice(-2) + '@' +
+              formInput.email?.split('@')[1]?.substring(0, 2) + '***...' }}
+          </b>
+          Please input the received OTP below.
           <q-input outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor" v-model="otp"
             class="text-fields" type="number" label="OTP from your Email" hint="6-digit OTP" lazy-rules>
 
