@@ -7,8 +7,8 @@ background-color: #ffffffc2;
 " id="topElement">
     <div id="parentContainer">
       <div>
-        <q-img src="/pubmat-big.png" v-show="!OTPVerified" :ratio="2" style="border-radius: 15px" />
-        <q-img src="/pubmat-small.png" v-show="OTPVerified" style="border-radius: 25px;" />
+        <q-img src="/slc/pubmat-big.png" v-show="!OTPVerified" :ratio="2" style="border-radius: 15px" />
+        <q-img src="/slc/pubmat-small.png" v-show="OTPVerified" style="border-radius: 25px;" />
       </div>
       <q-form>
         <div v-show="!OTPVerified && !OTPSent" style="margin-top: 15px;">
@@ -251,7 +251,7 @@ background-color: #ffffffc2;
                   flex-direction: column;
                   align-items: center;
                 ">
-                <q-img src="/radio-option1.png" alt="" srcset="" @click="selectParticipantType(1)"
+                <q-img src="/slc/radio-option1.png" alt="" srcset="" @click="selectParticipantType(1)"
                   :class="{ 'pulsate-bck': formInput.participant == 1 }"
                   style="height: 20vh; width: 20vh; filter: grayscale(100%)" />
                 <b>Scholar</b>
@@ -265,7 +265,7 @@ background-color: #ffffffc2;
                   flex-direction: column;
                   align-items: center;
                 ">
-                <q-img src="/radio-option2.png" alt="" srcset="" @click="selectParticipantType(2)"
+                <q-img src="/slc/radio-option2.png" alt="" srcset="" @click="selectParticipantType(2)"
                   :class="{ 'pulsate-bck': formInput.participant == 2 }"
                   style="height: 20vh; width: 20vh; filter: grayscale(100%)" />
                 <b>Coordinator</b>
