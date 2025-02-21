@@ -742,7 +742,7 @@ export default {
           if (response.data.emailSent === true) {
             OTPSent.value = response.data.emailSent;
             formInput.email = response.data.email
-            formInput.spas_id = response.data.spas_id
+            // formInput.spas_id = response.data.spas_id
           }
           else {
             errorWarning.value = true;
