@@ -79,10 +79,6 @@ background-color: #ffffffc2;
           </q-input>
           Please input the email where you received your VFO Certificate.<br>
           Furthermore, this email will be used to further contact you with DOST-SEI and Patriot Programs.
-          {{ formInput.email?.split('@')[0]?.substring(0, 2) + '******' +
-            formInput.email?.split('@')[0]?.slice(-2) + '@' +
-            formInput.email?.split('@')[1]?.substring(0, 2) + '***...' }}
-
           <q-input outlined rounded v-model="formInput.email" type="email" :color="borderColor" :bg-color="bgColor"
             :label-color="labelColor" label="Email Address" :rules="[(val) => val.includes('@') || 'Only valid email']"
             lazy-rules>
@@ -122,6 +118,13 @@ background-color: #ffffffc2;
         <div v-show="OTPVerified">
           <div v-show="pageNum == 1" style="display: flex;flex-direction: row; flex-wrap: wrap;">
             <div class="left-container">
+              <!-- <q-input outlined rounded label="SPAS ID" v-model="formInput.spas_id" :color="borderColor"
+                :bg-color="bgColor" :label-color="labelColor" mask="A-####-##-#####" fill-mask
+                :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
+                <template v-slot:before>
+                  <q-icon :color="logoColor" name="badge" size="lg" />
+                </template>
+              </q-input> -->
               <q-input outlined rounded v-model="formInput.email" readonly type="email" :color="borderColor"
                 :bg-color="bgColor" :label-color="labelColor" label="Email to Register"
                 :rules="[(val) => val.includes('@') || 'Only valid email']" lazy-rules>
@@ -739,6 +742,7 @@ export default {
           if (response.data.emailSent === true) {
             OTPSent.value = response.data.emailSent;
             formInput.email = response.data.email
+            formInput.spas_id = response.data.spas_id
           }
           else {
             errorWarning.value = true;
