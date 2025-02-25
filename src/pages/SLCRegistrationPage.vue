@@ -16,7 +16,7 @@ background-color: #ffffffc2;
             This batch of SLC will be conducted on {{ conduct }}
           </div>
           <q-input outlined rounded label="SPAS ID" v-model="formInput.spas_id" :color="borderColor" :bg-color="bgColor"
-            :label-color="labelColor" mask="A-####-##-#####" fill-mask
+            :label-color="labelColor" mask="X-XXXX-XX-XXXXX" fill-mask
             :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
             <template v-slot:before>
               <q-icon :color="logoColor" name="badge" size="lg" />
@@ -640,7 +640,7 @@ background-color: #ffffffc2;
 </template>
 
 <script>
-import { useMeta } from "quasar"
+import { LocalStorage, useMeta, useQuasar } from "quasar"
 import { ref } from 'vue'
 import {
   axiosInit,
@@ -689,8 +689,11 @@ const refreshPage = () => {
   location.reload()
 };
 
-
 export default {
+  beforeMount() {
+    if (LocalStorage.getItem('validation')?.every(v => v != null)) formInput.validation = LocalStorage.getItem('validation')
+    if (LocalStorage.getItem('pretest')?.every(v => v != null)) formInput.pretest = LocalStorage.getItem('pretest')
+  },
   setup() {
     axiosInit.get('/general/getConfig.php?' +
       '&getConduct=' +
@@ -702,6 +705,7 @@ export default {
     })
     useMeta(metaData)
 
+    const $q = useQuasar()
     const dataPolicyMenu = ref(false)
     const conformeCheck = ref(false)
     const errMessage = ref(null)
@@ -752,6 +756,10 @@ export default {
     };
 
     const submitResponse = () => {
+      // lets set the localstorage first
+      $q.localStorage.set('validation', formInput.validation)
+      $q.localStorage.set('pretest', formInput.pretest)
+
       pleaseWait.value = true
       if ((!formInput.participant ||
         ((formInput.participant == 1) && (
