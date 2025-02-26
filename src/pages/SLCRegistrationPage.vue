@@ -569,7 +569,7 @@ background-color: #ffffffc2;
         <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
       </q-card-section>
 
-      <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
+      <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px; white-space: pre;">
         {{ errMessage }}
       </q-card-section>
 
@@ -671,7 +671,6 @@ const metaData = {
   title: 'SLC Registration',
 }
 
-
 const accept = ref(false)
 // bypass otp
 const OTPVerified = ref(false)
@@ -691,8 +690,30 @@ const refreshPage = () => {
 
 export default {
   beforeMount() {
-    if (LocalStorage.getItem('validation')?.every(v => v != null)) formInput.validation = LocalStorage.getItem('validation')
-    if (LocalStorage.getItem('pretest')?.every(v => v != null)) formInput.pretest = LocalStorage.getItem('pretest')
+    // const getNumericalOption = (options, select) => {
+    //   return !Number.isInteger(select) && select != null ? options.value.find(obj => select == obj.label).value : select
+    // }
+
+    // const getLabelOption = (options, select) => {
+    //   return options?.value?.find(obj => select == obj.value).label
+    // }
+    // LocalStorage.clear()
+    let obj = LocalStorage.getItem('formInput')
+    if (obj != null) {
+      Object.keys(obj).forEach(function (item) {
+        // if (['university', 'course', 'univCity'].includes(item)) {
+        //   if (item == 'university')
+        //     formInput[item] = getLabelOption(university_options, obj[item])
+        //   else if (item == 'course')
+        //     formInput[item] = getLabelOption(course_options, obj[item])
+        //   else
+        //     formInput[item] = getLabelOption(univCity_options, obj[item])
+        // }
+        // else {
+        formInput[item] = obj[item]
+        // }
+      })
+    }
   },
   setup() {
     axiosInit.get('/general/getConfig.php?' +
@@ -757,8 +778,7 @@ export default {
 
     const submitResponse = () => {
       // lets set the localstorage first
-      $q.localStorage.set('validation', formInput.validation)
-      $q.localStorage.set('pretest', formInput.pretest)
+      $q.localStorage.set('formInput', formInput)
 
       pleaseWait.value = true
       if ((!formInput.participant ||
@@ -800,6 +820,7 @@ export default {
           }
         }
         ).then(function (response) {
+          $q.localStorage.clear()
           if (response.data.success) {
             pleaseWait.value = false
             congrats.value = true
@@ -809,6 +830,9 @@ export default {
             errorWarning.value = true
             errMessage.value = response.data.errMessage
           }
+        }).catch(function (error) {
+          errorWarning.value = true
+          errMessage.value = 'Your session has expired. Please reload this page. \n Your answers to the questionnaire has been saved'
         })
       }
 

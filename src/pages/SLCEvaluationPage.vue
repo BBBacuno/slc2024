@@ -537,8 +537,8 @@
         <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
       </q-card-section>
 
-      <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
-        Please try again
+      <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px; white-space: pre;">
+        {{ errMessage }}
       </q-card-section>
 
       <q-card-actions align="right">
@@ -660,7 +660,7 @@
 </template>
 
 <script>
-import { useQuasar, useMeta } from "quasar";
+import { LocalStorage, useQuasar, useMeta } from "quasar";
 import { ref, reactive } from 'vue';
 import {
   axiosInit
@@ -709,11 +709,12 @@ const alreadySubmitted = ref(null)
 const attended = ref(null)
 const index = ref(null)
 const dataPolicyMenu = ref(null)
+const errMessage = ref(null)
 
 const registrationClosed = ref(null)
 
 const refreshPage = () => {
-  // location.reload()
+  location.reload()
 };
 
 const scrollToElement = (el) => {
@@ -727,26 +728,31 @@ const sendOTP = () => {
   axiosInit
     .get('slc/record/checkEmailforEval.php?spas_id=' + formInput.spas_id)
     .then(function (response) {
+      pleaseWait.value = false;
       if (response.data.restrictEval === true)
         registrationClosed.value = response.data.restrictEval
-
       else if (response.data.dupe === true) {
-        pleaseWait.value = false;
         alreadySubmitted.value = true
       } else if (response.data.attended === false) {
-        pleaseWait.value = false;
         attended.value = true;
       } else if (response.data.success === true) {
-        pleaseWait.value = false;
         verify.value = response.data.success;
       } else {
-        pleaseWait.value = false;
+
         errorWarning.value = true;
       }
     });
 };
 
 export default {
+  beforeMount() {
+    if (LocalStorage.getItem('formInput') != null) {
+      let obj = LocalStorage.getItem('formInput')
+      Object.keys(obj).forEach(function (item) {
+        formInput[item] = obj[item]
+      })
+    }
+  },
   setup() {
     useMeta(metaData)
     const $q = useQuasar();
@@ -766,6 +772,7 @@ export default {
       toFormData,
       sendOTP,
       refreshPage,
+      errMessage,
       registrationClosed,
       dataPolicyMenu,
       formInput,
@@ -784,6 +791,7 @@ export default {
       pageNum,
       index,
       conformeCheck,
+      errMessage,
       testSubmit() {
         verify.value = true
         pageNum.value = 12
@@ -918,6 +926,7 @@ export default {
 
         E-mail: dpo@sei.dost.gov.ph`,
       submitResponse() {
+        $q.localStorage.set('formInput', formInput)
         pleaseWait.value = true
         if (
           formInput.af.filter(v => v).length < 6 ||
@@ -932,12 +941,10 @@ export default {
           formInput.five4[1].length < maxChar.value ||
           formInput.five5.length < maxChar.value ||
           formInput.five6.length < 10
-
         ) {
           pleaseWait.value = false
           allRequired.value = true
         } else {
-
           const dlInsert = toFormData(formInput);
           axiosInit.post(
             "slc/record/submitEval.php", dlInsert, {
@@ -946,14 +953,19 @@ export default {
             }
           }
           ).then(function (response) {
+            pleaseWait.value = false
             if (response.data.success) {
-              pleaseWait.value = false
               congrats.value = true
+              $q.localStorage.clear()
             }
             else {
-              pleaseWait.value = false
               errorWarning.value = true
+              errMessage.value = 'Please try again'
             }
+          }).catch(function (error) {
+            pleaseWait.value = false
+            errorWarning.value = true
+            errMessage.value = 'Your session has expired. Please reload this page. \n Your answers to the questionnaire has been saved'
           })
         }
       }
