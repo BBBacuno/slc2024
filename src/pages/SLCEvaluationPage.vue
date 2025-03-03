@@ -12,7 +12,7 @@
         </div>
         <br><br>
         <q-input outlined rounded label="SPAS ID" v-model="formInput.spas_id" color="blue-10" bg-color="blue-grey-3"
-          label-color="blue-10" mask="A-####-##-#####" fill-mask :rules="[(val) => val && val.length > 0 || 'Required']"
+          label-color="blue-10" mask="X-XXXX-XX-XXXXX" fill-mask :rules="[(val) => val && val.length > 0 || 'Required']"
           lazy-rules dense>
           <template v-slot:before>
             <q-icon color="blue-10" name="badge" size="md" />

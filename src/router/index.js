@@ -2,6 +2,8 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import SLCRegistrationPage from "../pages/SLCRegistrationPage.vue";
 import SLCConfirmAttendance from "../pages/SLCConfirmAttendance.vue";
 import SLCEvaluationPage from "../pages/SLCEvaluationPage.vue";
+import nickname from "../pages/NicknamePrinter.vue";
+
 
 const routes = [
   {
@@ -23,6 +25,13 @@ const routes = [
     name: 'SLCConfirmAttendance',
     components: {
       default: SLCConfirmAttendance,
+    },
+  },
+  {
+    path: '/nickname', 
+    name: 'nickname',
+    components: {
+      default: nickname,
     },
   },
   {

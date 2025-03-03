@@ -18,7 +18,7 @@
         <q-form>
           <div v-show="!OTPVerified && !OTPSent" style="margin-top: 15px;">
             <q-input outlined rounded label="SPAS ID" v-model="formInput.spas_id" :color="borderColor"
-              :bg-color="bgColor" :label-color="labelColor" mask="A-####-##-#####" fill-mask
+              :bg-color="bgColor" :label-color="labelColor" mask="X-XXXX-XX-XXXXX" fill-mask
               :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules dense>
               <template v-slot:before>
                 <q-icon :color="logoColor" name="badge" size="md" />
@@ -390,7 +390,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="OK" color="grey" v-close-popup @click="refreshPage()" />
+        <q-btn flat label="OK" color="grey" v-close-popup @click="OTPVerified ? refreshPage() : ''" />
       </q-card-actions>
     </q-card>
   </q-dialog>
