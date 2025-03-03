@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import SLCRegistrationPage from "../pages/SLCRegistrationPage.vue";
 import SLCConfirmAttendance from "../pages/SLCConfirmAttendance.vue";
 import SLCEvaluationPage from "../pages/SLCEvaluationPage.vue";
-import nickname from "../pages/NicknamePrinter.vue";
+// import nickname from "../pages/NicknamePrinter.vue";
 
 
 const routes = [
@@ -27,13 +27,13 @@ const routes = [
       default: SLCConfirmAttendance,
     },
   },
-  {
-    path: '/nickname', 
-    name: 'nickname',
-    components: {
-      default: nickname,
-    },
-  },
+  // {
+  //   path: '/nickname', 
+  //   name: 'nickname',
+  //   components: {
+  //     default: nickname,
+  //   },
+  // },
   {
     path: '/:catchAll(.*)*',
     redirect: "/"
