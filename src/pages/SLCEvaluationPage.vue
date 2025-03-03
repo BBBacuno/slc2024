@@ -5,6 +5,7 @@
         border-radius: 50px;
         background-color: #ffffffc2;
       " id="topElement">
+    <!-- <q-btn @click="testSubmit()" label="test" /> -->
     <div v-show="!verify">
       <div v-show="!verify" class="input-forms">
         <div class="button-container">
@@ -24,7 +25,7 @@
           </q-toggle>
           <q-btn unelevated rounded size="lg" label="Start Evaluation" color="teal" :disabled="!accept"
             style="width: 50%" @click="sendOTP()" />
-          <!-- <q-btn @click="testSubmit()" label="test" /> -->
+
         </div>
       </div>
     </div>
@@ -183,7 +184,7 @@
         </div>
         <q-separator />
       </div>
-      <!-- <div v-show="listPages.find(obj => obj.label == 'biyo').value == pageNum">
+      <div v-show="listPages.find(obj => obj.label == 'biyo').value == pageNum">
         <br><b>{{ "DR. JOSETTE T. BIYO" }}</b>
         <div v-for="(item, index) in questions.speakers" :key="item.id">
           <br>{{ item }}
@@ -203,7 +204,7 @@
           </div>
         </div>
         <q-separator />
-      </div> -->
+      </div>
       <div v-show="listPages.find(obj => obj.label == 'cornelio').value == pageNum">
         <br><b>{{ "JAYEEL S. CORNELIO Ph. D." }}</b>
         <div v-for="(item, index) in questions.speakers" :key="item.id">
@@ -265,6 +266,22 @@
             </ul>
           </div>
         </div>
+      </div>
+      <div v-show="listPages.find(obj => obj.label == 'aspect').value == pageNum">
+        <br><b>{{ "Aspect" }}</b>
+        <div v-for="(item, index) in questions.asp" :key="item.id">
+          <br>{{ item }}
+          <div class="radios">
+            <q-select color="indigo-7" label-color="indigo-7" v-model="formInput.asprate[index]"
+              class="text-fields-rate" label="Rate" :options="asprate_options" emit-value map-options lazy-rules
+              :rules="[(val) => (val && val > 0) || 'Required Field']" />
+            <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-aspect"
+              v-model="formInput.aspcomment[index]" label="Comment" lazy-rules :rules="[
+                (val) => (val && val.length > 0) || 'Required Field',
+              ]" />
+          </div>
+        </div>
+        <q-separator />
       </div>
       <div v-show="listPages.find(obj => obj.label == 'gad').value == pageNum">
         <br><b>{{ "Gender" }}</b>
@@ -454,10 +471,11 @@
                 (listPages.find(obj => obj.label == 'q').value == pageNum && formInput.q.filter(v => v).length < 7) ||
                 (listPages.find(obj => obj.label == 'org').value == pageNum && formInput.org.filter(v => v).length < 7) ||
                 (listPages.find(obj => obj.label == 'out').value == pageNum && formInput.out.filter(v => v).length < 7) ||
+                (listPages.find(obj => obj.label == 'aspect').value == pageNum && formInput.asprate.filter(v => v).length < 17) ||
+                (listPages.find(obj => obj.label == 'aspect').value == pageNum && formInput.aspcomment.filter(v => v).length < 17) ||
                 (listPages.find(obj => obj.label == 'romero').value == pageNum && formInput.romero.filter(v => v).length < 5) ||
                 (listPages.find(obj => obj.label == 'cangrejo').value == pageNum && formInput.cangrejo.filter(v => v).length < 5) ||
-                // (listPages.find(obj => obj.label == 'biyo').value == pageNum && formInput.biyo.filter(v => v).length < 5) ||
-                // (listPages.find(obj => obj.label == 'acala').value == pageNum && formInput.acala.filter(v => v).length < 5) ||
+                (listPages.find(obj => obj.label == 'biyo').value == pageNum && formInput.biyo.filter(v => v).length < 5) ||
                 (listPages.find(obj => obj.label == 'cornelio').value == pageNum && formInput.cornelio.filter(v => v).length < 5) ||
                 (listPages.find(obj => obj.label == 'chua').value == pageNum && formInput.chua.filter(v => v).length < 5) ||
                 (listPages.find(obj => obj.label == 'bulante').value == pageNum && formInput.bulante.filter(v => v).length < 5) ||
@@ -676,13 +694,14 @@ const formInput = reactive({
   q: [null],
   org: [null],
   out: [null],
+  asprate: [null],
+  aspcomment: [null],
   romero: [null],
   cornelio: [null],
   cangrejo: [null],
   chua: [null],
   bulante: [null],
-  acala: [null],
-  // biyo: [null],
+  biyo: [null],
   gad: [null],
   five1: null,
   five2: null,
@@ -692,6 +711,49 @@ const formInput = reactive({
   five6: null,
   email: null
 });
+
+const asprate_options = ref([
+  {
+    label: '10 (Excellent/Highest)',
+    value: 10
+  },
+  {
+    label: '9',
+    value: 9
+  },
+  {
+    label: '8',
+    value: 8
+  },
+  {
+    label: '7',
+    value: 7
+  },
+  {
+    label: '6',
+    value: 6
+  },
+  {
+    label: '5 (Neutral)',
+    value: 5
+  },
+  {
+    label: '4',
+    value: 4
+  },
+  {
+    label: '3',
+    value: 3
+  },
+  {
+    label: '2',
+    value: 2
+  },
+  {
+    label: '1 (Poor/Lowest)',
+    value: 1
+  }
+])
 
 const accept = ref(false)
 // test verify
@@ -792,15 +854,19 @@ export default {
       index,
       conformeCheck,
       errMessage,
+      asprate_options,
       testSubmit() {
         verify.value = true
-        pageNum.value = 12
+        pageNum.value = 14
         formInput.spas_id = 'U-2022-16-06704'
         formInput.af = [1, 2, 3, 4, 5, 1]
         formInput.c = [1, 2, 3, 4, 5]
         formInput.q = [1, 2, 3, 4, 5, 1, 2]
         formInput.org = [1, 2, 3, 4, 5, 1, 2]
         formInput.out = [1, 2, 3, 4, 5, 1, 2]
+        formInput.asprate = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2]
+        formInput.aspcomment = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2]
+        formInput.biyo = [1, 2, 3, 4, 5]
         formInput.romero = [1, 2, 3, 4, 5]
         formInput.cornelio = [1, 2, 3, 4, 5]
         formInput.cangrejo = [1, 2, 3, 4, 5]
@@ -824,15 +890,16 @@ export default {
         { label: 'q', value: 3 },
         { label: 'org', value: 4 },
         { label: 'out', value: 5 },
-        { label: 'romero', value: 6 },
-        { label: 'cornelio', value: 7 },
-        { label: 'cangrejo', value: 8 },
-        // { label: 'biyo', value: 9 },
-        { label: 'chua', value: 9 },
-        { label: 'bulante', value: 10 },
-        { label: 'gad', value: 11 },
-        { label: 'overall', value: 12 },
-        // { label: 'acala', value: 10 },
+        { label: 'aspect', value: 6 },
+        { label: 'biyo', value: 7 },
+        { label: 'cornelio', value: 8 },
+        { label: 'cangrejo', value: 9 },
+        { label: 'romero', value: 10 },
+        { label: 'chua', value: 11 },
+        { label: 'bulante', value: 12 },
+        { label: 'gad', value: 13 },
+        { label: 'overall', value: 14 },
+
       ],
       maxChar,
       radio_val: [5, 4, 3, 2, 1],
@@ -891,13 +958,31 @@ export default {
           "7. The training has enriched my leadership and organizational skills.  ",
 
         ],
+        asp: [
+          '1.	Talk: The Filipino Patriot Scholars Program: Empowerment and Leadership ',
+          '2.	Introductory Workshop on Professional Excellence ',
+          '3.	Talk: AKO: All About Me Being Excellent ',
+          '4.	Talk: AKO: To Become Professionally Excellent and Exemplary ',
+          '5.	Talk: AKO: To Live a Life that is Exemplary!',
+          '6.	Post-Input Workshop on Professional Excellence ',
+          '7.	Introductory Workshop on Social Responsibility',
+          '8.	Talk: Social Responsibility: Youth Participation, Citizenship, and Democracy',
+          '9.	Talk: Interwoven Core Values: Building Leaders and Patriots',
+          '10.	Talk: Six Horizons for Engaging in Social Responsibility ',
+          '11.	Talk: Tips for Early Career Social Responsibility Volunteering ',
+          '12.	Talk: Problem-Tree and Solution-Tree Analysis: Co-Diagnostic and Co-Creating Solutions to Core Community Problems ',
+          '13.	Workshop: Problem-Tree Analysis',
+          '14.	Introductory Workshop on Servant Leadership (Alumni Testimonials/PepTalk)',
+          '15.	Talk: Discussion on Historical Servant Leadership',
+          '16.	Workshop: Weriting My Personal Mission Statement ',
+          '17.	Activity: Stargaze ',
+        ],
         speakers: [
           "1. Displayed thorough knowledge of, and provided relevant insights on, the topic discussed.",
           "2. Thoroughly explained and processed the learning activities throughout the training. ",
           "3. Created a good learning environment, sustained the attention of the participants, and encouraged their participation in the duration of the activity.",
           "4. Managed their time well.",
           "5. Demonstrated keenness to the participants’ needs and other requirements related to the activity. ",
-
         ],
         gad: [
           '1.	Rate how gender was recognized in the camp with regard to the topics discussed, access to opportunities given to the participants, as well as the goals and objectives the activity aims to achieve.',
@@ -945,6 +1030,7 @@ export default {
           pleaseWait.value = false
           allRequired.value = true
         } else {
+          formInput.aspcomment = formInput.aspcomment.join('|')
           const dlInsert = toFormData(formInput);
           axiosInit.post(
             "slc/record/submitEval.php", dlInsert, {

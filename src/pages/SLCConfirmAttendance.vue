@@ -326,7 +326,8 @@
       </q-card-section>
 
       <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 18px">
-        You are confirming your attendance to SLC 2025. <br /><br />
+        You are confirming that you are <b>{{ formInput.attendance == 'true' ? 'ATTENDING' : 'NOT ATTENDING' }}</b> SLC
+        2025. <br /><br />
         This decision cannot be changed once submitted. Proceed?
         <br /><br />
         <span style="font-weight: 200; font-size: 13px;">
