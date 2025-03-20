@@ -12,9 +12,6 @@ background-color: #ffffffc2;
       </div>
       <q-form>
         <div v-show="!OTPVerified && !OTPSent" style="margin-top: 15px;">
-          <div style="text-align: center; font-size: 24px; font-weight: 600;">
-            This batch of SLC will be conducted on {{ conduct }}
-          </div>
           <q-input outlined rounded label="SPAS ID" v-model="formInput.spas_id" :color="borderColor" :bg-color="bgColor"
             :label-color="labelColor" mask="X-XXXX-XX-XXXXX" fill-mask
             :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
