@@ -669,7 +669,7 @@ const metaData = {
 }
 
 const accept = ref(false)
-// bypass otp
+// test otp
 const OTPVerified = ref(false)
 const otp = ref(null)
 const allRequired = ref(null)
@@ -687,30 +687,13 @@ const refreshPage = () => {
 
 export default {
   beforeMount() {
-    // const getNumericalOption = (options, select) => {
-    //   return !Number.isInteger(select) && select != null ? options.value.find(obj => select == obj.label).value : select
-    // }
-
-    // const getLabelOption = (options, select) => {
-    //   return options?.value?.find(obj => select == obj.value).label
-    // }
-    // LocalStorage.clear()
     let obj = LocalStorage.getItem('formInput')
     if (obj != null) {
       Object.keys(obj).forEach(function (item) {
-        // if (['university', 'course', 'univCity'].includes(item)) {
-        //   if (item == 'university')
-        //     formInput[item] = getLabelOption(university_options, obj[item])
-        //   else if (item == 'course')
-        //     formInput[item] = getLabelOption(course_options, obj[item])
-        //   else
-        //     formInput[item] = getLabelOption(univCity_options, obj[item])
-        // }
-        // else {
         formInput[item] = obj[item]
-        // }
       })
     }
+
   },
   setup() {
     axiosInit.get('/general/getConfig.php?' +
@@ -719,6 +702,22 @@ export default {
     ).then(function (response) {
       if (response.data) {
         conduct.value = response.data.conduct
+      }
+    })
+
+    axiosInit.get('/general/getConfig.php?' +
+      'settingName=' +
+      'restrictFirstYear' +
+      '&item=' +
+      'slc'
+    ).then(function (response) {
+      if (response.data.restrict == false) {
+        yearLevel_options.value.unshift(
+          {
+            label: '1st Year',
+            value: 1
+          }
+        )
       }
     })
     useMeta(metaData)
