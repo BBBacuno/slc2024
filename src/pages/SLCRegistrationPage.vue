@@ -8,7 +8,7 @@ background-color: #ffffffc2;
     <div id="parentContainer">
       <div>
         <q-img src="/slc/pubmat-big.png" v-show="!OTPVerified" :ratio="2" style="border-radius: 15px" />
-        <q-img src="/slc/pubmat-small.png" v-show="OTPVerified" style="border-radius: 25px;" />
+        <q-img src="/slc/pubmat-small.png" v-show="OTPVerified" style="border-radius: 25px; margin-bottom: 25px;" />
       </div>
       <q-form>
         <div v-show="!OTPVerified && !OTPSent" style="margin-top: 15px;">
@@ -75,7 +75,6 @@ background-color: #ffffffc2;
             </template>
           </q-input>
           Please input the email where you received your VFO Certificate.<br>
-          Furthermore, this email will be used to further contact you with DOST-SEI and Patriot Programs.
           <q-input outlined rounded v-model="formInput.email" type="email" :color="borderColor" :bg-color="bgColor"
             :label-color="labelColor" label="Email Address" :rules="[(val) => val.includes('@') || 'Only valid email']"
             lazy-rules>
@@ -205,7 +204,7 @@ background-color: #ffffffc2;
                 <div v-if="formInput.lgbt[0]">
                   {{ formInput.lgbt[0] == 'Yes' ?
                     'Are you okay to be roomed together with a cisgender*?'
-                    : 'Are you okay to be roomed together with a member of LGBTQ ? ' }}
+                    : 'Are you okay to be roomed together with a member of LGBTQ? ' }}
                   <span v-if="formInput.lgbt[0] == 'Yes'" class="text-caption">*gender identity corresponds with the sex
                     registered for them at birth</span>
                   <div class="radios">
@@ -239,7 +238,7 @@ background-color: #ffffffc2;
           <div v-show="pageNum == 2">
             <p class="text-h3 text-center q-my-md">Type of Participant</p>
             <div class="radios">
-              <div label="Scholar" style="
+              <div style="
                   background-size: contain;
                   background-repeat: no-repeat;
                   background-position: center;
@@ -490,7 +489,7 @@ background-color: #ffffffc2;
                     !formInput.scholarProgram
                   )) || ((pageNum == 3) && (
                     formInput.validation.filter(obj => obj != null).length != 4
-                  )))"></q-btn>
+                  )))" />
             </div>
           </div>
           <div class="button-container" style="width: 100%;"
@@ -499,7 +498,7 @@ background-color: #ffffffc2;
           </div>
         </div>
         <!-- remove comment to enable testing with pre-input data -->
-        <!-- <q-btn label="test" @click="testSubmit(), OTPVerified = true" /> -->
+        <q-btn label="test" @click="testSubmit(), OTPVerified = true" v-if="visibleTest == true" />
       </q-form>
     </div>
   </q-card>
@@ -671,6 +670,7 @@ const metaData = {
 const accept = ref(false)
 // test otp
 const OTPVerified = ref(false)
+const visibleTest = ref(false)
 const otp = ref(null)
 const allRequired = ref(null)
 const pleaseWait = ref(null)
@@ -883,6 +883,7 @@ export default {
       otp,
       greeting: ref(false),
       allRequired,
+      visibleTest,
 
       pleaseWait,
       congrats,
