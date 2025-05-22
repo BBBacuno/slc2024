@@ -30,7 +30,7 @@
       </div>
     </div>
     <div v-show="verify" id="parentContainer">
-      <div v-show="listPages.find(obj => obj.label == 'af').value == pageNum">
+      <div v-show="listPages.find(obj => obj.label == 'af')?.value == pageNum">
         <p style="justify-content: center;">
           <b>DIRECTIONS</b>: Using a 5-point Likert scale, please put a checkmark (✓) on the
           appropriate column that represents the extent of your agreement to the following
@@ -58,7 +58,7 @@
         </div>
         <q-separator />
       </div>
-      <div v-show="listPages.find(obj => obj.label == 'c').value == pageNum">
+      <div v-show="listPages.find(obj => obj.label == 'c')?.value == pageNum">
         <br><b>{{ "Communication" }}</b>
         <div v-for="(item, index) in questions.c" :key="item.id">
           <br>{{ item }}
@@ -79,7 +79,7 @@
         </div>
         <q-separator />
       </div>
-      <div v-show="listPages.find(obj => obj.label == 'q').value == pageNum">
+      <div v-show="listPages.find(obj => obj.label == 'q')?.value == pageNum">
         <br><b>{{ "Quality" }}</b>
         <div v-for="(item, index) in questions.q" :key="item.id">
           <br>{{ item }}
@@ -100,7 +100,7 @@
         </div>
         <q-separator />
       </div>
-      <div v-show="listPages.find(obj => obj.label == 'org').value == pageNum">
+      <div v-show="listPages.find(obj => obj.label == 'org')?.value == pageNum">
         <br><b>{{ "Organization" }}</b>
         <div v-for="(item, index) in questions.org" :key="item.id">
           <br>{{ item }}
@@ -121,7 +121,7 @@
         </div>
         <q-separator />
       </div>
-      <div v-show="listPages.find(obj => obj.label == 'out').value == pageNum">
+      <div v-show="listPages.find(obj => obj.label == 'out')?.value == pageNum">
         <br><b>{{ "Outcome" }}</b>
         <div v-for="(item, index) in questions.out" :key="item.id">
           <br>{{ item }}
@@ -142,7 +142,7 @@
         </div>
         <q-separator />
       </div>
-      <div v-show="listPages.find(obj => obj.label == 'romero').value == pageNum">
+      <div v-show="listPages.find(obj => obj.label == 'romero')?.value == pageNum">
         <br><b>{{ "DR. SEGUNDO JOAQUIN E. ROMERO, JR. " }}</b>
         <div v-for="(item, index) in questions.speakers" :key="item.id">
           <br>{{ item }}
@@ -163,7 +163,7 @@
         </div>
         <q-separator />
       </div>
-      <div v-show="listPages.find(obj => obj.label == 'cangrejo').value == pageNum">
+      <div v-show="listPages.find(obj => obj.label == 'cangrejo')?.value == pageNum">
         <br><b>{{ "ENGR. BERNIE C. CANGREJO" }}</b>
         <div v-for="(item, index) in questions.speakers" :key="item.id">
           <br>{{ item }}
@@ -184,7 +184,7 @@
         </div>
         <q-separator />
       </div>
-      <div v-show="listPages.find(obj => obj.label == 'biyo').value == pageNum">
+      <div v-show="listPages.find(obj => obj.label == 'biyo')?.value == pageNum">
         <br><b>{{ "DR. JOSETTE T. BIYO" }}</b>
         <div v-for="(item, index) in questions.speakers" :key="item.id">
           <br>{{ item }}
@@ -205,7 +205,7 @@
         </div>
         <q-separator />
       </div>
-      <div v-show="listPages.find(obj => obj.label == 'cornelio').value == pageNum">
+      <div v-show="listPages.find(obj => obj.label == 'cornelio')?.value == pageNum">
         <br><b>{{ "JAYEEL S. CORNELIO Ph. D." }}</b>
         <div v-for="(item, index) in questions.speakers" :key="item.id">
           <br>{{ item }}
@@ -226,7 +226,28 @@
         </div>
         <q-separator />
       </div>
-      <div v-show="listPages.find(obj => obj.label == 'chua').value == pageNum">
+      <div v-show="listPages.find(obj => obj.label == 'reyes')?.value == pageNum">
+        <br><b>{{ "Mr. ROBBY L. REYES" }}</b>
+        <div v-for="(item, index) in questions.speakers" :key="item.id">
+          <br>{{ item }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div v-for="val in radio_val" :key="val.id"
+                :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                <li>
+                  <q-btn :outline="formInput.reyes[index] != val" :unelevated="formInput.reyes[index] == val"
+                    :label="rpRatingDesc[val - 1]" @click="formInput.reyes[index] = val"
+                    :class="formInput.reyes[index] == val ? 'pulsate-bck' : ''"
+                    :color="formInput.reyes[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <q-separator />
+      </div>
+      <div v-show="listPages.find(obj => obj.label == 'chua')?.value == pageNum">
         <br><b>{{ "PROF. MICHAEL CHARLESTON B. CHUA" }}</b>
         <div v-for="(item, index) in questions.speakers" :key="item.id">
           <br>{{ item }}
@@ -247,7 +268,7 @@
         </div>
         <q-separator />
       </div>
-      <div v-show="listPages.find(obj => obj.label == 'bulante').value == pageNum">
+      <div v-show="listPages.find(obj => obj.label == 'bulante')?.value == pageNum">
         <br><b>{{ "MS. ROSEJELYNN C. BULANTE " }}</b>
         <div v-for="(item, index) in questions.speakers" :key="item.id">
           <br>{{ item }}
@@ -267,7 +288,7 @@
           </div>
         </div>
       </div>
-      <div v-show="listPages.find(obj => obj.label == 'aspect').value == pageNum">
+      <div v-show="listPages.find(obj => obj.label == 'asprate')?.value == pageNum">
         <br><b>{{ "Aspect" }}</b>
         <div v-for="(item, index) in questions.asp" :key="item.id">
           <br>{{ item }}
@@ -283,7 +304,7 @@
         </div>
         <q-separator />
       </div>
-      <div v-show="listPages.find(obj => obj.label == 'gad').value == pageNum">
+      <div v-show="listPages.find(obj => obj.label == 'gad')?.value == pageNum">
         <br><b>{{ "Gender" }}</b>
         <br>{{ questions.gad[0] }}
         <div class="radios">
@@ -321,7 +342,7 @@
                       formInput.gad[2] = 'N/A'
                     }
                     else {
-                      formInput.gad[2] = ''
+                      formInput.gad[2] = null
                     }
                   }" :class="formInput.gad[1] == yesno_options[val - 1] ? 'pulsate-bck' : ''"
                   :color="formInput.gad[1] == yesno_options[val - 1] ? gad_colors[val - 1] : 'purple-5'"
@@ -333,7 +354,7 @@
         <q-slide-transition>
           <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
             v-model="formInput.gad[2]" :label="formInput.gad[1] == 'Yes' ? 'Please Specify' : 'If no, Why not'"
-            lazy-rules :rules="[(val) => (val && val.length > maxChar) || maxChar + ' Characters Required']" counter
+            lazy-rules :rules="[(val) => val && val.length > 0 || 'Required']" counter
             v-if="formInput.gad[1] == 'Yes'" />
         </q-slide-transition>
 
@@ -349,7 +370,7 @@
                       formInput.gad[4] = 'N/A'
                     }
                     else {
-                      formInput.gad[4] = ''
+                      formInput.gad[4] = null
                     }
                   }" :class="formInput.gad[3] == yesno_options[val - 1] ? 'pulsate-bck' : ''"
                   :color="formInput.gad[3] == yesno_options[val - 1] ? gad_colors[val - 1] : 'purple-5'"
@@ -361,8 +382,7 @@
         <q-slide-transition>
           <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
             v-model="formInput.gad[4]" :label="formInput.gad[3] == 'Yes' ? 'Please Specify' : 'Why not'" lazy-rules
-            :rules="[(val) => (val && val.length > maxChar) || maxChar + ' Characters Required']" counter
-            v-if="formInput.gad[3] == 'Yes'" />
+            :rules="[(val) => val && val.length > 0 || 'Required']" counter v-if="formInput.gad[3] == 'Yes'" />
         </q-slide-transition>
 
         <br>{{ questions.gad[3] }}
@@ -377,7 +397,7 @@
                       formInput.gad[6] = 'N/A'
                     }
                     else {
-                      formInput.gad[6] = ''
+                      formInput.gad[6] = null
                     }
                   }" :class="formInput.gad[5] == yesno_options[val - 1] ? 'pulsate-bck' : ''"
                   :color="formInput.gad[5] == yesno_options[val - 1] ? gad_colors[val - 1] : 'purple-5'"
@@ -390,11 +410,11 @@
           <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-overall"
             v-model="formInput.gad[6]"
             :label="formInput.gad[5] == 'Yes' ? 'If yes, Please Specify' : 'In your opinion, what comprises  a safe space and gender-fair language?'"
-            lazy-rules :rules="[(val) => (val && val.length > maxChar) || maxChar + ' Characters Required']" counter
+            lazy-rules :rules="[(val) => val && val.length > 0 || 'Required']" counter
             v-if="formInput.gad[5] == 'No'" />
         </q-slide-transition>
       </div>
-      <div v-show="listPages.find(obj => obj.label == 'overall').value == pageNum">
+      <div v-show="listPages.find(obj => obj.label == 'five4')?.value == pageNum">
         <br><b>{{ "OVERALL RATING" }}</b>
         <br>{{ questions.five1 }}
         <div class="radios">
@@ -461,31 +481,31 @@
         <!-- <q-btn @click="testSubmit()" label="test" /> -->
         <div class="radios" style="width: 100%;">
           <div v-show="pageNum > 1" style="width: 25%;">
-            <q-btn label="Back" @click="pageNum--" color="teal" class="button-submit" style="width: 100%;"></q-btn>
+            <q-btn label="Back"
+              @click="changePage('back'), console.log(formInput['gad'].filter(v => v != null).length), console.log(formInput.gad)"
+              color="teal" class="button-submit" style="width: 100%;"></q-btn>
           </div>
-          <div v-show="listPages.find(obj => obj.label == 'overall').value > pageNum" style="width: 25%;  ">
-            <q-btn label="Next" @click="pageNum++, scrollToElement('#topElement')" color="teal" class="button-submit"
-              style="width: 100%; height: 12%"
-              :disabled="(listPages.find(obj => obj.label == 'af').value == pageNum && formInput.af.filter(v => v).length < 6) ||
-                (listPages.find(obj => obj.label == 'c').value == pageNum && formInput.c.filter(v => v).length < 5) ||
-                (listPages.find(obj => obj.label == 'q').value == pageNum && formInput.q.filter(v => v).length < 7) ||
-                (listPages.find(obj => obj.label == 'org').value == pageNum && formInput.org.filter(v => v).length < 7) ||
-                (listPages.find(obj => obj.label == 'out').value == pageNum && formInput.out.filter(v => v).length < 7) ||
-                (listPages.find(obj => obj.label == 'aspect').value == pageNum && formInput.asprate.filter(v => v).length < 17) ||
-                (listPages.find(obj => obj.label == 'aspect').value == pageNum && formInput.aspcomment.filter(v => v).length < 17) ||
-                (listPages.find(obj => obj.label == 'romero').value == pageNum && formInput.romero.filter(v => v).length < 5) ||
-                (listPages.find(obj => obj.label == 'cangrejo').value == pageNum && formInput.cangrejo.filter(v => v).length < 5) ||
-                (listPages.find(obj => obj.label == 'biyo').value == pageNum && formInput.biyo.filter(v => v).length < 5) ||
-                (listPages.find(obj => obj.label == 'cornelio').value == pageNum && formInput.cornelio.filter(v => v).length < 5) ||
-                (listPages.find(obj => obj.label == 'chua').value == pageNum && formInput.chua.filter(v => v).length < 5) ||
-                (listPages.find(obj => obj.label == 'bulante').value == pageNum && formInput.bulante.filter(v => v).length < 5) ||
-                (listPages.find(obj => obj.label == 'gad').value == pageNum && formInput.gad.filter(v => v).length < 7)">
+          <div v-show="listPages.find(obj => obj.label == 'five4').value > pageNum" style="width: 25%;  ">
+            <q-btn label="Next" @click="changePage('next'), console.log(formInput['gad'].filter(v => v != null).length)"
+              color="teal" class="button-submit" style="width: 100%; height: 12%"
+              :disabled="listPages.find(obj => obj.value == pageNum).fields > formInput[listPages.find(obj => obj.value == pageNum).label].filter(v => v != null).length">
             </q-btn>
           </div>
         </div>
         <div class="button-container" style="width: 100%;"
-          v-show="listPages.find(obj => obj.label == 'overall').value == pageNum">
-          <q-btn @click="submitResponse()" label="submit" color="primary" class="button-submit"></q-btn>
+          v-show="listPages.find(obj => obj.label == 'five4').value == pageNum">
+          <q-btn @click="submitResponse()" label="submit" color="primary" class="button-submit" :disabled="!formInput.five1 ||
+            formInput.five2 == null ||
+            formInput.five2.length < maxChar.value ||
+            formInput.five3 == null ||
+            formInput.five3.length < maxChar.value ||
+            formInput.five4.filter(v => v).length.value < 2 ||
+            formInput.five4[1] == null ||
+            formInput.five4[1].length < maxChar.value ||
+            formInput.five5 == null ||
+            formInput.five5.length < maxChar.value ||
+            formInput.five6 == null ||
+            formInput.five6.length < 10"></q-btn>
         </div>
       </div>
     </div>
@@ -699,6 +719,7 @@ const formInput = reactive({
   romero: [null],
   cornelio: [null],
   cangrejo: [null],
+  reyes: [null],
   chua: [null],
   bulante: [null],
   biyo: [null],
@@ -772,6 +793,23 @@ const attended = ref(null)
 const index = ref(null)
 const dataPolicyMenu = ref(null)
 const errMessage = ref(null)
+const listPages = ref([
+  { label: 'af', value: 1, fields: 6 },
+  { label: 'c', value: 2, fields: 5 },
+  { label: 'q', value: 3, fields: 7 },
+  { label: 'org', value: 4, fields: 7 },
+  { label: 'out', value: 5, fields: 7 },
+  { label: 'asprate', value: 6, fields: 17 },
+  { label: 'cornelio', value: 7, fields: 5 },
+  { label: 'biyo', value: 8, fields: 5 },
+  { label: 'reyes', value: 9, fields: 5 },
+  { label: 'cangrejo', value: 10, fields: 5 },
+  { label: 'romero', value: 11, fields: 5 },
+  { label: 'chua', value: 12, fields: 5 },
+  { label: 'bulante', value: 13, fields: 5 },
+  { label: 'gad', value: 14, fields: 7 },
+  { label: 'five4', value: 15, fields: 5 }
+])
 
 const registrationClosed = ref(null)
 
@@ -800,11 +838,11 @@ const sendOTP = () => {
       } else if (response.data.success === true) {
         verify.value = response.data.success;
       } else {
-
         errorWarning.value = true;
       }
     });
 };
+
 
 export default {
   beforeMount() {
@@ -814,12 +852,29 @@ export default {
         formInput[item] = obj[item]
       })
     }
+    axiosInit.get('/general/getConfig.php?item=' +
+      'slc' +
+      '&settingName=' +
+      'evaluation_visibility'
+    ).then(function (response) {
+      let eval_visibility = response.data.item.split(',')
+      let speakers = ['cornelio', 'biyo', 'reyes']
+      let i = 0
+      speakers.forEach((item) => {
+        if (eval_visibility[i++] == 'false') {
+          let index = listPages.value.findIndex(obj => obj.label == item)
+          listPages.value.splice(index, 1)
+        }
+
+      })
+    })
   },
   setup() {
     useMeta(metaData)
     const $q = useQuasar();
     const conformeCheck = ref(false)
     const maxChar = ref(40)
+
 
     const toFormData = (obj) => {
       const formData = new FormData();
@@ -828,6 +883,14 @@ export default {
       }
       return formData;
     };
+
+    function changePage(direction) {
+      direction == 'next' ? pageNum.value++ : pageNum.value--;
+      const nextPage = listPages.value.find(obj => obj.value == pageNum.value);
+      if (nextPage === undefined || listPages.value.find(obj => obj.label == 'five4').value < pageNum.value) {
+        changePage(direction);
+      }
+    }
 
     return {
       scrollToElement,
@@ -857,7 +920,7 @@ export default {
       asprate_options,
       testSubmit() {
         verify.value = true
-        pageNum.value = 14
+        pageNum.value = 15
         formInput.spas_id = 'U-2022-16-06704'
         formInput.af = [1, 2, 3, 4, 5, 1]
         formInput.c = [1, 2, 3, 4, 5]
@@ -867,40 +930,24 @@ export default {
         formInput.asprate = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2]
         formInput.aspcomment = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2]
         formInput.biyo = [1, 2, 3, 4, 5]
+        formInput.reyes = [1, 2, 3, 4, 5]
         formInput.romero = [1, 2, 3, 4, 5]
-        formInput.cornelio = [1, 2, 3, 4, 5]
+        // formInput.cornelio = [1, 2, 3, 4, 5]
         formInput.cangrejo = [1, 2, 3, 4, 5]
         formInput.chua = [1, 2, 3, 4, 5]
         formInput.bulante = [1, 2, 3, 4, 5]
-        formInput.gad = ['Gender-Sensitive', 'Yes', 'N/A', 'Yes', 'N/A', 'Yes', 'N/A']
-        formInput.five1 = 5
-        formInput.five2 = "yayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasd"
-        formInput.five3 = "yayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasd"
-        formInput.five4[0] = "Yes"
-        formInput.five4[1] = "yayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasd"
-        formInput.five5 = "yayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasd"
-        formInput.five6 = "yayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasd"
+        // formInput.gad = ['Gender-Sensitive', 'Yes', 'N/A', 'Yes', 'N/A', 'Yes', 'N/A']
+        // formInput.five1 = 5
+        // formInput.five2 = "yayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasd"
+        // formInput.five3 = "yayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasd"
+        // formInput.five4[0] = "Yes"
+        // formInput.five4[1] = "yayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasd"
+        // formInput.five5 = "yayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasd"
+        // formInput.five6 = "yayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasdyayasd"
       },
-      changePage(page) {
-        pageNum = listPages.filter(obj => obj.label == page).value
-      },
-      listPages: [
-        { label: 'af', value: 1 },
-        { label: 'c', value: 2 },
-        { label: 'q', value: 3 },
-        { label: 'org', value: 4 },
-        { label: 'out', value: 5 },
-        { label: 'aspect', value: 6 },
-        { label: 'biyo', value: 7 },
-        { label: 'cornelio', value: 8 },
-        { label: 'cangrejo', value: 9 },
-        { label: 'romero', value: 10 },
-        { label: 'chua', value: 11 },
-        { label: 'bulante', value: 12 },
-        { label: 'gad', value: 13 },
-        { label: 'overall', value: 14 },
+      listPages,
+      changePage,
 
-      ],
       maxChar,
       radio_val: [5, 4, 3, 2, 1],
       gad_options: ['Gender-Blind', 'Gender-Sensitive', 'Gender-Responsive'],
@@ -1013,50 +1060,32 @@ export default {
       submitResponse() {
         $q.localStorage.set('formInput', formInput)
         pleaseWait.value = true
-        if (
-          formInput.af.filter(v => v).length < 6 ||
-          formInput.c.filter(v => v).length < 5 ||
-          formInput.q.filter(v => v).length < 7 ||
-          formInput.org.filter(v => v).length < 7 ||
-          formInput.out.filter(v => v).length < 7 ||
-          !formInput.five1 ||
-          formInput.five2.length < maxChar.value ||
-          formInput.five3.length < maxChar.value ||
-          formInput.five4.filter(v => v).length.value < 2 ||
-          formInput.five4[1].length < maxChar.value ||
-          formInput.five5.length < maxChar.value ||
-          formInput.five6.length < 10
-        ) {
-          pleaseWait.value = false
-          allRequired.value = true
-        } else {
-          formInput.aspcomment = formInput.aspcomment.join('|')
-          const dlInsert = toFormData(formInput);
-          axiosInit.post(
-            "slc/record/submitEval.php", dlInsert, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            }
+        formInput.aspcomment = formInput.aspcomment.join('|')
+        const dlInsert = toFormData(formInput);
+        axiosInit.post(
+          "slc/record/submitEval.php", dlInsert, {
+          headers: {
+            "Content-Type": "multipart/form-data",
           }
-          ).then(function (response) {
-            pleaseWait.value = false
-            if (response.data.success) {
-              congrats.value = true
-              $q.localStorage.clear()
-            }
-            else {
-              errorWarning.value = true
-              errMessage.value = 'Please try again'
-            }
-          }).catch(function (error) {
-            pleaseWait.value = false
-            errorWarning.value = true
-            errMessage.value = 'Your session has expired. Please reload this page. \n Your answers to the questionnaire has been saved'
-          })
         }
+        ).then(function (response) {
+          pleaseWait.value = false
+          if (response.data.success) {
+            congrats.value = true
+            $q.localStorage.clear()
+          }
+          else {
+            errorWarning.value = true
+            errMessage.value = 'Please try again'
+          }
+        }).catch(function (error) {
+          pleaseWait.value = false
+          errorWarning.value = true
+          errMessage.value = 'Your session has expired. Please reload this page. \n Your answers to the questionnaire has been saved'
+        })
       }
     }
-  }
+  },
 }
 
 </script>

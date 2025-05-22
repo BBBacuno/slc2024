@@ -1,7 +1,7 @@
 // app global css in SCSS form
 @keyframes sideScroll {
   from { background-position: 0px 0; }
-  to { background-position: 2160px 0; }
+  to { background-position: 1680px 0; }
 }
 
 
@@ -263,7 +263,7 @@ body {
   background-size: contain;
   background-repeat: repeat;
   backdrop-filter: saturate(70%) blur(4px);
-  animation: sideScroll 50s linear infinite;
+  animation: sideScroll 30s linear infinite;
 }
 
 
