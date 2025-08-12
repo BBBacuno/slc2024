@@ -290,6 +290,7 @@
       </div>
       <div v-show="listPages.find(obj => obj.label == 'asprate')?.value == pageNum">
         <br><b>{{ "Aspect" }}</b>
+        <br>{{ "10 for highest, 1 for lowest" }}
         <div v-for="(item, index) in questions.asp" :key="item.id">
           <br>{{ item }}
           <div class="radios">
@@ -298,8 +299,7 @@
               :rules="[(val) => (val && val > 0) || 'Required Field']" />
             <q-input rounded outlined color="indigo-7" label-color="indigo-7" class="text-fields-aspect"
               v-model="formInput.aspcomment[index]" label="Comment" lazy-rules :rules="[
-                (val) => (val && val.length > 0) || 'Required Field',
-              ]" />
+                (val) => (val && val.length > 0) || 'Required Field']" />
           </div>
         </div>
         <q-separator />
@@ -481,14 +481,14 @@
         <!-- <q-btn @click="testSubmit()" label="test" /> -->
         <div class="radios" style="width: 100%;">
           <div v-show="pageNum > 1" style="width: 25%;">
-            <q-btn label="Back"
-              @click="changePage('back'), console.log(formInput['gad'].filter(v => v != null).length), console.log(formInput.gad)"
-              color="teal" class="button-submit" style="width: 100%;"></q-btn>
+            <q-btn label="Back" @click="changePage('back')" color="teal" class="button-submit"
+              style="width: 100%;"></q-btn>
           </div>
           <div v-show="listPages.find(obj => obj.label == 'five4').value > pageNum" style="width: 25%;  ">
-            <q-btn label="Next" @click="changePage('next'), console.log(formInput['gad'].filter(v => v != null).length)"
-              color="teal" class="button-submit" style="width: 100%; height: 12%"
-              :disabled="listPages.find(obj => obj.value == pageNum).fields > formInput[listPages.find(obj => obj.value == pageNum).label].filter(v => v != null).length">
+            <q-btn label="Next" @click="changePage('next')" color="teal" class="button-submit"
+              style="width: 100%; height: 12%"
+              :disabled="listPages.find(obj => obj.value == pageNum).fields > formInput[listPages.find(obj => obj.value == pageNum).label].filter(v => v != null).length ||
+                (pageNum == 6 && (formInput.asprate.filter(v => v).length < 17 || formInput.aspcomment.filter(v => v).length < 17))">
             </q-btn>
           </div>
         </div>
@@ -735,7 +735,7 @@ const formInput = reactive({
 
 const asprate_options = ref([
   {
-    label: '10 (Excellent/Highest)',
+    label: '10',
     value: 10
   },
   {
@@ -755,7 +755,7 @@ const asprate_options = ref([
     value: 6
   },
   {
-    label: '5 (Neutral)',
+    label: '5',
     value: 5
   },
   {
@@ -771,7 +771,7 @@ const asprate_options = ref([
     value: 2
   },
   {
-    label: '1 (Poor/Lowest)',
+    label: '1',
     value: 1
   }
 ])
@@ -865,7 +865,6 @@ export default {
           let index = listPages.value.findIndex(obj => obj.label == item)
           listPages.value.splice(index, 1)
         }
-
       })
     })
   },
