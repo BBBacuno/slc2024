@@ -23,6 +23,9 @@ const allRequired = ref(false)
 
 axiosInit.get("general/getRegions.php?conduct=slc").then(function (response) {
   region_options.value = response.data;
+  region_options.value.sort((a, b) =>
+    a.label.localeCompare(b.label, undefined, { numeric: true, sensitivity: 'base' })
+  )
 })
 
 axiosInit.get("general/getCities.php").then(function (response) {
@@ -40,6 +43,7 @@ const filtered_university = ref(university_options.value)
 const filtered_univCity = ref(univCity_options.value)
 
 const formInput = reactive({
+  spas_id: null,
   email: null,
   fName: null,
   mName: null,

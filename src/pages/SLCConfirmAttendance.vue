@@ -1,4 +1,7 @@
 <template>
+  <div class="bg-img-container">
+    <q-img src="background.jpg" class="bg-img"></q-img>
+  </div>
   <div style="height: 100%; overflow-y:hidden">
     <q-card class="evaluation " style="  
   -webkit-box-shadow: 0px 0px 37px 64px rgba(204,206,219,0.61);
@@ -88,7 +91,7 @@
                 <q-icon :color="logoColor" name="mail" size="md" />
               </template>
             </q-input> -->
-            Will you be attending SLC 2025?
+            Will you be attending SLC 2026?
             <div class="radios">
               <q-radio v-model="formInput.attendance" checked-icon="task_alt" unchecked-icon="panorama_fish_eye"
                 val="true" size="xl" color="indigo-7" @click="scrollTo()">
@@ -101,7 +104,7 @@
             </div>
             <q-slide-transition>
               <div v-show="formInput.attendance">
-                <h4>DOST-SEI Scholars Leadership Camp (SLC) 2025 Commitment Contract</h4>
+                <h4>DOST-SEI Scholars Leadership Camp (SLC) 2026 Commitment Contract</h4>
                 Please click each checkbox
                 <h4><q-checkbox v-model="accept[0]" />I. Statement of Commitment</h4>
                 <p>I,
@@ -118,7 +121,7 @@
                   participation in
                   the Scholars
                   Leadership
-                  Camp (SLC) 2025 is for my personal, holistic, and professional development. I also recognize that the
+                  Camp (SLC) 2026 is for my personal, holistic, and professional development. I also recognize that the
                   program is a
                   public investment and that my full commitment is expected.
                 </p>
@@ -281,8 +284,7 @@
             </div>
           </div>
           <div class="button-container" v-show="OTPVerified" style="width: 100%;">
-            <q-btn label="submit" type="submit" color="primary" class="button-submit"
-              @click="submitConfirmAttendance()" />
+            <q-btn label="submit" color="primary" class="button-submit" @click="submitConfirmAttendance()" />
           </div>
           <!-- remove comment to enable testing with pre-input data -->
           <!-- <q-btn label="test" @click="
@@ -327,11 +329,11 @@
 
       <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 18px">
         You are confirming that you are <b>{{ formInput.attendance == 'true' ? 'ATTENDING' : 'NOT ATTENDING' }}</b> SLC
-        2025. <br /><br />
+        2026. <br /><br />
         This decision cannot be changed once submitted. Proceed?
         <br /><br />
         <span style="font-weight: 200; font-size: 13px;">
-          (Failure to attend SLC 2025 despite confirming your attendance may result to
+          (Failure to attend SLC 2026 despite confirming your attendance may result to
           blacklisting of future Patriot activities.)
         </span>
       </q-card-section>

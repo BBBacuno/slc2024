@@ -1,4 +1,7 @@
 <template>
+  <div class="bg-img-container">
+    <q-img src="background.jpg" class="bg-img"></q-img>
+  </div>
   <q-card class="evaluation" style="
         -webkit-border-radius: 50px;
         -moz-border-radius: 50px;
@@ -24,7 +27,7 @@
             I accept the <b>Data Privacy Notice Terms</b>
           </q-toggle>
           <q-btn unelevated rounded size="lg" label="Start Evaluation" color="teal" :disabled="!accept"
-            style="width: 50%" @click="sendOTP()" />
+            style="width: 50%" @click="checkSPAS()" />
 
         </div>
       </div>
@@ -554,7 +557,7 @@
 
       <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
         Your
-        <b>SLC 2025</b> experience has been successfully <br />concluded.
+        <b>SLC 2026</b> experience has been successfully <br />concluded.
         An email will be sent to you containing<br />
         your proof of evaluation within a few minutes. <br /> <br />
         Please present the received email to your coordinator.
@@ -823,10 +826,10 @@ const scrollToElement = (el) => {
 }
 
 
-const sendOTP = () => {
+const checkSPAS = () => {
   pleaseWait.value = true;
   axiosInit
-    .get('slc/record/checkEmailforEval.php?spas_id=' + formInput.spas_id)
+    .get('slc/record/checkSPASforEval.php?spas_id=' + formInput.spas_id)
     .then(function (response) {
       pleaseWait.value = false;
       if (response.data.restrictEval === true)
@@ -894,7 +897,7 @@ export default {
     return {
       scrollToElement,
       toFormData,
-      sendOTP,
+      checkSPAS,
       refreshPage,
       errMessage,
       registrationClosed,
