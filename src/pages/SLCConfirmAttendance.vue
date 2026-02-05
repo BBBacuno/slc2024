@@ -11,7 +11,8 @@
     height: 90vh;
     box-sizing: border-box;
     margin-block: 5vh;
-    width: 30vw;
+    width: 40vw;
+    padding-inline: 50px;
     min-width: 360px;
     " for="mainDiv" id="mainDiv">
       <div class="q-mt-xl" style="margin-top: 50px">
@@ -133,7 +134,7 @@
                   future DOST-SEI programs and projects.</p>
 
                 <h4><q-checkbox v-model="accept[1]" />II. Attendance and Full Participation</h4>
-                <ul>
+                <ul style="text-align: justify">
                   <li>I will commit to attend all scheduled training days and activities on time.</li>
                   <li>I will actively engage in discussions, workshops, and group work, demonstrating my commitment to
                     leadership and
@@ -146,7 +147,7 @@
                 </ul>
 
                 <h4><q-checkbox v-model="accept[2]" />III. Proper Decorum and Professionalism</h4>
-                <ul>
+                <ul style="text-align: justify">
                   <li>I will follow the rules and regulations set by the DOST-SEI organizers and facilitators.</li>
                   <li>I will conduct myself with integrity, respect, and professionalism at all times during the camp.
                   </li>
@@ -158,7 +159,7 @@
                 </ul>
 
                 <h4><q-checkbox v-model="accept[3]" />IV. Respect and Safe Space Commitment</h4>
-                <ul>
+                <ul style="text-align: justify">
                   <li>I will respect the diverse backgrounds, opinions, and perspectives of all participants.</li>
                   <li>I will contribute to a safe and inclusive learning environment, ensuring that all scholars feel
                     welcome and
@@ -173,20 +174,20 @@
                 </ul>
 
                 <h4><q-checkbox v-model="accept[4]" />V. Post-Training Leadership Commitment</h4>
-                <ul>
-                  <li>I will conduct a One-Day Leadership Training for fellow DOST-SEI scholars in my university within
-                    30
-                    days after
-                    the SLC, covering leadership skills, teamwork, and community engagement.</li>
-                  <li>I will coordinate with my fellow SLC campers, DOST-SEI Scholars Regional Council, and DOST
-                    Regional
-                    Scholarship
-                    Unit to successfully conduct this event.</li>
-                  <li>I will submit an activity report to the DOST-SEI through the DOST Regional Scholarship Unit within
-                    15
-                    days after
-                    the training, including:</li>
-                  <ul>
+                <ul style="text-align: justify">
+                  <li>As a scholar-leader, I will conduct a One-Day Leadership Training for fellow DOST-SEI
+                    scholars at my university within 6 months after the SLC. It will cover leadership skills,
+                    teamwork, and community engagement. </li>
+                  <li>I will coordinate with my fellow SLC campers, DOST-SEI Scholars Regional Council,
+                    and DOST Regional Scholarship Unit on this undertaking and collaborate with them to
+                    mount this event successfully.</li>
+                  <li>I will submit an activity report to the DOST-SEI through the DOST Regional Scholarship
+                    Unit within 30 days after the training, highlighting the following:
+                    • Program objectives and agenda
+                    • List of participants
+                    • Photos and documentation of the training
+                    • Reflection on the impact of the training </li>
+                  <ul style="text-align: justify">
                     <li>Program objectives and agenda</li>
                     <li>List of participants</li>
                     <li>Photos and documentation of the training</li>
@@ -199,7 +200,7 @@
                 </ul>
 
                 <h4><q-checkbox v-model="accept[5]" />VI. Commitment to Program Objectives</h4>
-                <ul>
+                <ul style="text-align: justify">
                   <li>I will embrace the leadership lessons and values imparted during the camp and apply them in my
                     academic and
                     personal life.</li>
@@ -217,14 +218,14 @@
                 </ul>
 
                 <h4><q-checkbox v-model="accept[6]" />VII. Cancellation Policy</h4>
-                <ul>
+                <ul style="text-align: justify">
                   <li>A qualified applicant who has already confirmed their slot may cancel participation under the
                     following
                     conditions:</li>
-                  <ul>
+                  <ul style="text-align: justify">
                     <li>Decline attendance through email at least 5 calendar days before the event.</li>
                     <li>Acceptable reasons:</li>
-                    <ul>
+                    <ul style="text-align: justify">
                       <li>Medical emergency</li>
                       <li>Death of an immediate family member</li>
                       <li>Academic conflict</li>
