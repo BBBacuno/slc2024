@@ -146,7 +146,7 @@
         <q-separator />
       </div>
       <div v-show="listPages.find(obj => obj.label == 'romero')?.value == pageNum">
-        <br><b>{{ "DR. SEGUNDO JOAQUIN E. ROMERO, JR. " }}</b>
+        <br><b>{{ "DR. SEGUNDO JOAQUIN E. ROMERO JR. " }}</b>
         <div v-for="(item, index) in questions.speakers" :key="item.id">
           <br>{{ item }}
           <div class="radios">
@@ -187,8 +187,8 @@
         </div>
         <q-separator />
       </div>
-      <div v-show="listPages.find(obj => obj.label == 'biyo')?.value == pageNum">
-        <br><b>{{ "DR. JOSETTE T. BIYO" }}</b>
+      <div v-show="listPages.find(obj => obj.label == 'larroder')?.value == pageNum">
+        <br><b>{{ "DR. ARIS C. LARRODER" }}</b>
         <div v-for="(item, index) in questions.speakers" :key="item.id">
           <br>{{ item }}
           <div class="radios">
@@ -196,10 +196,31 @@
               <div v-for="val in radio_val" :key="val.id"
                 :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
                 <li>
-                  <q-btn :outline="formInput.biyo[index] != val" :unelevated="formInput.biyo[index] == val"
-                    :label="rpRatingDesc[val - 1]" @click="formInput.biyo[index] = val"
-                    :class="formInput.biyo[index] == val ? 'pulsate-bck' : ''"
-                    :color="formInput.biyo[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                  <q-btn :outline="formInput.larroder[index] != val" :unelevated="formInput.larroder[index] == val"
+                    :label="rpRatingDesc[val - 1]" @click="formInput.larroder[index] = val"
+                    :class="formInput.larroder[index] == val ? 'pulsate-bck' : ''"
+                    :color="formInput.larroder[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <q-separator />
+      </div>
+      <div v-show="listPages.find(obj => obj.label == 'gabuya')?.value == pageNum">
+        <br><b>{{ "ENGR. MARK EMERSON P. GABUYA" }}</b>
+        <div v-for="(item, index) in questions.speakers" :key="item.id">
+          <br>{{ item }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div v-for="val in radio_val" :key="val.id"
+                :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                <li>
+                  <q-btn :outline="formInput.gabuya[index] != val" :unelevated="formInput.gabuya[index] == val"
+                    :label="rpRatingDesc[val - 1]" @click="formInput.gabuya[index] = val"
+                    :class="formInput.gabuya[index] == val ? 'pulsate-bck' : ''"
+                    :color="formInput.gabuya[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
                     style="margin-inline: 10px; margin-block: 5px" />
                 </li>
               </div>
@@ -230,7 +251,7 @@
         <q-separator />
       </div>
       <div v-show="listPages.find(obj => obj.label == 'reyes')?.value == pageNum">
-        <br><b>{{ "Mr. ROBBY L. REYES" }}</b>
+        <br><b>{{ "MR. ROBBY L. REYES" }}</b>
         <div v-for="(item, index) in questions.speakers" :key="item.id">
           <br>{{ item }}
           <div class="radios">
@@ -263,6 +284,27 @@
                     :label="rpRatingDesc[val - 1]" @click="formInput.chua[index] = val"
                     :class="formInput.chua[index] == val ? 'pulsate-bck' : ''"
                     :color="formInput.chua[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
+                    style="margin-inline: 10px; margin-block: 5px" />
+                </li>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <q-separator />
+      </div>
+      <div v-show="listPages.find(obj => obj.label == 'ramos')?.value == pageNum">
+        <br><b>{{ "PROF. JOHN RAY B RAMOS" }}</b>
+        <div v-for="(item, index) in questions.speakers" :key="item.id">
+          <br>{{ item }}
+          <div class="radios">
+            <ul style="list-style-type: none; padding: 0; margin: 0; ">
+              <div v-for="val in radio_val" :key="val.id"
+                :style="$q.screen.lt.lg ? 'display: block' : 'display: inline-block'">
+                <li>
+                  <q-btn :outline="formInput.ramos[index] != val" :unelevated="formInput.ramos[index] == val"
+                    :label="rpRatingDesc[val - 1]" @click="formInput.ramos[index] = val"
+                    :class="formInput.ramos[index] == val ? 'pulsate-bck' : ''"
+                    :color="formInput.ramos[index] == val ? likertScaleColor[val - 1] : 'indigo-7'"
                     style="margin-inline: 10px; margin-block: 5px" />
                 </li>
               </div>
@@ -484,14 +526,14 @@
         <!-- <q-btn @click="testSubmit()" label="test" /> -->
         <div class="radios" style="width: 100%;">
           <div v-show="pageNum > 1" style="width: 25%;">
-            <q-btn label="Back" @click="changePage('back')" color="teal" class="button-submit"
-              style="width: 100%;"></q-btn>
+            <q-btn label="Back" @click="changePage('back'), scrollToElement('#topElement')" color="teal"
+              class="button-submit" style="width: 100%;"></q-btn>
           </div>
           <div v-show="listPages.find(obj => obj.label == 'five4').value > pageNum" style="width: 25%;  ">
-            <q-btn label="Next" @click="changePage('next')" color="teal" class="button-submit"
-              style="width: 100%; height: 12%"
-              :disabled="listPages.find(obj => obj.value == pageNum).fields > formInput[listPages.find(obj => obj.value == pageNum).label].filter(v => v != null).length ||
-                (pageNum == 6 && (formInput.asprate.filter(v => v).length < 17 || formInput.aspcomment.filter(v => v).length < 17))">
+            <q-btn label="Next" @click="changePage('next'), scrollToElement('#topElement')" color="teal"
+              class="button-submit" style="width: 100%; height: 12%">
+              <!-- :disabled="listPages.find(obj => obj.value == pageNum).fields > formInput[listPages.find(obj => obj.value == pageNum).label].filter(v => v != null).length ||
+                (pageNum == 6 && (formInput.asprate.filter(v => v).length < 17 || formInput.aspcomment.filter(v => v).length < 17))" -->
             </q-btn>
           </div>
         </div>
@@ -649,7 +691,7 @@
     <q-card class="dataPolicy" style="
       -webkit-border-radius: 25px;
       -moz-border-radius: 25px;
-      border-radius: 25px;  
+      border-radius: 25px;
       ">
       <q-card-section>
         <div class="text-h5" style="color: #d6ac1f">Data Privacy Notice</div>
@@ -722,10 +764,12 @@ const formInput = reactive({
   romero: [null],
   cornelio: [null],
   cangrejo: [null],
+  larroder: [null],
   reyes: [null],
   chua: [null],
+  ramos: [null],
   bulante: [null],
-  biyo: [null],
+  gabuya: [null],
   gad: [null],
   five1: null,
   five2: null,
@@ -782,6 +826,7 @@ const asprate_options = ref([
 const accept = ref(false)
 // test verify
 const verify = ref(false)
+const pageNum = ref(1)
 const otpSuccess = ref(null)
 const otp = ref(null)
 const isOTPSixDigit = ref(null)
@@ -790,7 +835,6 @@ const pleaseWait = ref(null)
 const congrats = ref(null)
 const errorWarning = ref(null)
 const notListed = ref(null)
-const pageNum = ref(1)
 const alreadySubmitted = ref(null)
 const attended = ref(null)
 const index = ref(null)
@@ -804,14 +848,16 @@ const listPages = ref([
   { label: 'out', value: 5, fields: 7 },
   { label: 'asprate', value: 6, fields: 17 },
   { label: 'cornelio', value: 7, fields: 5 },
-  { label: 'biyo', value: 8, fields: 5 },
+  { label: 'gabuya', value: 8, fields: 5 },
   { label: 'reyes', value: 9, fields: 5 },
   { label: 'cangrejo', value: 10, fields: 5 },
-  { label: 'romero', value: 11, fields: 5 },
-  { label: 'chua', value: 12, fields: 5 },
-  { label: 'bulante', value: 13, fields: 5 },
-  { label: 'gad', value: 14, fields: 7 },
-  { label: 'five4', value: 15, fields: 5 }
+  { label: 'larroder', value: 11, fields: 5 },
+  { label: 'romero', value: 12, fields: 5 },
+  { label: 'chua', value: 13, fields: 5 },
+  { label: 'ramos', value: 14, fields: 5 },
+  { label: 'bulante', value: 15, fields: 5 },
+  { label: 'gad', value: 16, fields: 7 },
+  { label: 'five4', value: 17, fields: 5 }
 ])
 
 const registrationClosed = ref(null)
@@ -861,13 +907,22 @@ export default {
       'evaluation_visibility'
     ).then(function (response) {
       let eval_visibility = response.data.item.split(',')
-      let speakers = ['cornelio', 'biyo', 'reyes']
+      let speakers = ['cornelio', 'gabuya', 'reyes', 'cangrejo', 'chua']
       let i = 0
       speakers.forEach((item) => {
-        if (eval_visibility[i++] == 'false') {
+        if (eval_visibility[i] == 'false') {
           let index = listPages.value.findIndex(obj => obj.label == item)
           listPages.value.splice(index, 1)
         }
+        else if (item == 'cangrejo' && eval_visibility[i] == 'true') {
+          let index = listPages.value.findIndex(obj => obj.label == 'larroder')
+          listPages.value.splice(index, 1)
+        }
+        else if (item == 'chua' && eval_visibility[i] == 'true') {
+          let index = listPages.value.findIndex(obj => obj.label == 'ramos')
+          listPages.value.splice(index, 1)
+        }
+        i++
       })
     })
   },
@@ -931,7 +986,7 @@ export default {
         formInput.out = [1, 2, 3, 4, 5, 1, 2]
         formInput.asprate = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2]
         formInput.aspcomment = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2]
-        formInput.biyo = [1, 2, 3, 4, 5]
+        formInput.gabuya = [1, 2, 3, 4, 5]
         formInput.reyes = [1, 2, 3, 4, 5]
         formInput.romero = [1, 2, 3, 4, 5]
         // formInput.cornelio = [1, 2, 3, 4, 5]
@@ -1046,13 +1101,13 @@ export default {
         five5: "5.	Please identify and describe specific skills and knowledge that you learned from the leadership camp. ",
         five6: "6.	Please indicate any possible training to be organized under the Patriot Program that you wish to attend in the future."
       },
-      dataPolicyText: `This form collects your personal information and post-evaluation of the activity for future improvements and research study.  The DOST-SEI, in compliance with R.A. 10173, implements reasonable and appropriate organizational, physical, and technical security measures for the protection of your personal information collected. Only the DOST-SEI employees are permitted to have access to the collected information. They shall be guided by the security measures provided in handling all personal information collected. Personal information collected is processed, stored, and later on disposed of via shredding and permanently deleted in our electronic files in accordance with R.A No. 9470 otherwise known as the National Archive of the Philippines Act of 2007. In case of a data breach, DOST-SEI shall notify you and inform the National Privacy Commission (NPC) in accordance with NPC Circular 16-03 on Personal Data Breach Management. Additionaly, agreeing with this policy allows DOST - SEI to take any images, videos or graphics taken during conduct for publication and reporting purposes. 
+      dataPolicyText: `This form collects your personal information and post-evaluation of the activity for future improvements and research study.  The DOST-SEI, in compliance with R.A. 10173, implements reasonable and appropriate organizational, physical, and technical security measures for the protection of your personal information collected. Only the DOST-SEI employees are permitted to have access to the collected information. They shall be guided by the security measures provided in handling all personal information collected. Personal information collected is processed, stored, and later on disposed of via shredding and permanently deleted in our electronic files in accordance with R.A No. 9470 otherwise known as the National Archive of the Philippines Act of 2007. In case of a data breach, DOST-SEI shall notify you and inform the National Privacy Commission (NPC) in accordance with NPC Circular 16-03 on Personal Data Breach Management. Additionaly, agreeing with this policy allows DOST - SEI to take any images, videos or graphics taken during conduct for publication and reporting purposes.
 
         RIGHTS OF THE DATA SUBJECT
 
-        As the Data Subject, you have the right to be informed of the personal information being collected, processed, and stored by DOST-SEI as well as to access, object, rectify, and block the same. 
+        As the Data Subject, you have the right to be informed of the personal information being collected, processed, and stored by DOST-SEI as well as to access, object, rectify, and block the same.
 
-        CONTACT DETAILS OF THE DOST-SEI DATA PRIVACY OFFICER (DPO) 
+        CONTACT DETAILS OF THE DOST-SEI DATA PRIVACY OFFICER (DPO)
 
         For questions or concerns, you may contact our Data Protection Officer through the following details:
 
