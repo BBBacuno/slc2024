@@ -531,9 +531,11 @@
           </div>
           <div v-show="listPages.find(obj => obj.label == 'five4').value > pageNum" style="width: 25%;  ">
             <q-btn label="Next" @click="changePage('next'), scrollToElement('#topElement')" color="teal"
-              class="button-submit" style="width: 100%; height: 12%">
-              <!-- :disabled="listPages.find(obj => obj.value == pageNum).fields > formInput[listPages.find(obj => obj.value == pageNum).label].filter(v => v != null).length ||
-                (pageNum == 6 && (formInput.asprate.filter(v => v).length < 17 || formInput.aspcomment.filter(v => v).length < 17))" -->
+              class="button-submit" style="width: 100%; height: 12%" :disabled="listPages.find(obj => obj.value == pageNum).fields >
+                formInput[listPages.find(obj => obj.value == pageNum).label].filter(v => v != null).length ||
+                (pageNum == 6 && (formInput.asprate.filter(v => v).length < 17 ||
+                  formInput.aspcomment.filter(v => v).length < 17))">
+              <!--  -->
             </q-btn>
           </div>
         </div>
