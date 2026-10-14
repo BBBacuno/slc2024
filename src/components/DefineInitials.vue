@@ -63,11 +63,7 @@ const formInput = reactive({
   yearAward: null,
   association: null,
   pretest: [null],
-  validation: [null],
-  expectation: null,
-  designation: null,
-  position: null,
-  importMasterList: null
+  validation: [null]
 });
 
 const suffix_options = ref([

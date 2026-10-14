@@ -2,7 +2,7 @@
   <div class="bg-img-container">
     <q-img src="background.jpg" class="bg-img"></q-img>
   </div>
-  <q-card class="evaluation" style="  
+  <q-card class="evaluation" style="
   box-shadow:
     0 4px 8px rgba(0, 0, 0, 0.5),
     0 8px 16px rgba(0, 0, 0, 0.5),
@@ -19,7 +19,7 @@ background-color: #cccccc;
         <div v-show="!OTPVerified && !OTPSent" style="margin-top: 15px;">
           <q-input outlined rounded label="SPAS ID" v-model="formInput.spas_id" :color="borderColor" :bg-color="bgColor"
             :label-color="labelColor" mask="X-XXXX-XX-XXXXX" fill-mask
-            :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
+            :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules v-if="this.$route.path != '/teachers'">
             <template v-slot:before>
               <q-icon :color="logoColor" name="badge" size="lg" />
             </template>
@@ -79,7 +79,9 @@ background-color: #cccccc;
               </q-icon>
             </template>
           </q-input>
-          Please input the email where you received your VFO Certificate.<br>
+          <div v-if="this.$route.path != '/teachers'">
+            Please input the email where you received your VFO Certificate.<br>
+          </div>
           <q-input outlined rounded v-model="formInput.email" type="email" :color="borderColor" :bg-color="bgColor"
             :label-color="labelColor" label="Email Address" :rules="[(val) => val.includes('@') || 'Only valid email']"
             lazy-rules>
@@ -119,13 +121,6 @@ background-color: #cccccc;
         <div v-show="OTPVerified">
           <div v-show="pageNum == 1" style="display: flex;flex-direction: row; flex-wrap: wrap;">
             <div class="left-container">
-              <!-- <q-input outlined rounded label="SPAS ID" v-model="formInput.spas_id" :color="borderColor"
-                :bg-color="bgColor" :label-color="labelColor" mask="A-####-##-#####" fill-mask
-                :rules="[(val) => val && val.length > 0 || 'Required']" lazy-rules>
-                <template v-slot:before>
-                  <q-icon :color="logoColor" name="badge" size="lg" />
-                </template>
-              </q-input> -->
               <q-input outlined rounded v-model="formInput.email" readonly type="email" :color="borderColor"
                 :bg-color="bgColor" :label-color="labelColor" label="Email to Register"
                 :rules="[(val) => val.includes('@') || 'Only valid email']" lazy-rules>
@@ -251,8 +246,8 @@ background-color: #cccccc;
               </q-select>
               <q-select outlined rounded :color="borderColor" :bg-color="bgColor" :label-color="labelColor"
                 v-model="formInput.university" use-input emit-value map-options input-debounce="0" label="University"
-                :options="filtered_university" @filter="filter_university" behavior="menu" lazy-rules
-                :rules="[(val) => (val && val > 0) || 'Required Field',]">
+                :options="filtered_university" @filter="filter_university" @update:modelValue="checkUniversity"
+                behavior="menu" lazy-rules :rules="[(val) => (val && val > 0) || 'Required Field',]">
 
                 <template v-slot:no-option>
                   <q-item>
@@ -451,6 +446,25 @@ background-color: #cccccc;
       </q-card-actions>
     </q-card>
   </q-dialog>
+  <q-dialog v-model="nonCoordDialog" persistent>
+    <q-card style="width: 450px !important" class="prompt">
+      <q-card-section class="q-pb-none text-center">
+        <q-icon color="blue-grey-6" name="error" size="70px" />
+      </q-card-section>
+      <q-card-section class="q-pa-md text-center">
+        <div style="font-family: Montserrat; font-size: 25px">Ooops!</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none text-center" style="font-family: Montserrat; font-size: 15px">
+        This conduct of SLC is reserved for NCR Universities with no coordinators only. Your registration will be marked
+        as invalid.
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn flat label="CLOSE" color="red-8" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
   <q-dialog v-model="pleaseWait" persistent>
     <q-card style="width: 300px" class="q-px-sm q-pb-md prompt">
       <q-card-section>
@@ -534,7 +548,7 @@ background-color: #cccccc;
     <q-card class="dataPolicy" style="
       -webkit-border-radius: 25px;
       -moz-border-radius: 25px;
-      border-radius: 25px;  
+      border-radius: 25px;
       ">
       <q-card-section>
         <div class="text-h3 text-white">Data Privacy Notice</div>
@@ -572,6 +586,7 @@ background-color: #cccccc;
 <script>
 import { LocalStorage, useMeta, useQuasar } from "quasar"
 import { ref } from 'vue'
+import { useRouter } from 'vue-router';
 import {
   axiosInit,
   yearAward_options,
@@ -600,7 +615,6 @@ import {
 const metaData = {
   title: 'SLC Registration',
 }
-
 const accept = ref(false)
 // test otp
 const OTPVerified = ref(false)
@@ -612,12 +626,39 @@ const congrats = ref(false)
 const errorWarning = ref(null)
 const OTPSent = ref(false)
 const conduct = ref(null)
+const nonCoordDialog = ref(false)
 
 const registrationClosed = ref(null)
 
 const refreshPage = () => {
   location.reload()
 };
+
+function checkUniversity(value) {
+  var ncr_univ_filter = [
+    325, //ateneo
+    329, //dlsu
+    340, //mapua
+    350, //pnu
+    352, //pup m
+    364, //tip qc
+    363, //tip m
+    348, //plm
+
+    373, //up d
+    327, //ceu
+    346, //olfu qc
+    347, //olfu val
+    366, //tup t
+    358, //rtu
+    365, //tup m
+    332, //feu it
+    334, //feu m
+  ];
+  if (ncr_univ_filter.includes(value)) {
+    nonCoordDialog.value = true
+  }
+}
 
 export default {
   beforeMount() {
@@ -627,6 +668,7 @@ export default {
         formInput[item] = obj[item]
       })
     }
+    // console.log(this.$route)
   },
 
   setup() {
@@ -656,11 +698,12 @@ export default {
     })
     useMeta(metaData)
 
-    const $q = useQuasar()
+    const router = useRouter();
     const dataPolicyMenu = ref(false)
     const conformeCheck = ref(false)
     const errMessage = ref(null)
     const disclaimer = ref(false)
+    const $q = useQuasar()
 
     const OTPValid = () => {
       pleaseWait.value = true;
@@ -685,25 +728,6 @@ export default {
         formData.append(key, obj[key]);
       }
       return formData;
-    };
-
-    const sendOTP = () => {
-      pleaseWait.value = true;
-      const dlInsert = toFormData(formInput);
-      axiosInit
-        .post('slc/auth/sendOTP.php?', dlInsert)
-        .then(function (response) {
-          pleaseWait.value = false;
-          if (response.data.emailSent === true) {
-            OTPSent.value = response.data.emailSent;
-            formInput.email = response.data.email
-            // formInput.spas_id = response.data.spas_id
-          }
-          else {
-            errorWarning.value = true;
-            errMessage.value = response.data.errMessage
-          }
-        });
     };
 
     const submitResponse = () => {
@@ -761,10 +785,10 @@ export default {
     };
 
     return {
+      router,
       scrollToElement,
       toFormData,
       submitResponse,
-      sendOTP,
       refreshPage,
       OTPValid,
       selectParticipantType,
@@ -778,6 +802,8 @@ export default {
       conduct,
 
       disclaimer,
+      checkUniversity,
+      nonCoordDialog,
 
       errMessage,
       dataPolicyMenu,
@@ -861,20 +887,36 @@ export default {
       },
       dataPolicyText: `This form collects your personal information and post-evaluation of the activity for future improvements and research study.  The DOST-SEI, in compliance with R.A. 10173, implements reasonable and appropriate organizational, physical, and technical security measures for the protection of your personal information collected. Only the DOST-SEI employees are permitted to have access to the collected information. They shall be guided by the security measures provided in handling all personal information collected. Personal information collected is processed, stored, and later on disposed of via shredding and permanently deleted in our electronic files in accordance with R.A No. 9470 otherwise known as the National Archive of the Philippines Act of 2007. In case of a data breach, DOST-SEI shall notify you and inform the National Privacy Commission (NPC) in accordance with NPC Circular 16-03 on Personal Data Breach Management. Additionaly, agreeing with this policy allows DOST - SEI to take any images, videos or graphics taken during conduct for publication and reporting purposes.
 
-RIGHTS OF THE DATA SUBJECT
+          RIGHTS OF THE DATA SUBJECT
 
-As the Data Subject, you have the right to be informed of the personal information being collected, processed, and stored by DOST-SEI as well as to access, object, rectify, and block the same. 
+          As the Data Subject, you have the right to be informed of the personal information being collected, processed, and stored by DOST-SEI as well as to access, object, rectify, and block the same.
 
-CONTACT DETAILS OF THE DOST-SEI DATA PRIVACY OFFICER (DPO) 
+          CONTACT DETAILS OF THE DOST-SEI DATA PRIVACY OFFICER (DPO)
 
-For questions or concerns, you may contact our Data Protection Officer through the following details:
+          For questions or cowncerns, you may contact our Data Protection Officer through the following details:
 
-Direct Line: +63 2 8710 7462
+          Direct Line: +63 2 8710 7462
 
-E-mail: dpo@sei.dost.gov.ph`,
-
+          E-mail: dpo@sei.dost.gov.ph`,
+      sendOTP() {
+        pleaseWait.value = true;
+        const dlInsert = toFormData(formInput);
+        console.log(router.currentRoute.value.fullPath)
+        axiosInit
+          .post(router.currentRoute.value.fullPath != '/teachers' ? 'slc/auth/sendOTP.php' : 'slc/auth/sendOTPTeachers.php', dlInsert)
+          .then(function (response) {
+            pleaseWait.value = false;
+            if (response.data.emailSent === true) {
+              OTPSent.value = response.data.emailSent;
+              formInput.email = response.data.email
+            }
+            else {
+              errorWarning.value = true;
+              errMessage.value = response.data.errMessage
+            }
+          });
+      },
     }
-
   }
 }
 

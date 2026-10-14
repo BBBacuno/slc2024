@@ -14,26 +14,26 @@ const routes = [
     },
   },
   {
-    path: '/eval', 
+    path: "/teachers",
+    name: "Teachers",
+    components: {
+      default: SLCRegistrationPage,
+    },
+  },
+  {
+    path: '/eval',
     name: 'Eval',
     components: {
       default: SLCEvaluationPage,
     },
   },
   {
-    path: '/attendance', 
+    path: '/attendance',
     name: 'SLCConfirmAttendance',
     components: {
       default: SLCConfirmAttendance,
     },
   },
-  // {
-  //   path: '/nickname', 
-  //   name: 'nickname',
-  //   components: {
-  //     default: nickname,
-  //   },
-  // },
   {
     path: '/:catchAll(.*)*',
     redirect: "/"
